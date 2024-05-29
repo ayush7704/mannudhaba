@@ -1,0 +1,122 @@
+Whether you’re having an intimate anniversary dinner or throwing a family party, we'll make sure it has great food served in a cozy atmosphere. The Neringa restaurant consists of four spaces: a lobby, a bar, a large hall for up to 120 people, and a small hall for up to 50 people. Whatever the occasion, we’ll help to make it special!
+
+introline - Unforgettable tastes await! Fresh, delicious Indian dishes packed with flavor, shared in a warm, family-friendly atmosphere. Gather, connect, and make memories at your new favorite spot.
+
+shorter - Unforgettable Indian flavors await!  Fresh, delicious dishes. Family-friendly fun. Find your new favorite spot.
+
+final - Unforgettable flavors await (Fresh), delicious dishes packed with flavor, family-friendly atmosphere. Gather, connect, and make memories! At your new favorite spot.
+
+Unforgettable flavors await (Fresh), delicious dishes packed with flavor, Family-friendly atmosphere. Gather, connect, and make memories! At your new favorite spot.
+
+hindi version - अविस्मरणीय स्वाद आपका इंतज़ार कर रहे हैं! ताज़ा, स्वादिष्ट भारतीय व्यंजन स्वाद से भरपूर, गर्म, पारिवारिक माहौल में साझा किए जाते हैं। इकट्ठा हों, जुड़ें और अपने नए पसंदीदा स्थान पर यादें बनाएं।
+
+shorter -  आपके नए पसंदीदा स्थान में आपका स्वागत है! ताज़ा , स्वादिष्ट व्यंजन स्वाद का अनुभव करें!
+
+
+infinite scroll 
+you will love every bite (2) made with love 
+
+
+The Basic Stuff: Address, Phone Number, & Hours  as components
+
+we would love to share you our futute discount deals directly 
+
+whatsApp number 
+email
+
+<!-- {/* ===== paneer  start=====*/}
+<div className='flex justify-between items-center px-4 py-5'>
+  <h3 className='text-xl dark:text-[gold] text-black capitalize font-semibold' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>paneer menu</h3>
+  {/*======= selection   =====*/}
+  <select ref={paneerFilter} onChange={(e) => { setpaneerPrice(paneerFilter.current.value); console.log(paneerFilter.current.value) }} className='text-white bg-black cursor-pointer p-3 border border-white rounded-md'>
+    <option className='p-4' value="1000">&#8377; Filter</option>
+    <option className='p-4' value="50">under &#8377; 50</option>
+    <option className='p-4' value="100">under &#8377; 100</option>
+    <option className='p-4' value="150">under &#8377; 150</option>
+    <option className='p-4' value="200">under &#8377; 200</option>
+    <option className='p-4' value="300">under &#8377; 300</option>
+  </select>
+</div>
+<div className="flex p-[20px] justify-evenly flex-nowrap overflow-auto gap-y-[50px] gap-5">
+  {
+    menucard.filter((m) => { return m.variety === 'paneer special' && m.price <= paneerPrice }).map((menu, menuindex) => (
+      <div key={menuindex} className="homecard pt-4 grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
+        <div className="w-[60%] mx-auto relative">
+          <img src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
+        </div>
+
+        <div className="card-body p-[15px]">
+          <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+          <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
+        </div>
+        <div className="flex ">
+          <Link to={'/menu'} className='orderbtn flex items-center justify-center gap-2 bg-white color text-black text-sm flex-1 rounded-sm  text-center'><span>Order</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21" color='black' fill="none">
+              <path d="M19.5 17.5C19.5 18.8807 18.3807 20 17 20C15.6193 20 14.5 18.8807 14.5 17.5C14.5 16.1193 15.6193 15 17 15C18.3807 15 19.5 16.1193 19.5 17.5Z" stroke="currentColor" stroke-width="1.5" />
+              <path d="M9.5 17.5C9.5 18.8807 8.38071 20 7 20C5.61929 20 4.5 18.8807 4.5 17.5C4.5 16.1193 5.61929 15 7 15C8.38071 15 9.5 16.1193 9.5 17.5Z" stroke="currentColor" stroke-width="1.5" />
+              <path d="M14.5 17.5H9.5M2 4H12C13.4142 4 14.1213 4 14.5607 4.43934C15 4.87868 15 5.58579 15 7V15.5M15.5 6.5H17.3014C18.1311 6.5 18.5459 6.5 18.8898 6.6947C19.2336 6.8894 19.4471 7.2451 19.8739 7.95651L21.5725 10.7875C21.7849 11.1415 21.8911 11.3186 21.9456 11.5151C22 11.7116 22 11.918 22 12.331V15C22 15.9346 22 16.4019 21.799 16.75C21.6674 16.978 21.478 17.1674 21.25 17.299C20.9019 17.5 20.4346 17.5 19.5 17.5M2 13V15C2 15.9346 2 16.4019 2.20096 16.75C2.33261 16.978 2.52197 17.1674 2.75 17.299C3.09808 17.5 3.56538 17.5 4.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 7H8M2 10H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></Link>
+        </div>
+      </div>
+    ))
+  }
+  {
+    menucard.filter((m) => { return m.variety === 'paneer special' && m.price <= paneerPrice }).length === 0 ?
+      <div className='text-red-500 text-center block mx-auto'>
+        Sorry there is nothing in this category
+      </div> : ''
+  }
+</div>
+{/*===== paneer  end===== */} -->
+
+
+
+
+
+
+<!-- {/*===== chinese  start =====*/}
+<div className='flex justify-between items-center px-4 py-5'>
+  <h3 className='text-xl dark:text-[gold] text-black capitalize font-semibold' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>chinese menu</h3>
+  {/*======= selection   =====*/}
+  <select ref={chinessFilter} onChange={(e) => { setchinesePrice(chinessFilter.current.value); console.log(chinessFilter.current.value) }} className='text-white bg-black cursor-pointer p-3 border border-white rounded-md'>
+    <option className='p-4' value="1000">&#8377; Filter</option>
+    <option className='p-4' value="50">under &#8377; 50</option>
+    <option className='p-4' value="100">under &#8377; 100</option>
+    <option className='p-4' value="150">under &#8377; 150</option>
+    <option className='p-4' value="200">under &#8377; 200</option>
+    <option className='p-4' value="300">under &#8377; 300</option>
+  </select>
+</div>
+<div className="flex p-[20px] justify-evenly flex-nowrap overflow-auto gap-y-[50px] gap-5">
+  {
+    menucard.filter((m) => { return m.variety === 'chinese special' && m.price <= chinessPrice }).map((menu, menuindex) => (
+      <div key={menuindex} className="homecard pt-4 grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
+        <div className="w-[60%] mx-auto relative">
+          <img src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
+        </div>
+
+        <div className="card-body p-[15px]">
+          <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+          <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
+        </div>
+        <div className="flex ">
+          <Link to={'/menu'} className='orderbtn flex items-center justify-center gap-2 bg-white color text-black text-sm flex-1 rounded-sm  text-center'><span>Order</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21" color='black' fill="none">
+              <path d="M19.5 17.5C19.5 18.8807 18.3807 20 17 20C15.6193 20 14.5 18.8807 14.5 17.5C14.5 16.1193 15.6193 15 17 15C18.3807 15 19.5 16.1193 19.5 17.5Z" stroke="currentColor" stroke-width="1.5" />
+              <path d="M9.5 17.5C9.5 18.8807 8.38071 20 7 20C5.61929 20 4.5 18.8807 4.5 17.5C4.5 16.1193 5.61929 15 7 15C8.38071 15 9.5 16.1193 9.5 17.5Z" stroke="currentColor" stroke-width="1.5" />
+              <path d="M14.5 17.5H9.5M2 4H12C13.4142 4 14.1213 4 14.5607 4.43934C15 4.87868 15 5.58579 15 7V15.5M15.5 6.5H17.3014C18.1311 6.5 18.5459 6.5 18.8898 6.6947C19.2336 6.8894 19.4471 7.2451 19.8739 7.95651L21.5725 10.7875C21.7849 11.1415 21.8911 11.3186 21.9456 11.5151C22 11.7116 22 11.918 22 12.331V15C22 15.9346 22 16.4019 21.799 16.75C21.6674 16.978 21.478 17.1674 21.25 17.299C20.9019 17.5 20.4346 17.5 19.5 17.5M2 13V15C2 15.9346 2 16.4019 2.20096 16.75C2.33261 16.978 2.52197 17.1674 2.75 17.299C3.09808 17.5 3.56538 17.5 4.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 7H8M2 10H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></Link>
+        </div>
+      </div>
+    ))
+  }
+  {
+    menucard.filter((m) => { return m.variety === 'chinese special' && m.price <= chinessPrice }).length === 0 ?
+      <div className='text-red-500 text-center block mx-auto'>
+        Sorry there is nothing in this category
+      </div> : ''
+  }
+</div>
+{/*===== chinese  end =====*/} -->

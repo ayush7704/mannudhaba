@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .text-stroke {
+        -webkit-text-stroke: 0px #de8dff;
+        color: transparent;
+        will-change: auto;
+    }
+}
+
+:root {
+    --navHeight: 83px;
+}
+
+a,
+Link {
+    user-select: none;
+}
+
+body,
+html {
+    font-size: 16px;
+    background-color: rgb(0, 0, 0);
+    /* font-family: "Tourney", sans-serif; */
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    transition: background-color 0.3s linear;
+}
+
+.linear-btn {
+    background: hsla(43, 84%, 85%, 1);
+
+    background: linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+
+    background: -moz-linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+
+    background: -webkit-linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+    transition: all 0.3s linear;
+}
+
+.ball {
+    background: hsla(43, 84%, 85%, 1);
+
+    background: linear-gradient(90deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+
+    background: -moz-linear-gradient(90deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+
+    background: -webkit-linear-gradient(90deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F9E7BB", endColorstr="#E97CBB", GradientType=1);
+}
+
+.ball:nth-of-type(2) {
+    background: hsla(64, 41%, 92%, 1);
+
+    background: linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
+
+    background: -moz-linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
+
+    background: -webkit-linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F2F3E2", endColorstr="#B2E5F8", GradientType=1);
+}
+
+.svgbtn:hover>svg {
+    animation: rotate 0.4s linear;
+}
+
+.svgbtn:active>svg {
+    transition: all 0.1s ease;
+    scale: 0;
+}
+
+@keyframes rotate {
+    33% {
+        rotate: -40deg;
+    }
+
+    66% {
+        rotate: 40deg;
+    }
+
+    100% {
+        rotate: 0deg;
+    }
+}
+
+.orderbtn:hover svg {
+    animation: order 1s linear;
+    transform-origin: left;
+}
+
+.orderbtn:active svg {
+    rotate: -25deg;
+    transform-origin: left;
+}
+
+@keyframes order {
+    0% {
+        translate: 5px 0px;
+    }
+
+    30% {
+        translate: 5px 0px;
+    }
+
+    80% {
+        translate: 30px 0px;
+    }
+
+    100% {
+        translate: 0px 0px;
+        rotate: 0deg;
+    }
+}
+
+input.acco:checked~.check-content {
+    padding-block: 0px;
+    max-height: 0rem;
+}
+
+input.acco~.check-content {
+    transition: 0.35s linear;
+    padding-block: 7px;
+    max-height: 50rem;
+}
+
+input.acco+label:hover {
+    background-color: #80808036;
+    transition: all 0.35s;
+}
+
+input.acco~.check-content:hover {
+    background-color: #80808036;
+}
+
+input.acco+.detail::after {
+    transform: rotate(270deg);
+}
+
+input.acco:checked+.detail::after {
+    transform: rotate(90deg);
+}
+
+.detail::after {
+    content: "\276F";
+    width: 1em;
+    text-align: center;
+    transform: rotate(90deg);
+    transition: all 0.35s;
+}
+
+@media (max-width:500px) {
+
+    body,
+    html {
+        font-size: 15px;
+    }
+}
+
+.menuPage{
+    user-select: none;
+}
+
+/* .search-div{
+    top: var(--navHeight);
+} */

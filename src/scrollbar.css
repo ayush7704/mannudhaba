@@ -1,0 +1,34 @@
+/* custom-scrollbar.css */
+@media (min-width:600px) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+}
+nav *::-webkit-scrollbar{
+    height: 3px;
+}
+
+::-webkit-scrollbar-thumb{
+    cursor: pointer;
+    border-radius: 8px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #9f9ea0;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #cccaca;
+}
+
+/* Firefox
+ {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+} */

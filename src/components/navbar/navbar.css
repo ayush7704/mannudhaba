@@ -1,0 +1,9 @@
+:is(.links, .linkswrapper) {
+    top: var(--navHeight);
+}
+
+@media (max-width:400px) {
+    .nav-logo {
+        width: 175px;
+    }
+}
