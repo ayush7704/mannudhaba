@@ -110,8 +110,9 @@ function home(props) {
   const {value,setvalue, Fixed} = useContext(counterContext)
   let homecardObj = [
     { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
+    { heading: 'Daal baafle', variety: 'Daal special', img: foodimg, price: 150 },
     { heading: 'veg kofta', variety: 'paneer special', img: imgg, price: 180 },
-    { heading: 'Daal snacks', variety: 'Daal special', img: foodimg, price: 120 },
+    { heading: 'Daal baati', variety: 'Daal special', img: foodimg, price: 120 },
     { heading: 'paneer chilli', variety: 'chinees special', img: foodimg, price: 200 },
     { heading: 'paneer nudals', variety: 'chinees special', img: foodimg, price: 130 },
     { heading: 'paneer paratha', variety: 'paratha special', img: foodimg, price: 80 },

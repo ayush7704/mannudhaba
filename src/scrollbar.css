@@ -1,8 +1,20 @@
 /* custom-scrollbar.css */
+/* @media (max-width:600px) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 5px;
+    }
+    .gallery ::-webkit-scrollbar{
+        width: 4px;
+    }
+} */
 @media (min-width:600px) {
     ::-webkit-scrollbar {
         width: 10px;
         height: 10px;
+    }
+    .gallery ::-webkit-scrollbar{
+        width: 4px;
     }
 }
 nav *::-webkit-scrollbar{

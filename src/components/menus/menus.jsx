@@ -129,6 +129,7 @@ function menus(props) {
   const menucard = useMemo(() => {
     console.log('memo')
     return [
+
       // panner only 
       { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
       { heading: 'kadai paneer', variety: 'paneer special', img: foodimg, price: 190 },
@@ -144,31 +145,34 @@ function menus(props) {
       { heading: 'paalak paneer', variety: 'paneer special', img: foodimg, price: 160 },
       { heading: 'handa paneer', variety: 'paneer special', img: foodimg, price: 170 },
 
-      { heading: 'veg kofta', variety: 'paneer special', img: foodimg, price: 180 },
-      { heading: 'dam aalu', variety: 'paneer special', img: foodimg, price: 150 },
-      { heading: 'raap tamatar', variety: 'paneer special', img: foodimg, price: 170 },
-      { heading: 'raap shimla', variety: 'paneer special', img: foodimg, price: 170 },
-      { heading: 'jees aalu', variety: 'paneer special', img: foodimg, price: 80 },
-      { heading: 'malai kofta', variety: 'paneer special', img: foodimg, price: 180 },
-      { heading: 'kaaju kadi', variety: 'paneer special', img: foodimg, price: 220 },
-      { heading: 'mix vej', variety: 'paneer special', img: foodimg, price: 150 },
-      { heading: 'sev tamata', variety: 'paneer special', img: foodimg, price: 100 },
-      { heading: 'sev bhaaji', variety: 'paneer special', img: foodimg, price: 90 },
-      { heading: 'bhindi masala', variety: 'paneer special', img: foodimg, price: 90 },
-      { heading: 'vegan bhartaa', variety: 'paneer special', img: foodimg, price: 100 },
-      { heading: 'aalu matar', variety: 'paneer special', img: foodimg, price: 80 },
-      { heading: 'aalu gobhi', variety: 'paneer special', img: foodimg, price: 90 },
-      { heading: 'aalu gobhi tamatar', variety: 'paneer special', img: foodimg, price: 90 },
-      { heading: 'bhindi kurkuri', variety: 'paneer special', img: foodimg, price: 80 },
-      { heading: 'saahi paneer', variety: 'paneer special', img: foodimg, price: 170 },
-      { heading: 'malai kofta', variety: 'paneer special', img: foodimg, price: 200 },
-      { heading: 'sev masala', variety: 'paneer special', img: foodimg, price: 90 },
-      { heading: 'aalu potato', variety: 'paneer special', img: foodimg, price: 60 },
+      { heading: 'kheer', variety: "other's", img: foodimg, price: 70 },
+      { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180 },
+      { heading: 'dam aalu', variety: "other's", img: foodimg, price: 150 },
+      { heading: 'raap tamatar', variety: "other's", img: foodimg, price: 170 },
+      { heading: 'raap shimla', variety: "other's", img: foodimg, price: 170 },
+      { heading: 'jees aalu', variety: "other's", img: foodimg, price: 80 },
+      { heading: 'malai kofta', variety: "other's", img: foodimg, price: 180 },
+      { heading: 'kaaju kadi', variety: "other's", img: foodimg, price: 220 },
+      { heading: 'mix vej', variety: "other's", img: foodimg, price: 150 },
+      { heading: 'sev tamata', variety: "other's", img: foodimg, price: 100 },
+      { heading: 'sev bhaaji', variety: "other's", img: foodimg, price: 90 },
+      { heading: 'bhindi masala', variety: "other's", img: foodimg, price: 90 },
+      { heading: 'vegan bhartaa', variety: "other's", img: foodimg, price: 100 },
+      { heading: 'aalu matar', variety: "other's", img: foodimg, price: 80 },
+      { heading: 'aalu gobhi', variety: "other's", img: foodimg, price: 90 },
+      { heading: 'aalu gobhi tamatar', variety: "other's", img: foodimg, price: 90 },
+      { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 80 },
+      { heading: 'saahi paneer', variety: "other's", img: foodimg, price: 170 },
+      { heading: 'malai kofta', variety: "other's", img: foodimg, price: 200 },
+      { heading: 'sev masala', variety: "other's", img: foodimg, price: 90 },
+      { heading: 'aalu potato', variety: "other's", img: foodimg, price: 60 },
 
 
       // daal 
       { heading: 'Daal snacks', variety: 'daal special', img: foodimg, price: 120 },
       { heading: 'Daal fry', variety: 'daal special', img: foodimg, price: 90 },
+      { heading: 'Daal baafle', variety: 'daal special', img: foodimg, price: 150 },
+      { heading: 'Daal baati', variety: 'daal special', img: foodimg, price: 120 },
       { heading: 'Daal tadka', variety: 'daal special', img: foodimg, price: 100 },
 
       // chinese 
@@ -185,7 +189,43 @@ function menus(props) {
       { heading: 'momos', variety: 'chinese special', img: foodimg, price: 70 },
       { heading: 'chole bhature', variety: 'chinese special', img: foodimg, price: 80 },
 
+      // paratha 
       { heading: 'paneer paratha', variety: 'paratha special', img: foodimg, price: 80 },
+      { heading: 'aalu paratha', variety: 'paratha special', img: foodimg, price: 50 },
+      { heading: 'taba paratha', variety: 'paratha special', img: foodimg, price: 30 },
+      { heading: 'gobhi paratha', variety: 'paratha special', img: foodimg, price: 50 },
+      { heading: 'pyaaj paratha', variety: 'paratha special', img: foodimg, price: 50 },
+
+      // roti 
+      { heading: 'tandoor roti', variety: 'roti special', img: foodimg, price: 10 },
+      { heading: 'tandoor butter roti', variety: 'roti special', img: foodimg, price: 15 },
+      { heading: 'missi roti', variety: 'roti special', img: foodimg, price: 12 },
+      { heading: 'taba roti', variety: 'roti special', img: foodimg, price: 30 },
+      { heading: 'butter naan', variety: 'roti special', img: foodimg, price: 40 },
+      { heading: 'garlik naan', variety: 'roti special', img: foodimg, price: 50 },
+
+      // rice 
+      { heading: 'plane rice', variety: 'rice special', img: foodimg, price: 70 },
+      { heading: 'jeera rice', variety: 'rice special', img: foodimg, price: 90 },
+      { heading: 'masala rice', variety: 'rice special', img: foodimg, price: 100 },
+      { heading: 'veg biryani', variety: 'rice special', img: foodimg, price: 140 },
+      { heading: 'matar pulab', variety: 'rice special', img: foodimg, price: 120 },
+      { heading: 'veg pulab', variety: 'rice special', img: foodimg, price: 140 },
+      { heading: 'manchuriyan rice', variety: 'rice special', img: foodimg, price: 120 },
+      { heading: 'veg fry rice', variety: 'rice special', img: foodimg, price: 140 },
+
+      // rayta 
+      { heading: 'veg rayta', variety: 'rayta special', img: foodimg, price: 70 },
+      { heading: 'boondi rayta', variety: 'rayta special', img: foodimg, price: 80 },
+      { heading: 'lassi', variety: 'rayta special', img: foodimg, price: 40 },
+      { heading: 'dahi', variety: 'rayta special', img: foodimg, price: 60 },
+      { heading: 'chaach', variety: 'rayta special', img: foodimg, price: 30 },
+
+      // papad 
+      { heading: 'papad bhurji', variety: 'papad special', img: foodimg, price: 60 },
+      { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30 },
+      { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15 },
+      { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20 },
     ]
   }, [])
 
@@ -367,10 +407,14 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
           {/*======= selection   =====*/}
           <select className='text-white bg-black cursor-pointer p-3 border border-white rounded-md' ref={selection} onChange={(e) => { setselect(selection.current.value) }}>
             <option className='p-4' value="all">full menu</option>
-            <option className='p-4' value="chinese special">chinese special</option>
-            <option className='p-4' value="daal special">daal special</option>
-            <option className='p-4' value="paneer special">paneer special</option>
-            <option className='p-4' value="paratha special">paratha special</option>
+            <option className='p-4' value="chinese special">chinese menu</option>
+            <option className='p-4' value="daal special">daal menu</option>
+            <option className='p-4' value="paneer special">paneer menu</option>
+            <option className='p-4' value="paratha special">paratha menu</option>
+            <option className='p-4' value="rayta special">rayta menu</option>
+            <option className='p-4' value="papad special">papad menu</option>
+            <option className='p-4' value="rice special">rice menu</option>
+            <option className='p-4' value="other's">other's varieties</option>
           </select>
         </div>
         <div className='relative'>

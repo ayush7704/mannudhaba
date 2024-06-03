@@ -28,6 +28,7 @@ html {
     font-weight: 400;
     font-style: normal;
     transition: background-color 0.3s linear;
+    scroll-behavior: smooth;
 }
 
 .linear-btn {
@@ -161,7 +162,7 @@ input.acco:checked+.detail::after {
     }
 }
 
-.menuPage{
+.menuPage,.gallery{
     user-select: none;
 }
 
