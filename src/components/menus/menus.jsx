@@ -249,6 +249,7 @@ function menus(props) {
   }, [searchvalue])
 
   useEffect(() => {
+    document.title = 'Mannu Dhaba Menu'
     // console.log('first render')
     // gsap 
     // gsap.utils.toArray('.homecardimg').forEach(element => {
@@ -317,7 +318,7 @@ function menus(props) {
           <h3 className='text-2xl ml-4 capitalize font-semibold' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>menu</h3>
         </div>
         <div className='mx-auto sm:mx-0 grow-[0.5]'>
-          <form onSubmit={search} className='flex rounded-sm overflow-hidden'>
+          <form onSubmit={search} className='flex rounded-sm '>
             <input list='browsers' type="search" ref={searchInput} placeholder='search' className='border outline-none p-2 ps-3 rounded-[3px] dark:text-white dark:border-white border-black bg-transparent text-black transition-all duration-300 focus:grow-[1] focus:rounded-[3px_0_0_3px] flex-[0_1_100px]' required autoFocus />
             <datalist id="browsers">
               {

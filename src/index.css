@@ -28,7 +28,6 @@ html {
     font-weight: 400;
     font-style: normal;
     transition: background-color 0.3s linear;
-    scroll-behavior: smooth;
 }
 
 .linear-btn {
@@ -154,6 +153,53 @@ input.acco:checked+.detail::after {
     transition: all 0.35s;
 }
 
+.outLine {
+    outline: 0px solid;
+    outline-offset: 0px;
+}
+
+.outLine:hover {
+    animation: outline-hover 0.8s ease;
+}
+
+:is(.outLine,.filterBtn):active {
+    transition: all 0.2s ease;
+    outline-offset: 7px;
+    outline-width: 1px;
+    outline-color: transparent;
+}
+
+
+@keyframes outline-hover {
+    0% {
+        outline-width: 1px;
+    }
+
+    100% {
+        outline-offset: 7px;
+        outline-color: transparent;
+    }
+}
+@keyframes outlineinput {
+    0% {
+        outline-width: 1px;
+    }
+
+    100% {
+        outline-offset: 7px;
+        outline-color: transparent;
+    }
+}
+
+.outLineInput {
+    animation: outlineinput 0.2s ease;
+}
+
+
+.gallery {
+    scroll-behavior: smooth;
+}
+
 @media (max-width:500px) {
 
     body,
@@ -162,7 +208,30 @@ input.acco:checked+.detail::after {
     }
 }
 
-.menuPage,.gallery{
+.filterBtn{
+    outline: solid 0px;
+    background-image:linear-gradient(145deg, rgb(197 148 209), rgb(0 0 0));
+    color: white;
+}
+.filterBtn.activeFilter{
+    outline:#A3E636 solid 2px;
+}
+.filterBtn:hover{
+    animation: outlinefil 0.5s ease;
+}
+@keyframes outlinefil {
+    0% {
+        outline-width: 1px; 
+        outline-color: #A3E636;
+    }
+
+    100% {
+        outline-offset: 7px;
+        outline-color: transparent;
+    }
+}
+.menuPage,
+.gallery {
     user-select: none;
 }
 

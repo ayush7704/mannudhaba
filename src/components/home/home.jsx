@@ -19,7 +19,7 @@ export function Menulink(props) {
   }
 
   return (
-    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className='svgbtn linear-btn font-semibold  py-[10px] text-center rounded-[6px] text-white px-[19px] w-1/2 flex gap-2 justify-center items-center'>
+    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className='svgbtn outLine linear-btn font-semibold  py-[10px] text-center rounded-[6px] text-white px-[19px] w-1/2 flex gap-2 justify-center items-center'>
       <span>{props.value}</span>
       <svg className='shrink-0' xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none">
         <path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -256,7 +256,7 @@ function home(props) {
               </svg>
             </a>
             <Menulink value='Menu' reff={menubtn}/>
-            <Link to="/about Us" className='svgbtn font-semibold  py-[10px] text-center rounded-[6px] dark:text-white px-[19px] md:w-1/2 flex gap-2 justify-center items-center capitalize border shadow-md transition-all  hover:shadow-xl' style={{ lineHeight: '100%' }}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={value === 'dark' ? 'white' : 'black'} fill="none">
+            <Link to="/about Us" className='svgbtn outLine font-semibold  py-[10px] text-center rounded-[6px] dark:text-white px-[19px] md:w-1/2 flex gap-2 justify-center items-center capitalize border shadow-md transition-all  hover:shadow-xl' style={{ lineHeight: '100%' }}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={value === 'dark' ? 'white' : 'black'} fill="none">
               <path d="M21.1677 7C22.2774 9.54466 22.2774 12.4569 21.1677 15.0015M2.83226 15.0015C1.72258 12.4569 1.72258 9.54466 2.83226 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M13.3472 19.9619C12.9858 20.3071 12.5028 20.5 12.0002 20.5C11.4975 20.5 11.0145 20.3071 10.6531 19.9619C7.34389 16.7821 2.90913 13.2299 5.07183 8.07272C6.24118 5.28428 9.04815 3.5 12.0002 3.5C14.9522 3.5 17.7591 5.28428 18.9285 8.07272C21.0885 13.2234 16.6646 16.793 13.3472 19.9619Z" stroke="currentColor" strokeWidth="1.5" />
               <path d="M15 11C15 12.6569 13.6569 14 12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11Z" stroke="currentColor" strokeWidth="1.5" />

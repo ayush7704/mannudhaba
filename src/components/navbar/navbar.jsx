@@ -14,13 +14,13 @@ function Navbar(props) {
   let links = useRef(null)
   let location = useLocation()
   let linkswrapper = useRef(null)
-  let {value,setvalue} = useContext(counterContext)
+  let { value, setvalue } = useContext(counterContext)
   let [navHeight, setnavHeight] = useState(75)
 
 
   function toggleBtn() {
     let moon = document.querySelector('.moon')
-    moon.classList.toggle('left-[6px]')
+    moon.classList.toggle('left-[4px]')
     document.querySelector('.yellow').classList.toggle('left-[6px]')
     document.documentElement.classList.toggle('dark')
     document.body.classList.toggle('bg-slate-50')
@@ -28,11 +28,11 @@ function Navbar(props) {
     setvalue(`${document.documentElement.classList.contains('dark') === true ? 'dark' : 'light'}`)
   }
 
-    let ham = () => {
-      links.current.classList.toggle('w-9/12')
-      links.current.classList.toggle('w-0')
-      linkswrapper.current.classList.toggle('hidden')
-    }
+  let ham = () => {
+    links.current.classList.toggle('w-9/12')
+    links.current.classList.toggle('w-0')
+    linkswrapper.current.classList.toggle('hidden')
+  }
 
   window.addEventListener('resize', () => {
     document.documentElement.style.setProperty(`--navHeight`, `${nav.current.offsetHeight}px`)
@@ -44,10 +44,10 @@ function Navbar(props) {
 
   return (
     // dark:bg-[rgb(30,30,30)]  bg-[#ebedec]
-    <nav ref={nav} className=' z-[5] bg-gray-80 flex items-center py-[5px] justify-between lg:pl-[20px] pl-[10px] pr-[20px]  sticky top-0'>
+    <nav ref={nav} className=' z-[5] bg-[#f5fffa] dark:bg-[#1e1e1e] flex items-center py-[5px] justify-between lg:pl-[20px] pl-[10px] pr-[20px]  sticky top-0'>
 
       {/* blur bg for nav  */}
-      <div className='absolute inset-0 z-[-1] w-full h-full backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e]'></div>
+      {/* <div className='absolute inset-0 z-[-1] w-full h-full backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e]'></div> */}
 
       {/*======== logo and name   ======*/}
       <div className="name-logo flex gap-4 items-center">
@@ -61,7 +61,7 @@ function Navbar(props) {
 
       {/* x scrollbar comes between 768px 815px  i can solve this it but i will consume time */}
       {/* dark:bg-[#1e1e1e]  bg-[#ebedec] */}
-      <div ref={links} className={`links transition-all duration-[300ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] md:relative md:overflow-auto overflow-hidden md:rounded-none md:flex md:items-center md:w-auto md:top-[0px] md:border-none dark:border-[#ffffff30] border-[#00000030] border-t-[1px] grid absolute  w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[20px] md:pb-[0px] backdrop-blur-[50px] md:backdrop-blur-[0px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e] md:bg-[transparent] md:dark:bg-[transparent]`}>
+      <div ref={links} className={`links bg transition-all duration-[300ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] md:relative md:overflow-auto overflow-hidden md:flex md:items-center md:w-auto md:top-[0px] md:border-none dark:border-[#ffffff30] border-[#00000030] border-t-[1px] grid absolute  w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[20px] md:pb-[0px] backdrop-blur-[50px] md:backdrop-blur-[0px]  bg-[#f5fffa] dark:bg-[#1e1e1e] md:bg-transparent dark:md:bg-transparent md:rounded-lg`}>
 
         {/*======== close btn x   ======*/}
         <div className='md:hidden py-[10px] px-5 text-right cursor-pointer' onClick={() => { ham() }}>
@@ -111,7 +111,7 @@ function Navbar(props) {
           // }
         ]
           .map((item, index) => (
-            <NavLink to={item.name == 'home' ? '/' : item.name} key={index} className={`${item.name === 'home' && location.pathname === '/' ? 'dark:bg-darkgradient bg-lightgradient' : ''} ${item.name === (location.pathname).replace(/%20/g, ' ').slice(1) ? 'dark:bg-darkgradient bg-lightgradient' : ''}  md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]  font-bold  transition-all duration-[300ms]  capitalize px-5 text-nowrap py-[10px]`} onClick={()=>{ham()}}>
+            <NavLink to={item.name == 'home' ? '/' : item.name} key={index} className={`${item.name === 'home' && location.pathname === '/' ? 'dark:bg-darkgradient bg-lightgradient' : ''} ${item.name === (location.pathname).replace(/%20/g, ' ').slice(1) ? 'dark:bg-darkgradient bg-lightgradient' : ''}  md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]  font-bold  transition-all duration-[200ms]  capitalize px-5 text-nowrap py-[10px]`} onClick={() => { ham() }}>
               {item?.svg} <span>{item.name}</span>
             </NavLink>
           ))}
@@ -121,9 +121,17 @@ function Navbar(props) {
           <div className={`toggler w-[70px] border border-cyan-50 p-[3px] relative h-[35px] rounded-full overflow-hidden cursor-pointer`}>
 
             {/* moonbg  */}
-            <img src={togglebg} className='absolute w-full h-full object-cover inset-0 ' alt="img" />
+            <img src={togglebg} className='absolute w-full h-full object-cover inset-0' alt="img" />
 
-            <img src={moon} className='moon transition-all duration-1000 left-[6px] left-[100px] w-[26px] h-[26px] absolute top-[50%] translate-y-[-50%] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20]' alt="img" />
+            {/* <img src={moon} className='moon transition-all duration-1000 left-[6px] left-[100px] w-[26px] h-[26px] absolute top-[50%] translate-y-[-50%] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20]' alt="img" /> */}
+            <div className='moon  top-[50%] translate-y-[-50%] transition-all duration-1000 left-[4px] left-[100px] relative w-[26px] bg-[#E7E7E7] h-[26px] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20] overflow-hidden'>
+              <div className="absolute top-0 right-0 w-[40%] h-[40%] rounded-[50%] bg-[#CDCDCD]"></div>
+              <div className="absolute top-1 right-3 w-[30%] h-[30%] rounded-[50%] bg-[#CDCDCD]"></div>
+              <div className="absolute top-1/2 right-3 w-[10%] h-[10%] rounded-[50%] bg-[#CDCDCD]"></div>
+              <div className="absolute top-1/2 right-1 w-[15%] h-[15%] rounded-[50%] bg-[#CDCDCD]"></div>
+              <div className="absolute top-[70%] right-0 w-[25%] h-[25%] rounded-[50%] bg-[#CDCDCD]"></div>
+              <div className="absolute top-[75%] right-2 w-[10%] h-[10%] rounded-[50%] bg-[#CDCDCD]"></div>
+            </div>
 
             {/* sun bg  */}
             <img src={sunbg} className='sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 opacity-0 ' alt="img" />
@@ -136,7 +144,7 @@ function Navbar(props) {
 
       {/*======== hamburger for medium size screens   ======*/}
       {/* <span onClick={ham} className='ham md:hidden text-lg p-3'>&#9776;</span> */}
-      <span onClick={()=>{ham()}} className='ham md:hidden text-lg p-3'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <span onClick={() => { ham() }} className='ham md:hidden text-lg p-3'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M20 12L10 12" stroke={`${value === 'dark' ? '#ffffff' : '#000000'}`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M20 5L4 5" stroke={`${value === 'dark' ? '#ffffff' : '#000000'}`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M20 19L4 19" stroke={`${value === 'dark' ? '#ffffff' : '#000000'}`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
