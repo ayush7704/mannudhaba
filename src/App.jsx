@@ -4,6 +4,7 @@ import Home from './components/home/home'
 import Menus from './components/menus/menus.jsx'
 import Gallery from './components/gallery/gallery.jsx'
 import About from './components/aboutus/aboutUs.jsx'
+// import Form from './components/form.jsx'
 import Footer from './components/footer/footer';
 import { counterContext } from './components/context/context.js';
 import ScrollToTop from './components/scrollToTop/scrollToTop.jsx'
@@ -23,6 +24,7 @@ function App() {
           <Route path='/menu' element={<Menus />} />
           <Route path='/about Us' element={<About />} />
           <Route path='/gallery' element={<Gallery />} />
+          {/* <Route path='/form' element={<Form />} /> */}
         </Routes>
         <Footer />
       </div>

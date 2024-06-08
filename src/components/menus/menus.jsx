@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useContext, useMemo, memo } from 'react'
+import { matarPaneer ,saahiPaneer} from '../varieties imgs/varietyImgs'
 import { counterContext } from '../context/context'
 import foodimg from '../home/hero-food.webp'
 import { Link } from 'react-router-dom'
@@ -33,8 +34,8 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
           {
             menuCard.filter((m) => { return m.variety === cardSpecial && m.price <= menuFilterPrice }).map((menu, menuindex) => (
               <div key={menuindex} className="homecard mx-auto hover:scale-[1.05] transition-all duration-300  overflow-hidden grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
-                <div className="w-[80%] mx-auto relative">
-                  <img src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
+                <div className="h-[180px] mx-auto relative">
+                  <img src={menu.img} className='homecardimg h-full object-cover w-full' alt="food img" />
                 </div>
 
                 <div className="card-body p-[15px]">
@@ -133,7 +134,7 @@ function menus(props) {
       // panner only 
       { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
       { heading: 'kadai paneer', variety: 'paneer special', img: foodimg, price: 190 },
-      { heading: 'matar paneer', variety: 'paneer special', img: foodimg, price: 160 },
+      { heading: 'matar paneer', variety: 'paneer special', img: matarPaneer, price: 160 },
       { heading: 'chota paneer', variety: 'paneer special', img: foodimg, price: 160 },
       { heading: 'paneer punjabi', variety: 'paneer special', img: foodimg, price: 200 },
       { heading: 'paneer masala', variety: 'paneer special', img: foodimg, price: 170 },
@@ -144,6 +145,7 @@ function menus(props) {
       { heading: 'paneer tikka masala', variety: 'paneer special', img: foodimg, price: 250 },
       { heading: 'paalak paneer', variety: 'paneer special', img: foodimg, price: 160 },
       { heading: 'handa paneer', variety: 'paneer special', img: foodimg, price: 170 },
+      { heading: 'saahi paneer', variety: "paneer special", img: saahiPaneer, price: 170 },
 
       { heading: 'kheer', variety: "other's", img: foodimg, price: 70 },
       { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180 },
@@ -162,7 +164,6 @@ function menus(props) {
       { heading: 'aalu gobhi', variety: "other's", img: foodimg, price: 90 },
       { heading: 'aalu gobhi tamatar', variety: "other's", img: foodimg, price: 90 },
       { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 80 },
-      { heading: 'saahi paneer', variety: "other's", img: foodimg, price: 170 },
       { heading: 'malai kofta', variety: "other's", img: foodimg, price: 200 },
       { heading: 'sev masala', variety: "other's", img: foodimg, price: 90 },
       { heading: 'aalu potato', variety: "other's", img: foodimg, price: 60 },
@@ -376,8 +377,8 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
               <div ref={searchResultCardContainer} className='flex snap-x p-[20px] flex-nowrap overflow-auto gap-[10px]'>
                 {searchvalue.length !== 0 && searchvalue.map((menu, menuindex) => (
                   <div key={menuindex} className="homecard mx-auto overflow-hidden hover:scale-[1.05] transition-all duration-300  grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
-                    <div className="w-[80%] mx-auto relative">
-                      <img src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
+                    <div className="h-[180px] mx-auto relative">
+                      <img src={menu.img} className='homecardimg h-full object-cover w-full object-cover w-full' alt="food img" />
                     </div>
 
                     <div className="card-body p-[15px]">
@@ -426,8 +427,8 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
             {
               finalfilter.map((menu, menuindex) => (
                 <div key={menuindex} className="homecard mx-auto hover:scale-[1.05] transition-all duration-300 overflow-hidden grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
-                  <div className="w-[80%] mx-auto relative">
-                    <img src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
+                  <div className="h-[180px] mx-auto relative">
+                    <img src={menu.img} className='homecardimg h-full object-cover w-full' alt="food img" />
                   </div>
                   <div className="card-body p-[15px]">
                     <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
