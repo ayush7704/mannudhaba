@@ -2,7 +2,7 @@ import './home.css'
 import Bg from '../bg.jsx'
 import imgg from '../table1.jpg'
 import foodimg from './hero-food.webp'
-import React, { useEffect, useState, useRef, useContext ,memo} from 'react'
+import React, { useEffect, useState, useRef, useContext, memo } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
@@ -19,7 +19,7 @@ export function Menulink(props) {
   }
 
   return (
-    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className='svgbtn outLine linear-btn font-semibold  py-[10px] text-center rounded-[6px] text-white px-[19px] w-1/2 flex gap-2 justify-center items-center'>
+    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className='svgbtn outLine linear-btn font-semibold  py-[10px] text-center rounded-[6px] text-white px-[19px] min-w-[50%] text-nowrap flex gap-2 justify-center items-center'>
       <span>{props.value}</span>
       <svg className='shrink-0' xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none">
         <path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -29,7 +29,7 @@ export function Menulink(props) {
 }
 
 // reasons 
- const ReasonAndtiming = memo(()=> {
+const ReasonAndtiming = memo(() => {
   console.log('ReasonAndtiming rendered')
   return (
     <section className='p-[20px]'>
@@ -69,7 +69,7 @@ export function Menulink(props) {
     </section>
   )
 })
-export {ReasonAndtiming}
+export { ReasonAndtiming }
 
 function LoopSlide() {
   return (
@@ -107,17 +107,18 @@ function home(props) {
   let homecard = useRef(null)
   let homecardsImg = useRef(null)
   let menubtn = useRef(null)
-  const {value,setvalue, Fixed} = useContext(counterContext)
-  let homecardObj = [
-    { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
-    { heading: 'Daal baafle', variety: 'Daal special', img: foodimg, price: 150 },
-    { heading: 'veg kofta', variety: 'paneer special', img: imgg, price: 180 },
-    { heading: 'Daal baati', variety: 'Daal special', img: foodimg, price: 120 },
-    { heading: 'paneer chilli', variety: 'chinees special', img: foodimg, price: 200 },
-    { heading: 'paneer nudals', variety: 'chinees special', img: foodimg, price: 130 },
-    { heading: 'paneer paratha', variety: 'paratha special', img: foodimg, price: 80 },
-  ]
-
+  const { value, menucard, setmenucard } = useContext(counterContext)
+  // fitering these arrays values start 
+  let homecardObj = [];
+  let arr = ['paneer pasanda', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'paneer paratha']
+  for (let i = 0; i < menucard.length; i++) {
+    for (let ii = 0; ii < arr.length; ii++) {
+      if (menucard[i].heading === arr[ii]) {
+        homecardObj[ii] = menucard[i]
+      }
+    }
+  }
+  // fitering these arrays values start 
   // strokeWidth
 
   useGSAP(() => {
@@ -175,28 +176,31 @@ function home(props) {
       })
     })
 
-    gsap.from(menubtn.current,{
-      y:'100%',
-      scrollTrigger:{
-        trigger:menubtn.current,
-        scrub:1,
+    gsap.from(menubtn.current, {
+      y: '100%',
+      scrollTrigger: {
+        trigger: menubtn.current,
+        scrub: 1,
         // markers:true,
-        start:'bottom bottom',
-        end:'center 80%',
+        start: 'bottom bottom',
+        end: 'center 80%',
       }
     })
-    gsap.from(menubtn.current.nextElementSibling,{
-      y:'100%',
-      scrollTrigger:{
-        trigger:menubtn.current.nextElementSibling,
-        scrub:1,
+    gsap.from(menubtn.current.nextElementSibling, {
+      y: '100%',
+      scrollTrigger: {
+        trigger: menubtn.current.nextElementSibling,
+        scrub: 1,
         // markers:true,
-        start:'bottom bottom',
-        end:'center 80%',
+        start: 'bottom bottom',
+        end: 'center 80%',
       }
     })
   })
 
+  useEffect(() => {
+    document.title = 'Mannu Dhaba'
+  }, [])
 
   let timeout1;
   let timeout2;
@@ -222,6 +226,16 @@ function home(props) {
         duration: 1.5
       })
     }, 2000);
+  }
+
+  const updateCart = (variety, heading) => {
+    const updatedCards = menucard.map(card => {
+      if (card.heading === heading && card.variety === variety) {
+        return { ...card, inCart: !card.inCart };
+      }
+      return card;
+    });
+    setmenucard(updatedCards)
   }
   return (
     <section>
@@ -255,7 +269,7 @@ function home(props) {
                 <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" stroke="currentColor" strokeWidth="1.5" />
               </svg>
             </a>
-            <Menulink value='Menu' reff={menubtn}/>
+            <Menulink value='Menu' reff={menubtn} />
             <Link to="/about Us" className='svgbtn outLine font-semibold  py-[10px] text-center rounded-[6px] dark:text-white px-[19px] md:w-1/2 flex gap-2 justify-center items-center capitalize border shadow-md transition-all  hover:shadow-xl' style={{ lineHeight: '100%' }}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={value === 'dark' ? 'white' : 'black'} fill="none">
               <path d="M21.1677 7C22.2774 9.54466 22.2774 12.4569 21.1677 15.0015M2.83226 15.0015C1.72258 12.4569 1.72258 9.54466 2.83226 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M13.3472 19.9619C12.9858 20.3071 12.5028 20.5 12.0002 20.5C11.4975 20.5 11.0145 20.3071 10.6531 19.9619C7.34389 16.7821 2.90913 13.2299 5.07183 8.07272C6.24118 5.28428 9.04815 3.5 12.0002 3.5C14.9522 3.5 17.7591 5.28428 18.9285 8.07272C21.0885 13.2234 16.6646 16.793 13.3472 19.9619Z" stroke="currentColor" strokeWidth="1.5" />
@@ -280,15 +294,22 @@ function home(props) {
           {/*==== food cards  ====*/}
           <div className="flex p-[20px] flex-wrap justify-center gap-y-[50px] gap-5">
             {
-              homecardObj.map((elm, index) => (
-                <div key={index} ref={homecard} className="homecard pt-4 grid overflow-hidden w-[300px] min-h-[300px] bg-[#00000012] border border-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] rounded-lg ">
+              homecardObj.map((menu, index) => (
+                <div key={index} ref={homecard} className="homecard relative pt-4 grid overflow-hidden w-[300px] min-h-[300px] bg-[#00000012] border border-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] rounded-lg ">
+                  <div className="absolute cursor-pointer right-3 top-5">
+                    <span>
+                      <svg fill="none" onClick={(e) => { updateCart(menu.variety, menu.heading) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={useContext(counterContext).value === 'dark' ? 'white' : 'black'}>
+                        <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill={menu.inCart ? 'red' : 'none'} />
+                      </svg>
+                    </span>
+                  </div>
                   <div className="w-[60%] mx-auto relative">
-                    <img ref={homecardsImg} src={elm.img} className='homecardimg rounded-full w-full' alt="food img" />
+                    <img ref={homecardsImg} src={menu.img} className='homecardimg rounded-full w-full' alt="food img" />
                   </div>
 
                   <div className="card-body p-[15px]">
-                    <h3 className="dark:text-white text-slate-950  font-bold capitalize">{elm.heading}</h3>
-                    <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {elm.price}</h4>
+                    <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                    <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
                   </div>
                   <div className="flex ">
                     <Link to={'/menu'} className='svgbtn flex items-center justify-center gap-2 text-sm flex-1  outline-[gray] rounded-sm text-center py-[8px] bg-gradient-to-r dark:from-[#6e4882] from-[#d69ec6] to-[transparent]'><span>Full menu</span>
@@ -326,7 +347,7 @@ function home(props) {
               <div className="flex flex-nowrap gap-[30px] pl-[30px] will-change-scroll">
                 {
                   ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-                    <p key={el+ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+                    <p key={el + ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
                   ))
                 }
               </div>

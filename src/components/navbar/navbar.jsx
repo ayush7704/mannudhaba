@@ -14,7 +14,7 @@ function Navbar(props) {
   let links = useRef(null)
   let location = useLocation()
   let linkswrapper = useRef(null)
-  let { value, setvalue } = useContext(counterContext)
+  let { value, setvalue ,addToCartItemValue} = useContext(counterContext)
   let [navHeight, setnavHeight] = useState(75)
 
 
@@ -61,7 +61,7 @@ function Navbar(props) {
 
       {/* x scrollbar comes between 768px 815px  i can solve this it but i will consume time */}
       {/* dark:bg-[#1e1e1e]  bg-[#ebedec] */}
-      <div ref={links} className={`links bg transition-all duration-[300ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] md:relative md:overflow-auto overflow-hidden md:flex md:items-center md:w-auto md:top-[0px] md:border-none dark:border-[#ffffff30] border-[#00000030] border-t-[1px] grid absolute  w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[20px] md:pb-[0px] backdrop-blur-[50px] md:backdrop-blur-[0px]  bg-[#f5fffa] dark:bg-[#1e1e1e] md:bg-transparent dark:md:bg-transparent md:rounded-lg`}>
+      <div ref={links} className={`links bg transition-all duration-[300ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] md:relative md:overflow-auto overflow-hidden md:flex md:items-center md:w-auto md:top-[0px] md:border-none dark:border-[#ffffff30] border-[#00000030] border-t-[1px] grid absolute  w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[20px] md:pb-[0px] backdrop-blur-[50px] md:backdrop-blur-[0px]  bg-[#f5fffa] dark:bg-[rgb(13,13,13)] md:bg-transparent dark:md:bg-transparent md:rounded-lg`}>
 
         {/*======== close btn x   ======*/}
         <div className='md:hidden py-[10px] px-5 text-right cursor-pointer' onClick={() => { ham() }}>
@@ -100,11 +100,13 @@ function Navbar(props) {
             </svg>)
           },
           // {
-          //   name: 'form', svg: (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color={value === 'dark' ? 'white' : 'black'} fill="none">
-          //     <path d="M6 17.9745C6.1287 19.2829 6.41956 20.1636 7.07691 20.8209C8.25596 22 10.1536 22 13.9489 22C17.7442 22 19.6419 22 20.8209 20.8209C22 19.6419 22 17.7442 22 13.9489C22 10.1536 22 8.25596 20.8209 7.07691C20.1636 6.41956 19.2829 6.1287 17.9745 6" stroke="currentColor" strokeWidth="1.5" />
-          //     <path d="M2 10C2 6.22876 2 4.34315 3.17157 3.17157C4.34315 2 6.22876 2 10 2C13.7712 2 15.6569 2 16.8284 3.17157C18 4.34315 18 6.22876 18 10C18 13.7712 18 15.6569 16.8284 16.8284C15.6569 18 13.7712 18 10 18C6.22876 18 4.34315 18 3.17157 16.8284C2 15.6569 2 13.7712 2 10Z" stroke="currentColor" strokeWidth="1.5" />
-          //     <path d="M2 11.1185C2.61902 11.0398 3.24484 11.001 3.87171 11.0023C6.52365 10.9533 9.11064 11.6763 11.1711 13.0424C13.082 14.3094 14.4247 16.053 15 18" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-          //     <path d="M12.9998 7H13.0088" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          //   name: 'cart', svg: (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color={value === 'dark' ? 'white' : 'black'} fill="none">
+          //     <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          //     <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          //     <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+          //     <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+          //     <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          //     <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           //   </svg>)
           // },
 
@@ -124,8 +126,9 @@ function Navbar(props) {
             </NavLink>
           ))}
 
-        {/* toggler  */}
-        <div className='lg:ml-[4rem] ml-[0rem] px-5 py-[10px] cursor-pointer' onClick={toggleBtn}>
+
+        {/* toggler  lg:ml-[4rem]*/}
+        <div className=' ml-[0rem] px-5 py-[10px] cursor-pointer' onClick={toggleBtn}>
           <div className={`toggler w-[70px] border border-cyan-50 p-[3px] relative h-[35px] rounded-full overflow-hidden cursor-pointer`}>
 
             {/* moonbg  */}
@@ -149,6 +152,26 @@ function Navbar(props) {
         </div>
 
       </div>
+      {/* add to cart start  */}
+      {
+        [
+          {
+            name: 'cart', svg: (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color={value === 'dark' ? 'white' : 'black'} fill="none">
+              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>)
+          }
+        ].map((item, index) => (<NavLink to={'cart'} key={index} className={`${item.name === (location.pathname).replace(/%20/g, ' ').slice(1) ? 'dark:bg-darkgradient bg-lightgradient' : ''} md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]  font-bold  transition-all duration-[200ms]  capitalize px-5 text-nowrap py-[10px]`}>
+          {<span className='relative'>{item?.svg} <span className='absolute text-white dark:outline-white outline-black top-[-4px] right-0 w-[14px] h-[14px] rounded-[50%]
+          bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] outline outline-1 flex items-center justify-center text-[10px]'>{addToCartItemValue.length}</span>
+          </span>}
+           <span>{item.name}</span>
+        </NavLink>))
+      }
+      {/* add to cart end */}
 
       {/*======== hamburger for medium size screens   ======*/}
       {/* <span onClick={ham} className='ham md:hidden text-lg p-3'>&#9776;</span> */}
