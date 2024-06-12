@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext, useMemo, memo } from 'react'
-import { matarPaneer ,saahiPaneer} from '../varieties imgs/varietyImgs'
+import { matarPaneer, saahiPaneer } from '../varieties imgs/varietyImgs'
 import { counterContext } from '../context/context'
 import foodimg from '../home/hero-food.webp'
 import { Link } from 'react-router-dom'
@@ -9,8 +9,23 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 
-const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardSpecial, menuName, menuCard, menuRef }) => {
+const MenusMaker = ({ filterRef, menuFilterPrice, setMenuFilterPrice, cardSpecial, menuName, menuRef }) => {
   // console.log(menuFilterPrice)
+  let { menucard, setmenucard } = useContext(counterContext)
+  // console.log(menucard)
+  // const handleClick = (e) => {
+  //   const pathElement = e.currentTarget.querySelector('path');
+  //   pathElement.setAttribute('fill', pathElement.getAttribute('fill') === 'red' ? 'none' : 'red');
+  // };
+  const updateCart = (variety, heading) => {
+    const updatedCards = menucard.map(card => {
+      if (card.heading === heading && card.variety === variety) {
+        return { ...card, inCart: !card.inCart };
+      }
+      return card;
+    });
+    setmenucard(updatedCards)
+  }
   return (
     <>
       <div className='flex justify-between items-center px-4 py-5'>
@@ -32,9 +47,17 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
         <div ref={menuRef} className="flex snap-x relative p-[20px] flex-nowrap overflow-auto gap-[10px]">
           {/* {console.log(menuRef.current)} */}
           {
-            menuCard.filter((m) => { return m.variety === cardSpecial && m.price <= menuFilterPrice }).map((menu, menuindex) => (
+            menucard.filter((m) => { return m.variety === cardSpecial && m.price <= menuFilterPrice }).map((menu, menuindex) => (
               <div key={menuindex} className="homecard mx-auto hover:scale-[1.05] transition-all duration-300  overflow-hidden grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
+
                 <div className="h-[180px] mx-auto relative">
+                  <div className="absolute cursor-pointer right-2 top-5">
+                    <span>
+                      <svg fill="none" onClick={(e) => { updateCart(menu.variety, menu.heading) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={useContext(counterContext).value === 'dark' ? 'white' : 'black'}>
+                        <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill={menu.inCart ? 'red' : 'none'} />
+                      </svg>
+                    </span>
+                  </div>
                   <img src={menu.img} className='homecardimg h-full object-cover w-full' alt="food img" />
                 </div>
 
@@ -55,7 +78,7 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
             ))
           }
           {
-            menuCard.filter((m) => { return m.variety === cardSpecial && m.price <= menuFilterPrice }).length === 0 ?
+            menucard.filter((m) => { return m.variety === cardSpecial && m.price <= menuFilterPrice }).length === 0 ?
               <div className='text-red-500 text-center block mx-auto'>
                 Sorry there is nothing in this category
               </div> : ''
@@ -64,7 +87,7 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
       </div>
     </>
   )
-})
+}
 
 const MenusNavigation = ({ menusRef }) => {
   let [hidden, sethidden] = useState(false)
@@ -123,116 +146,119 @@ function menus(props) {
   const [formsubmitted, setformsubmitted] = useState(null)
   // const [noSearchResult, setnoSearchResult] = useState(false)
 
-  const { value, setvalue, Fixed } = useContext(counterContext).value
+  const { menucard, setmenucard } = useContext(counterContext)
+
+  useEffect(() => {
+    console.log('menu render')
+  })
+
+  // const menucard = useMemo(() => {
+  //   console.log('memo')
+  //   return [
+
+  //     // panner only 
+  //     { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
+  //     { heading: 'kadai paneer', variety: 'paneer special', img: foodimg, price: 190 },
+  //     { heading: 'matar paneer', variety: 'paneer special', img: matarPaneer, price: 160 },
+  //     { heading: 'chota paneer', variety: 'paneer special', img: foodimg, price: 160 },
+  //     { heading: 'paneer punjabi', variety: 'paneer special', img: foodimg, price: 200 },
+  //     { heading: 'paneer masala', variety: 'paneer special', img: foodimg, price: 170 },
+  //     { heading: 'butter paneer masala', variety: 'paneer special', img: foodimg, price: 180 },
+  //     { heading: 'paneer do pyaja', variety: 'paneer special', img: foodimg, price: 200 },
+  //     { heading: 'paneer kolhapuri', variety: 'paneer special', img: foodimg, price: 180 },
+  //     { heading: 'kaaju paneer', variety: 'paneer special', img: foodimg, price: 220 },
+  //     { heading: 'paneer tikka masala', variety: 'paneer special', img: foodimg, price: 250 },
+  //     { heading: 'paalak paneer', variety: 'paneer special', img: foodimg, price: 160 },
+  //     { heading: 'handa paneer', variety: 'paneer special', img: foodimg, price: 170 },
+  //     { heading: 'saahi paneer', variety: "paneer special", img: saahiPaneer, price: 170 },
+
+  //     { heading: 'kheer', variety: "other's", img: foodimg, price: 70 },
+  //     { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180 },
+  //     { heading: 'dam aalu', variety: "other's", img: foodimg, price: 150 },
+  //     { heading: 'raap tamatar', variety: "other's", img: foodimg, price: 170 },
+  //     { heading: 'raap shimla', variety: "other's", img: foodimg, price: 170 },
+  //     { heading: 'jees aalu', variety: "other's", img: foodimg, price: 80 },
+  //     { heading: 'malai kofta', variety: "other's", img: foodimg, price: 180 },
+  //     { heading: 'kaaju kadi', variety: "other's", img: foodimg, price: 220 },
+  //     { heading: 'mix vej', variety: "other's", img: foodimg, price: 150 },
+  //     { heading: 'sev tamata', variety: "other's", img: foodimg, price: 100 },
+  //     { heading: 'sev bhaaji', variety: "other's", img: foodimg, price: 90 },
+  //     { heading: 'bhindi masala', variety: "other's", img: foodimg, price: 90 },
+  //     { heading: 'vegan bhartaa', variety: "other's", img: foodimg, price: 100 },
+  //     { heading: 'aalu matar', variety: "other's", img: foodimg, price: 80 },
+  //     { heading: 'aalu gobhi', variety: "other's", img: foodimg, price: 90 },
+  //     { heading: 'aalu gobhi tamatar', variety: "other's", img: foodimg, price: 90 },
+  //     { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 80 },
+  //     { heading: 'malai kofta', variety: "other's", img: foodimg, price: 200 },
+  //     { heading: 'sev masala', variety: "other's", img: foodimg, price: 90 },
+  //     { heading: 'aalu potato', variety: "other's", img: foodimg, price: 60 },
 
 
+  //     // daal 
+  //     { heading: 'Daal snacks', variety: 'daal special', img: foodimg, price: 120 },
+  //     { heading: 'Daal fry', variety: 'daal special', img: foodimg, price: 90 },
+  //     { heading: 'Daal baafle', variety: 'daal special', img: foodimg, price: 150 },
+  //     { heading: 'Daal baati', variety: 'daal special', img: foodimg, price: 120 },
+  //     { heading: 'Daal tadka', variety: 'daal special', img: foodimg, price: 100 },
 
-  const menucard = useMemo(() => {
-    console.log('memo')
-    return [
+  //     // chinese 
+  //     { heading: 'paneer chilli', variety: 'chinese special', img: foodimg, price: 200 },
+  //     { heading: 'paneer nudals', variety: 'chinese special', img: foodimg, price: 130 },
+  //     { heading: 'veg nudals', variety: 'chinese special', img: foodimg, price: 100 },
+  //     { heading: 'hakka nudals', variety: 'chinese special', img: foodimg, price: 110 },
+  //     { heading: 'veg hok kaada nudals', variety: 'chinese special', img: foodimg, price: 110 },
+  //     { heading: 'veg mekroni', variety: 'chinese special', img: foodimg, price: 90 },
+  //     { heading: 'veg paasta', variety: 'chinese special', img: foodimg, price: 80 },
+  //     { heading: 'veg tomato pasta', variety: 'chinese special', img: foodimg, price: 80 },
+  //     { heading: 'veg manchuriyan', variety: 'chinese special', img: foodimg, price: 120 },
+  //     { heading: 'veg kothe', variety: 'chinese special', img: foodimg, price: 120 },
+  //     { heading: 'momos', variety: 'chinese special', img: foodimg, price: 70 },
+  //     { heading: 'chole bhature', variety: 'chinese special', img: foodimg, price: 80 },
 
-      // panner only 
-      { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240 },
-      { heading: 'kadai paneer', variety: 'paneer special', img: foodimg, price: 190 },
-      { heading: 'matar paneer', variety: 'paneer special', img: matarPaneer, price: 160 },
-      { heading: 'chota paneer', variety: 'paneer special', img: foodimg, price: 160 },
-      { heading: 'paneer punjabi', variety: 'paneer special', img: foodimg, price: 200 },
-      { heading: 'paneer masala', variety: 'paneer special', img: foodimg, price: 170 },
-      { heading: 'butter paneer masala', variety: 'paneer special', img: foodimg, price: 180 },
-      { heading: 'paneer do pyaja', variety: 'paneer special', img: foodimg, price: 200 },
-      { heading: 'paneer kolhapuri', variety: 'paneer special', img: foodimg, price: 180 },
-      { heading: 'kaaju paneer', variety: 'paneer special', img: foodimg, price: 220 },
-      { heading: 'paneer tikka masala', variety: 'paneer special', img: foodimg, price: 250 },
-      { heading: 'paalak paneer', variety: 'paneer special', img: foodimg, price: 160 },
-      { heading: 'handa paneer', variety: 'paneer special', img: foodimg, price: 170 },
-      { heading: 'saahi paneer', variety: "paneer special", img: saahiPaneer, price: 170 },
+  //     // paratha 
+  //     { heading: 'paneer paratha', variety: 'paratha special', img: foodimg, price: 80 },
+  //     { heading: 'aalu paratha', variety: 'paratha special', img: foodimg, price: 50 },
+  //     { heading: 'taba paratha', variety: 'paratha special', img: foodimg, price: 30 },
+  //     { heading: 'gobhi paratha', variety: 'paratha special', img: foodimg, price: 50 },
+  //     { heading: 'pyaaj paratha', variety: 'paratha special', img: foodimg, price: 50 },
 
-      { heading: 'kheer', variety: "other's", img: foodimg, price: 70 },
-      { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180 },
-      { heading: 'dam aalu', variety: "other's", img: foodimg, price: 150 },
-      { heading: 'raap tamatar', variety: "other's", img: foodimg, price: 170 },
-      { heading: 'raap shimla', variety: "other's", img: foodimg, price: 170 },
-      { heading: 'jees aalu', variety: "other's", img: foodimg, price: 80 },
-      { heading: 'malai kofta', variety: "other's", img: foodimg, price: 180 },
-      { heading: 'kaaju kadi', variety: "other's", img: foodimg, price: 220 },
-      { heading: 'mix vej', variety: "other's", img: foodimg, price: 150 },
-      { heading: 'sev tamata', variety: "other's", img: foodimg, price: 100 },
-      { heading: 'sev bhaaji', variety: "other's", img: foodimg, price: 90 },
-      { heading: 'bhindi masala', variety: "other's", img: foodimg, price: 90 },
-      { heading: 'vegan bhartaa', variety: "other's", img: foodimg, price: 100 },
-      { heading: 'aalu matar', variety: "other's", img: foodimg, price: 80 },
-      { heading: 'aalu gobhi', variety: "other's", img: foodimg, price: 90 },
-      { heading: 'aalu gobhi tamatar', variety: "other's", img: foodimg, price: 90 },
-      { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 80 },
-      { heading: 'malai kofta', variety: "other's", img: foodimg, price: 200 },
-      { heading: 'sev masala', variety: "other's", img: foodimg, price: 90 },
-      { heading: 'aalu potato', variety: "other's", img: foodimg, price: 60 },
+  //     // roti 
+  //     { heading: 'tandoor roti', variety: 'roti special', img: foodimg, price: 10 },
+  //     { heading: 'tandoor butter roti', variety: 'roti special', img: foodimg, price: 15 },
+  //     { heading: 'missi roti', variety: 'roti special', img: foodimg, price: 12 },
+  //     { heading: 'taba roti', variety: 'roti special', img: foodimg, price: 30 },
+  //     { heading: 'butter naan', variety: 'roti special', img: foodimg, price: 40 },
+  //     { heading: 'garlik naan', variety: 'roti special', img: foodimg, price: 50 },
 
+  //     // rice 
+  //     { heading: 'plane rice', variety: 'rice special', img: foodimg, price: 70 },
+  //     { heading: 'jeera rice', variety: 'rice special', img: foodimg, price: 90 },
+  //     { heading: 'masala rice', variety: 'rice special', img: foodimg, price: 100 },
+  //     { heading: 'veg biryani', variety: 'rice special', img: foodimg, price: 140 },
+  //     { heading: 'matar pulab', variety: 'rice special', img: foodimg, price: 120 },
+  //     { heading: 'veg pulab', variety: 'rice special', img: foodimg, price: 140 },
+  //     { heading: 'manchuriyan rice', variety: 'rice special', img: foodimg, price: 120 },
+  //     { heading: 'veg fry rice', variety: 'rice special', img: foodimg, price: 140 },
 
-      // daal 
-      { heading: 'Daal snacks', variety: 'daal special', img: foodimg, price: 120 },
-      { heading: 'Daal fry', variety: 'daal special', img: foodimg, price: 90 },
-      { heading: 'Daal baafle', variety: 'daal special', img: foodimg, price: 150 },
-      { heading: 'Daal baati', variety: 'daal special', img: foodimg, price: 120 },
-      { heading: 'Daal tadka', variety: 'daal special', img: foodimg, price: 100 },
+  //     // rayta 
+  //     { heading: 'veg rayta', variety: 'rayta special', img: foodimg, price: 70 },
+  //     { heading: 'boondi rayta', variety: 'rayta special', img: foodimg, price: 80 },
+  //     { heading: 'lassi', variety: 'rayta special', img: foodimg, price: 40 },
+  //     { heading: 'dahi', variety: 'rayta special', img: foodimg, price: 60 },
+  //     { heading: 'chaach', variety: 'rayta special', img: foodimg, price: 30 },
 
-      // chinese 
-      { heading: 'paneer chilli', variety: 'chinese special', img: foodimg, price: 200 },
-      { heading: 'paneer nudals', variety: 'chinese special', img: foodimg, price: 130 },
-      { heading: 'veg nudals', variety: 'chinese special', img: foodimg, price: 100 },
-      { heading: 'hakka nudals', variety: 'chinese special', img: foodimg, price: 110 },
-      { heading: 'veg hok kaada nudals', variety: 'chinese special', img: foodimg, price: 110 },
-      { heading: 'veg mekroni', variety: 'chinese special', img: foodimg, price: 90 },
-      { heading: 'veg paasta', variety: 'chinese special', img: foodimg, price: 80 },
-      { heading: 'veg tomato pasta', variety: 'chinese special', img: foodimg, price: 80 },
-      { heading: 'veg manchuriyan', variety: 'chinese special', img: foodimg, price: 120 },
-      { heading: 'veg kothe', variety: 'chinese special', img: foodimg, price: 120 },
-      { heading: 'momos', variety: 'chinese special', img: foodimg, price: 70 },
-      { heading: 'chole bhature', variety: 'chinese special', img: foodimg, price: 80 },
-
-      // paratha 
-      { heading: 'paneer paratha', variety: 'paratha special', img: foodimg, price: 80 },
-      { heading: 'aalu paratha', variety: 'paratha special', img: foodimg, price: 50 },
-      { heading: 'taba paratha', variety: 'paratha special', img: foodimg, price: 30 },
-      { heading: 'gobhi paratha', variety: 'paratha special', img: foodimg, price: 50 },
-      { heading: 'pyaaj paratha', variety: 'paratha special', img: foodimg, price: 50 },
-
-      // roti 
-      { heading: 'tandoor roti', variety: 'roti special', img: foodimg, price: 10 },
-      { heading: 'tandoor butter roti', variety: 'roti special', img: foodimg, price: 15 },
-      { heading: 'missi roti', variety: 'roti special', img: foodimg, price: 12 },
-      { heading: 'taba roti', variety: 'roti special', img: foodimg, price: 30 },
-      { heading: 'butter naan', variety: 'roti special', img: foodimg, price: 40 },
-      { heading: 'garlik naan', variety: 'roti special', img: foodimg, price: 50 },
-
-      // rice 
-      { heading: 'plane rice', variety: 'rice special', img: foodimg, price: 70 },
-      { heading: 'jeera rice', variety: 'rice special', img: foodimg, price: 90 },
-      { heading: 'masala rice', variety: 'rice special', img: foodimg, price: 100 },
-      { heading: 'veg biryani', variety: 'rice special', img: foodimg, price: 140 },
-      { heading: 'matar pulab', variety: 'rice special', img: foodimg, price: 120 },
-      { heading: 'veg pulab', variety: 'rice special', img: foodimg, price: 140 },
-      { heading: 'manchuriyan rice', variety: 'rice special', img: foodimg, price: 120 },
-      { heading: 'veg fry rice', variety: 'rice special', img: foodimg, price: 140 },
-
-      // rayta 
-      { heading: 'veg rayta', variety: 'rayta special', img: foodimg, price: 70 },
-      { heading: 'boondi rayta', variety: 'rayta special', img: foodimg, price: 80 },
-      { heading: 'lassi', variety: 'rayta special', img: foodimg, price: 40 },
-      { heading: 'dahi', variety: 'rayta special', img: foodimg, price: 60 },
-      { heading: 'chaach', variety: 'rayta special', img: foodimg, price: 30 },
-
-      // papad 
-      { heading: 'papad bhurji', variety: 'papad special', img: foodimg, price: 60 },
-      { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30 },
-      { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15 },
-      { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20 },
-    ]
-  }, [])
+  //     // papad 
+  //     { heading: 'papad bhurji', variety: 'papad special', img: foodimg, price: 60 },
+  //     { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30 },
+  //     { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15 },
+  //     { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20 },
+  //   ]
+  // }, [])
 
   let [finalfilter, setfinalfilter] = useState(menucard);
 
   useEffect(() => {
+    console.log(selection.current.value)
     setselect(selection.current.value)
     filter1 = menucard.filter((n) => {
       if (select === 'all') {
@@ -243,11 +269,12 @@ function menus(props) {
       }
     })
     setfinalfilter(filter1)
-  }, [select])
+  }, [select, menucard])
 
   useEffect(() => {
-    // console.log('hhh' + searchvalue.length)
-  }, [searchvalue])
+    console.log('hakkkk')
+    searchInput.current.value !== undefined && searchInput.current.value !== '' ? setsearchvalue(menucard.filter((e) => { return e.heading.toLowerCase().includes(searchInput.current.value.toLowerCase().trim()) || e.variety.toLowerCase().includes(searchInput.current.value.toLowerCase().trim()) })) : '';
+  }, [menucard])
 
   useEffect(() => {
     document.title = 'Mannu Dhaba Menu'
@@ -307,6 +334,17 @@ function menus(props) {
     console.log(searchvalue)
   }
 
+  const updateCart = (variety, heading) => {
+    console.log('updateCard')
+    const updatedCards = menucard.map(card => {
+      if (card.heading === heading && card.variety === variety) {
+        return { ...card, inCart: !card.inCart };
+      }
+      return card;
+    });
+    setmenucard(updatedCards)
+  }
+
   return (
     <section className='relative menuPage backdrop-blur-[70px]'>
       <div ref={searchDiv} className='search-div flex flex-wrap gap-y-3 gap-x-7 items-center py-5 z-[5] justify-between backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e] px-5'>
@@ -319,7 +357,7 @@ function menus(props) {
           <h3 className='text-2xl ml-4 capitalize font-semibold' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>menu</h3>
         </div>
         <div className='mx-auto sm:mx-0 grow-[0.5]'>
-          <form onSubmit={search} className='flex rounded-sm '>
+          <form onSubmit={search} className='flex rounded-sm'>
             <input list='browsers' type="search" ref={searchInput} placeholder='search' className='border outline-none p-2 ps-3 rounded-[3px] dark:text-white dark:border-white border-black bg-transparent text-black transition-all duration-300 focus:grow-[1] focus:rounded-[3px_0_0_3px] flex-[0_1_100px]' required autoFocus />
             <datalist id="browsers">
               {
@@ -355,7 +393,7 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
             <div className='grow md:grow-0 flex justify-end right-0 top-0' >
 
               <span className='flex items-center justify-center w-[40px] h-[40px] rounded-circle cursor-pointer transition-all duration-200 dark:hover:bg-[rgb(39_37_44)] dark:bg-transparent bg-white shadow-[1.5px_3.5px_7.5px_-5px_#3c3c3c]
-hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsearchvalue([]); noSearchResultRef.current.classList.add('hidden'); searchInput.current.value = '' }}>
+                hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsearchvalue([]); noSearchResultRef.current.classList.add('hidden'); searchInput.current.value = '' }}>
                 {/* blink  start*/}
                 <span className="absolute flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -377,8 +415,16 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
               <div ref={searchResultCardContainer} className='flex snap-x p-[20px] flex-nowrap overflow-auto gap-[10px]'>
                 {searchvalue.length !== 0 && searchvalue.map((menu, menuindex) => (
                   <div key={menuindex} className="homecard mx-auto overflow-hidden hover:scale-[1.05] transition-all duration-300  grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
+
                     <div className="h-[180px] mx-auto relative">
-                      <img src={menu.img} className='homecardimg h-full object-cover w-full object-cover w-full' alt="food img" />
+                      <div className="absolute cursor-pointer right-2 top-5">
+                        <span>
+                          <svg fill="none" onClick={(e) => { updateCart(menu.variety, menu.heading) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={useContext(counterContext).value === 'dark' ? 'white' : 'black'}>
+                            <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill={menu.inCart ? 'red' : 'none'} />
+                          </svg>
+                        </span>
+                      </div>
+                      <img src={menu.img} className='homecardimg h-full object-cover w-full' alt="food img" />
                     </div>
 
                     <div className="card-body p-[15px]">
@@ -427,7 +473,15 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
             {
               finalfilter.map((menu, menuindex) => (
                 <div key={menuindex} className="homecard mx-auto hover:scale-[1.05] transition-all duration-300 overflow-hidden grid min-h-[300px] bg-[#00000012] border border-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] rounded-lg flex-[0_0_200px]">
+
                   <div className="h-[180px] mx-auto relative">
+                    <div className="absolute cursor-pointer right-2 top-5">
+                      <span>
+                        <svg fill="none" onClick={(e) => { updateCart(menu.variety, menu.heading) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={useContext(counterContext).value === 'dark' ? 'white' : 'black'}>
+                          <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill={menu.inCart ? 'red' : 'none'} />
+                        </svg>
+                      </span>
+                    </div>
                     <img src={menu.img} className='homecardimg h-full object-cover w-full' alt="food img" />
                   </div>
                   <div className="card-body p-[15px]">
@@ -451,19 +505,19 @@ hover:shadow-[1px_2px_3px_1px_#2828283b] rounded-[50%]' onClick={() => { setsear
         {/*=== full menu cards end ====*/}
 
         {/* ===== paneer  start=====*/}
-        <MenusMaker cardSpecial={'paneer special'} menuName={'paneer menu'} menuRef={paneerMenu} filterRef={paneerFilter} menuFilterPrice={paneerPrice} setMenuFilterPrice={setpaneerPrice} menuCard={menucard} />
+        <MenusMaker cardSpecial={'paneer special'} menuName={'paneer menu'} menuRef={paneerMenu} filterRef={paneerFilter} menuFilterPrice={paneerPrice} setMenuFilterPrice={setpaneerPrice} />
         {/*===== paneer  end===== */}
 
         {/*===== chinese  start =====*/}
-        <MenusMaker cardSpecial={'chinese special'} menuName={'chinese menu'} menuRef={chineseMenu} filterRef={chinessFilter} menuFilterPrice={chinessPrice} setMenuFilterPrice={setchinesePrice} menuCard={menucard} />
+        <MenusMaker cardSpecial={'chinese special'} menuName={'chinese menu'} menuRef={chineseMenu} filterRef={chinessFilter} menuFilterPrice={chinessPrice} setMenuFilterPrice={setchinesePrice} />
         {/*===== chinese  end =====*/}
 
         {/*===== daal start  =====*/}
-        <MenusMaker cardSpecial={'daal special'} menuName={'daal menu'} menuRef={daalMenu} filterRef={daalFilter} menuFilterPrice={daalPrice} setMenuFilterPrice={setdaalPrice} menuCard={menucard} />
+        <MenusMaker cardSpecial={'daal special'} menuName={'daal menu'} menuRef={daalMenu} filterRef={daalFilter} menuFilterPrice={daalPrice} setMenuFilterPrice={setdaalPrice} />
         {/*===== daal end  =====*/}
 
         {/*===== paratha start =====*/}
-        <MenusMaker cardSpecial={'paratha special'} menuName={'paratha menu'} menuRef={parathaMenu} filterRef={parathaFilter} menuFilterPrice={parathaPrice} setMenuFilterPrice={setparathaPrice} menuCard={menucard} />
+        <MenusMaker cardSpecial={'paratha special'} menuName={'paratha menu'} menuRef={parathaMenu} filterRef={parathaFilter} menuFilterPrice={parathaPrice} setMenuFilterPrice={setparathaPrice} />
         {/*===== paratha start =====*/}
       </div>
     </section>

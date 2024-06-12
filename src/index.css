@@ -234,6 +234,10 @@ input.acco:checked+.detail::after {
 .gallery {
     user-select: none;
 }
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 
 /* .search-div{
     top: var(--navHeight);

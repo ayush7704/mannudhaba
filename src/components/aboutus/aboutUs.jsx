@@ -28,7 +28,7 @@ function aboutUs() {
 
           <div className="p-[20px] mb-4">
             <p className='sm:w-[75%] mx-auto'>
-              Mannu Dhaba & Restaurant is a restaurant located on Khajoori Sadak, Bhopal, Madhya Pradesh 462030. The average rating of our place is 4.70 out of 5 stars. And the street address is 67W2+3C , Bhopal, Madhya Pradesh 462030, India. </p>
+              Mannu Dhaba & Restaurant is a restaurant located on Khajoori Sadak, Bhopal, Madhya Pradesh 462030. The average rating of our <strong>Dhaba</strong> is 4.8 out of 5 stars. And the street address is 67W2+3C , Bhopal, Madhya Pradesh 462030, India. </p>
 
             <div className="map py-[20px]">
               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d916.486984201125!2d77.25028019195072!3d23.24498154910111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c614107f0d14d%3A0x17c8d7aee88d59fa!2sMannu%20Dhaba%20%26%20family%20Restaurant!5e0!3m2!1sen!2sin!4v1709424647844!5m2!1sen!2sin" className='border border-white w-full h-[300px]' allowFullScreen="" referrerPolicy="no-referrer-when-downgrade"></iframe>
