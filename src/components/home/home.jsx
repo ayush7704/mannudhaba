@@ -1,6 +1,4 @@
 import './home.css'
-import Bg from '../bg.jsx'
-import imgg from '../table1.jpg'
 import foodimg from './hero-food.webp'
 import React, { useEffect, useState, useRef, useContext, memo } from 'react'
 import { Link } from 'react-router-dom'
@@ -12,11 +10,12 @@ import { counterContext } from '../context/context.js'
 gsap.registerPlugin(ScrollTrigger)
 
 //=== linear btn  
-export function Menulink(props) {
+let Menulink = memo((props) => {
+const {contextSafe} = useGSAP({ scope: '.homePage'});
 
-  let btnmouse = (event) => {
+  let btnmouse = contextSafe((event) => {
     gsap.to(props.reff.current, { background: `-webkit-linear-gradient(${event.nativeEvent.offsetX}deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%)`, duration: 0.3 })
-  }
+  })
 
   return (
     <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className='svgbtn outLine linear-btn font-semibold  py-[10px] text-center rounded-[6px] text-white px-[19px] min-w-[50%] text-nowrap flex gap-2 justify-center items-center'>
@@ -26,7 +25,7 @@ export function Menulink(props) {
         <path d="M12 7.80556C11.3131 7.08403 9.32175 5.3704 5.98056 4.76958C4.2879 4.4652 3.44157 4.31301 2.72078 4.89633C2 5.47965 2 6.42688 2 8.32133V15.1297C2 16.8619 2 17.728 2.4626 18.2687C2.9252 18.8095 3.94365 18.9926 5.98056 19.3589C7.79633 19.6854 9.21344 20.2057 10.2392 20.7285C11.2484 21.2428 11.753 21.5 12 21.5C12.247 21.5 12.7516 21.2428 13.7608 20.7285C14.7866 20.2057 16.2037 19.6854 18.0194 19.3589C20.0564 18.9926 21.0748 18.8095 21.5374 18.2687C22 17.728 22 16.8619 22 15.1297V8.32133C22 6.42688 22 5.47965 21.2792 4.89633C20.5584 4.31301 19 4.76958 18 5.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg></Link>
   )
-}
+})
 
 // reasons 
 const ReasonAndtiming = memo(() => {
@@ -69,7 +68,7 @@ const ReasonAndtiming = memo(() => {
     </section>
   )
 })
-export { ReasonAndtiming }
+export { ReasonAndtiming, Menulink }
 
 function LoopSlide() {
   return (
@@ -98,6 +97,9 @@ function LoopSlide2() {
 //==== main home compo 
 function home(props) {
 
+// made global label dynamic popover functionalaity with context 
+// did correction in add to card functionality 
+
   let linearline = useRef(null)
   let pureveg = useRef(null)
   let mealimg = useRef(null)
@@ -107,7 +109,10 @@ function home(props) {
   let homecard = useRef(null)
   let homecardsImg = useRef(null)
   let menubtn = useRef(null)
-  const { value, menucard, setmenucard } = useContext(counterContext)
+  let ourspecial = useRef(null)
+  let render = useRef(0)
+
+  const { value, menucard, setmenucard,setfixedMsg } = useContext(counterContext)
   // fitering these arrays values start 
   let homecardObj = [];
   let arr = ['paneer pasanda', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'paneer paratha']
@@ -121,18 +126,32 @@ function home(props) {
   // fitering these arrays values start 
   // strokeWidth
 
-  useGSAP(() => {
-    setTimeout(function initialStart() {
+  useEffect(() => {
+    console.log('render '+ render.current )
+    render.current = render.current + 1;
+    console.log('home render  ' + render.current)
+  })
+
+  useGSAP((context) => {
+// let settime = setTimeout(function initialStart() {
 
       //== pure veg and linear anm 
       let tm = gsap.timeline()
       tm.fromTo(pureveg.current, { webkitTextStroke: 0 + 'px #de8dff' }, { webkitTextStroke: 1 + 'px #de8dff', duration: 1, })
         .fromTo(mealimg.current, { transform: 'rotate3d(1,1,1, 70deg)' }, { transform: 'rotate3d(1,1,1,0deg)', duration: 1, delay: -.5 })
         .fromTo(linearline.current, { backgroundSize: '0% 100%' }, {
-          duration: 1.3, backgroundSize: '100% 100%', scrollTrigger: {
-            trigger: linearline.current, start: 'top 80%', end: 'top 60%', scrub: 1,
+          backgroundSize: '100% 100%', scrollTrigger: {
+            trigger: linearline.current, start: 'top 80%', end: 'top 50%', scrub: 1,
           }
         })
+      // gsap.fromTo(ourspecial.current, { opacity: '0.5', rotateX: -90 },
+      //   {
+      //     opacity: '1', rotateX: 0, duration: 3, ease: 'bounce.out', scrollTrigger: {
+      //       trigger: ourspecial.current, start: 'top 70%',
+      //       // toggleActions:'play none none restart',
+      //       // markers: true
+      //     }
+      //   }) 
 
       gsap.from(infi.current.children, {
         ease: 'none',
@@ -151,15 +170,8 @@ function home(props) {
         }
       })
 
-      // infi.current.addEventListener('mouseenter', () => { infitm.pause() })
-      // infi2.current.addEventListener('mouseenter', () => { infi2tm.pause() })
-      // infi.current.addEventListener('mouseleave', () => { infitm.resume() })
-      // infi2.current.addEventListener('mouseleave', () => { infi2tm.resume() })
-    }, 3300)
+    // }, 0)
 
-    // initialStart()
-    // console.log(value.mode)
-    // function scrolling() {
     gsap.utils.toArray('.homecardimg').forEach(element => {
       gsap.from(element, {
         top: '140px',
@@ -196,7 +208,26 @@ function home(props) {
         end: 'center 80%',
       }
     })
+    console.log('gsap')
+    console.log(context.data)
+    return()=> {
+      // settime
+    };
   })
+
+  useGSAP(() => {
+    if (value === 'dark') {
+      // console.log(+"  if   " + value)
+      gsap.fromTo(ourspecial.current, {
+        background: 'linear-gradient(0deg, #7d539b, transparent, transparent, #aabdcd)',
+      }, { background: 'linear-gradient(360deg, #7d539b, transparent, transparent, #aabdcd)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
+    } else {
+      // console.log(+"  else   " + value)
+      gsap.fromTo(ourspecial.current, {
+        background: 'linear-gradient(0deg, #be8acd, transparent, transparent, #d2e4f4)',
+      }, { background: 'linear-gradient(360deg, #be8acd, transparent, transparent, #d2e4f4)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
+    }
+  }, {dependencies:[value]})
 
   useEffect(() => {
     document.title = 'Mannu Dhaba'
@@ -204,11 +235,11 @@ function home(props) {
 
   let timeout1;
   let timeout2;
-  let mealDivover = (e) => {
+  const {contextSafe} = useGSAP();
+  let mealDivover = contextSafe((e) => {
     mealimg.current.style.zIndex = '-1'
     gsap.to(mealimg.current, { position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 0.4, ease: 'none', translate: '0%' })
 
-    console.log(getComputedStyle(mealDiv.current).background)
     clearTimeout(timeout1);
     clearTimeout(timeout2);
 
@@ -226,22 +257,21 @@ function home(props) {
         duration: 1.5
       })
     }, 2000);
-  }
+  })
 
   const updateCart = (variety, heading) => {
     const updatedCards = menucard.map(card => {
       if (card.heading === heading && card.variety === variety) {
+        setfixedMsg(prev => ({ ...prev,msg: card.inCart?'item removed successfully':'item added successfully', random: !prev.random , initial :!prev.initial,cardIncard: !card.inCart}))
         return { ...card, inCart: !card.inCart };
       }
       return card;
     });
     setmenucard(updatedCards)
   }
+
   return (
-    <section>
-      <div className='grid alert justify-center items-center h-screen fixed z-[-5] w-screen bg-[#000000c4]'>
-        <h1 className='text-lg'>we are under development</h1>
-      </div>
+    <section className='homePage'>
       <div className='backdrop-blur-[70px]'>
         <div className='hero  flex items-center overflow-x-hidden min-h-[90vh] relative p-[20px]'>
           <div className="homecontent mx-auto py-14 px-[20px] sm:w-[75%] flex flex-col items-center gap-4">
@@ -252,12 +282,12 @@ function home(props) {
             {/* food img */}
             <div className={`h-[250px] relative self-stretch`} ref={mealDiv} onMouseMove={mealDivover}>
               <Link to='/menu' className='h-full w-full flex justify-center'>
-                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_30px_35px_rgba(0,0,0,63%)]' />
+                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_30px_35px_rgba(0,0,0,63%)] duration-[50]' />
               </Link>
             </div>
 
 
-            <h3 className='text-center capitalize intro-line text-xl relative dark:text-white text-black'>Unforgettable flavors await (Fresh), delicious dishes packed with flavor, <span className='intro-line-main' ref={linearline}>family-friendly atmosphere.</span> Gather, connect, and make memories! At your new favorite spot.
+            <h3 className='text-center capitalize intro-line text-xl relative dark:text-white text-black'>Unforgettable flavors await, delicious dishes packed with flavor, <span className='intro-line-main' ref={linearline}>family-friendly atmosphere.</span> Gather, connect, and make memories! At your new favorite spot.
             </h3>
 
 
@@ -287,8 +317,10 @@ function home(props) {
 
         {/* our special  */}
         <div className="page2 py-[20px]">
-          <h3 className='capitalize font-semibold text-xl pb-6 text-center' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>our special</h3>
-          <h3 className='capitalize text-lg px-3 pb-6 text-center' style={{ textShadow: '2px 1px 16px #3b3b3b94' }}>A Taste of Tradition, A Touch of Innovation </h3>
+          <h3 className='overflow-hidden capitalize font-semibold text-xl pb-6 text-center' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>
+            <span ref={ourspecial} className='inline-block p-2 px-4 rounded text-center mx-auto origin-top'>our special</span>
+          </h3>
+          <h3 className='overflow-hidden capitalize text-lg px-3 pb-6 text-center' style={{ textShadow: '2px 1px 16px #3b3b3b94' }}>A Taste of Tradition, A Touch of Innovation</h3>
           {/* (Combines familiar flavors with new twists) */}
 
           {/*==== food cards  ====*/}
@@ -311,14 +343,28 @@ function home(props) {
                     <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
                     <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
                   </div>
-                  <div className="flex ">
-                    <Link to={'/menu'} className='svgbtn flex items-center justify-center gap-2 text-sm flex-1  outline-[gray] rounded-sm text-center py-[8px] bg-gradient-to-r dark:from-[#6e4882] from-[#d69ec6] to-[transparent]'><span>Full menu</span>
-                      <svg className='shrink- 0' xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none">
-                        < path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke={value === 'dark' ? 'white' : 'black'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M12 7.80556C11.3131 7.08403 9.32175 5.3704 5.98056 4.76958C4.2879 4.4652 3.44157 4.31301 2.72078 4.89633C2 5.47965 2 6.42688 2 8.32133V15.1297C2 16.8619 2 17.728 2.4626 18.2687C2.9252 18.8095 3.94365 18.9926 5.98056 19.3589C7.79633 19.6854 9.21344 20.2057 10.2392 20.7285C11.2484 21.2428 11.753 21.5 12 21.5C12.247 21.5 12.7516 21.2428 13.7608 20.7285C14.7866 20.2057 16.2037 19.6854 18.0194 19.3589C20.0564 18.9926 21.0748 18.8095 21.5374 18.2687C22 17.728 22 16.8619 22 15.1297V8.32133C22 6.42688 22 5.47965 21.2792 4.89633C20.5584 4.31301 19 4.76958 18 5.5" stroke={value === 'dark' ? 'white' : 'black'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                  <div className="flex text-[14px]">
+                    <Link to={'/cart'} className={`svgbtn flex items-center justify-center gap-2 flex-1 bg-gradient-to-r dark:from-[#6e4882] from-[#d69ec6] to-[transparent] cursor-pointer capitalize ${menu.inCart ? '' : 'hidden'}`}>
+                      <span>{`go to cart`}</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" color={value === 'dark' ? 'white' : 'black'} fill="none">
+                        <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+                        <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
                     </Link>
-                    <Link to={'/menu'} className='orderbtn flex items-center justify-center gap-2 bg-white color text-black text-sm flex-1 rounded-sm  text-center py-[8px]'><span>Order</span>
+                    <span className={`svgbtn flex items-center justify-center gap-2 flex-1 bg-gradient-to-r dark:from-[#6e4882] from-[#d69ec6] to-[transparent] cursor-pointer capitalize ${menu.inCart ? 'hidden' : ''}`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
+                      <span>{`add to cart`}</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" color={value === 'dark' ? 'white' : 'black'} fill="none">
+                        <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+                        <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                    </span>
+                    <Link to={'/cart'} className='orderbtn flex items-center justify-center gap-2 bg-white color text-black text-sm flex-1 rounded-sm  text-center py-[8px]'><span>Order</span>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21" color='black' fill="none">
                         <path d="M19.5 17.5C19.5 18.8807 18.3807 20 17 20C15.6193 20 14.5 18.8807 14.5 17.5C14.5 16.1193 15.6193 15 17 15C18.3807 15 19.5 16.1193 19.5 17.5Z" stroke="currentColor" strokeWidth="1.5" />
                         <path d="M9.5 17.5C9.5 18.8807 8.38071 20 7 20C5.61929 20 4.5 18.8807 4.5 17.5C4.5 16.1193 5.61929 15 7 15C8.38071 15 9.5 16.1193 9.5 17.5Z" stroke="currentColor" strokeWidth="1.5" />

@@ -77,7 +77,12 @@ function gallery() {
 
           {
             ['all', 'food', 'vibe', "customer's"].map((elm, ind) => (
-              <button key={elm + ind} className={`filterBtn px-3 py-[6px] rounded-md border-none capitalize ${elm === galleryFilter ? 'activeFilter outline-[#9eff00] outline-1' : ''}`} onClick={() => { setgalleryFilter(elm) }}>{elm}</button>
+              <button key={elm + ind} className={`filterBtn px-3 py-[6px] rounded-md border-none capitalize flex gap-1 items-center ${elm === galleryFilter ? 'activeFilter outline-[#9eff00] outline-1' : ''}`} onClick={() => { setgalleryFilter(elm) }}>{elm}
+                <span className={`${elm !== galleryFilter ? 'hidden':''}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" color="#9eff00" fill="none">
+                    <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span></button>
             ))
           }
         </div>
@@ -117,7 +122,7 @@ function gallery() {
           </div>
           <div className="md:w-[80%] sticky top-[--navHeight] md:h-[80%] h-full dark:border-white border-black border-1 rounded-md">
             {/* navigations start  */}
-            <div className='absolute justify-around z-[1] bottom-2 left-1/2 -translate-x-1/2 w-[11rem] flex items-center p-[6px] bg-[#f5fffa75] rounded-3xl backdrop-blur-[1px]'>
+            <div className='absolute justify-around z-[1] bottom-2 left-1/2 -translate-x-1/2 w-[11rem] flex items-center p-[6px_8px] bg-[#f5fffa75] rounded-3xl backdrop-blur-[1px]'>
 
               {/* left menu start */}
               <button onClick={(e) => {

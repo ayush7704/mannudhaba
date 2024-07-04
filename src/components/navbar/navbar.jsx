@@ -6,7 +6,9 @@ import whiteLogo from './White logo - no background.svg'
 import blacklogo from './Black logo - no background.svg'
 import { counterContext } from '../context/context'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import React, { useEffect, useState, useRef, useContext } from 'react'
+import React, { useEffect, useState, useRef, useContext, memo } from 'react'
+import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 
 function Navbar(props) {
@@ -14,7 +16,8 @@ function Navbar(props) {
   let links = useRef(null)
   let location = useLocation()
   let linkswrapper = useRef(null)
-  let { value, setvalue ,addToCartItemValue} = useContext(counterContext)
+  let cartref = useRef(null)
+  let { value, setvalue, addToCartItemValue } = useContext(counterContext)
   let [navHeight, setnavHeight] = useState(75)
 
 
@@ -42,6 +45,9 @@ function Navbar(props) {
     document.documentElement.style.setProperty(`--navHeight`, `${nav.current.offsetHeight}px`)
   })
 
+  useGSAP(() => {
+    gsap.fromTo(cartref.current, { scale: 1.2 }, { scale: 1, duration: 2.5, ease: 'elastic' })
+  }, [addToCartItemValue.length])
   return (
     // dark:bg-[rgb(30,30,30)]  bg-[#ebedec] dark:bg-[#1e1e1e]
     <nav ref={nav} className=' z-[5] dark:bg-[rgb(13,13,13)] bg-[#f5fffa]  flex items-center py-[5px] justify-between lg:pl-[20px] pl-[10px] pr-[20px]  sticky top-0'>
@@ -165,10 +171,10 @@ function Navbar(props) {
               <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>)
           }
         ].map((item, index) => (<NavLink to={'cart'} key={index} className={`${item.name === (location.pathname).replace(/%20/g, ' ').slice(1) ? 'dark:bg-darkgradient bg-lightgradient' : ''} md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]  font-bold  transition-all duration-[200ms]  capitalize px-5 text-nowrap py-[10px]`}>
-          {<span className='relative'>{item?.svg} <span className='absolute text-white dark:outline-white outline-black top-[-4px] right-0 w-[14px] h-[14px] rounded-[50%]
+          {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute text-white dark:outline-white outline-black top-[-4px] right-0 w-[14px] h-[14px] rounded-[50%]
           bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] outline outline-1 flex items-center justify-center text-[10px]'>{addToCartItemValue.length}</span>
           </span>}
-           <span>{item.name}</span>
+          <span>{item.name}</span>
         </NavLink>))
       }
       {/* add to cart end */}
@@ -184,4 +190,4 @@ function Navbar(props) {
   )
 }
 
-export default Navbar
+export default memo(Navbar)
