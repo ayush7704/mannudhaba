@@ -159,6 +159,9 @@ function cart() {
                       <div className='p-2 flex-grow'>
                         <div className="border-b grid gap-[2px] p-2">
                           <h3 className="dark:text-white text-[18px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                          {'contains' in menu && <details className='cursor-pointer text-[14px]'>
+                          <summary>{`${menu.contains.length} items`}</summary>
+                          {menu.contains.map((e,ind)=>(<span key={e+ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind+1 ? ',':''}`}</span>))} </details>}
                           {/* <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; 190</h4> */}
 
                           {/* <p className='text-[13px]'>Ref:

@@ -57,9 +57,9 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
                 </div>
 
                 <div className="card-body p-[15px]">
-                  <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                  <h3 className="dark:text-white tracking-[.5px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
                   <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
-                   {'contains' in menu && <details>
+                   {'contains' in menu && <details className='cursor-pointer'>
                           <summary>{`${menu.contains.length} items`}</summary>
                           {menu.contains.map((e,ind)=>(<span key={e+ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind+1 ? ',':''}`}</span>))} </details>}
                 </div>
@@ -294,7 +294,7 @@ function menus(props) {
           </div>
         </div>
 
-        <div className='p-[20px]'>
+        <div className='p-[20px] pt-0'>
 
           {/* on focus page  */}
           <div ref={focusPage} className='z-[4] relative sm:mt-5'>
@@ -360,9 +360,9 @@ function menus(props) {
                       </div>
 
                       <div className="card-body p-[15px]">
-                        <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                        <h3 className="dark:text-white tracking-[.5px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
                         <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
-                        {'contains' in menu && <details>
+                        {'contains' in menu && <details className='cursor-pointer'>
                           <summary>{`${menu.contains.length} items`}</summary>
                           {menu.contains.map((e,ind)=>(<span key={e+ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind+1 ? ',':''}`}</span>))} </details>}
                       </div>
@@ -443,9 +443,9 @@ function menus(props) {
                     </div>
 
                     <div className="card-body p-[15px]">
-                      <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                      <h3 className="dark:text-white tracking-[.5px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
                       <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
-                       {'contains' in menu && <details>
+                       {'contains' in menu && <details className='cursor-pointer'>
                           <summary>{`${menu.contains.length} items`}</summary>
                           {menu.contains.map((e,ind)=>(<span key={e+ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind+1 ? ',':''}`}</span>))} </details>}
                     </div>

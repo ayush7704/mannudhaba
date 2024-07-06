@@ -9,8 +9,14 @@ gsap.registerPlugin(ScrollTrigger)
 function aboutUs() {
   const copy = useRef(null)
   const secondPRef = useRef(null)
-  const { value,setfixedMsg, PageHeading,  } = useContext(counterContext)
-  
+  const { value, setfixedMsg, PageHeading, } = useContext(counterContext)
+  let render = useRef(0)
+  useEffect(() => {
+    render.current = render.current + 1
+    console.log('aboutus '+render.current)
+  })
+
+
   useEffect(() => {
     document.title = 'Mannu Dhaba AboutUs'
   }, [])
@@ -20,7 +26,7 @@ function aboutUs() {
     // copy.current.classList.toggle('opacity-0')
     navigator.clipboard.writeText(e.target.innerText)
     navigator.vibrate(20)
-    setfixedMsg(prev=>({...prev,msg:'number copied',initial :!prev.initial,random: !prev.random}))
+    setfixedMsg(prev => ({ ...prev, msg: 'number copied', initial: !prev.initial, random: !prev.random }))
     // setmenucard(menucard.slice(news))
     setTimeout(() => {
       // copy.current.classList.toggle('opacity-0')
@@ -57,7 +63,7 @@ function aboutUs() {
 
     }
   }, [value])
-  
+
   return (
     <section>
       <div className='dark:text-white text-black backdrop-blur-[70px]'>

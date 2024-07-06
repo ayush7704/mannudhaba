@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 //=== linear btn  
 let Menulink = memo((props) => {
-const {contextSafe} = useGSAP({ scope: '.homePage'});
+  const { contextSafe } = useGSAP({ scope: '.homePage' });
 
   let btnmouse = contextSafe((event) => {
     gsap.to(props.reff.current, { background: `-webkit-linear-gradient(${event.nativeEvent.offsetX}deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%)`, duration: 0.3 })
@@ -75,7 +75,7 @@ function LoopSlide() {
     <div className="flex flex-nowrap gap-[30px] pl-[30px] will-change-scroll">
       {
         ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-          <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg'>&#9829;</span></p>
+          <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg'>&#9829;</span></p>
         ))
       }
     </div>
@@ -86,7 +86,7 @@ function LoopSlide2() {
     <div className="flex flex-nowrap gap-[30px] pl-[30px] will-change-scroll">
       {
         ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-          <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+          <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
         ))
       }
     </div>
@@ -97,8 +97,6 @@ function LoopSlide2() {
 //==== main home compo 
 function home(props) {
 
-// made global label dynamic popover functionalaity with context 
-// did correction in add to card functionality 
 
   let linearline = useRef(null)
   let pureveg = useRef(null)
@@ -111,8 +109,11 @@ function home(props) {
   let menubtn = useRef(null)
   let ourspecial = useRef(null)
   let render = useRef(0)
+  const timeout1 = useRef(null);
+  const timeout2 = useRef(null);
+  const tm = useRef(gsap.timeline());
 
-  const { value, menucard, setmenucard,setfixedMsg } = useContext(counterContext)
+  const { value, menucard, setmenucard, setfixedMsg } = useContext(counterContext)
   // fitering these arrays values start 
   let homecardObj = [];
   let arr = ['paneer pasanda', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'paneer paratha']
@@ -127,48 +128,40 @@ function home(props) {
   // strokeWidth
 
   useEffect(() => {
-    console.log('render '+ render.current )
+    console.log('render ' + render.current)
     render.current = render.current + 1;
     console.log('home render  ' + render.current)
   })
 
   useGSAP((context) => {
-// let settime = setTimeout(function initialStart() {
+    // let settime = setTimeout(function initialStart() {
 
-      //== pure veg and linear anm 
-      let tm = gsap.timeline()
-      tm.fromTo(pureveg.current, { webkitTextStroke: 0 + 'px #de8dff' }, { webkitTextStroke: 1 + 'px #de8dff', duration: 1, })
-        .fromTo(mealimg.current, { transform: 'rotate3d(1,1,1, 70deg)' }, { transform: 'rotate3d(1,1,1,0deg)', duration: 1, delay: -.5 })
-        .fromTo(linearline.current, { backgroundSize: '0% 100%' }, {
-          backgroundSize: '100% 100%', scrollTrigger: {
-            trigger: linearline.current, start: 'top 80%', end: 'top 50%', scrub: 1,
-          }
-        })
-      // gsap.fromTo(ourspecial.current, { opacity: '0.5', rotateX: -90 },
-      //   {
-      //     opacity: '1', rotateX: 0, duration: 3, ease: 'bounce.out', scrollTrigger: {
-      //       trigger: ourspecial.current, start: 'top 70%',
-      //       // toggleActions:'play none none restart',
-      //       // markers: true
-      //     }
-      //   }) 
 
-      gsap.from(infi.current.children, {
-        ease: 'none',
-        x: '-300px',
-        scrollTrigger: {
-          trigger: infi.current,
-          scrub: 3
-        }
-      })
-      gsap.from(infi2.current.children, {
-        ease: 'none',
-        x: '300px',
-        scrollTrigger: {
-          trigger: infi2.current,
-          scrub: 3
-        }
-      })
+    // gsap.fromTo(ourspecial.current, { opacity: '0.5', rotateX: -90 },
+    //   {
+    //     opacity: '1', rotateX: 0, duration: 3, ease: 'bounce.out', scrollTrigger: {
+    //       trigger: ourspecial.current, start: 'top 70%',
+    //       // toggleActions:'play none none restart',
+    //       // markers: true
+    //     }
+    //   }) 
+
+    gsap.from(infi.current.children, {
+      ease: 'none',
+      x: '-300px',
+      scrollTrigger: {
+        trigger: infi.current,
+        scrub: 3
+      }
+    })
+    gsap.from(infi2.current.children, {
+      ease: 'none',
+      x: '300px',
+      scrollTrigger: {
+        trigger: infi2.current,
+        scrub: 3
+      }
+    })
 
     // }, 0)
 
@@ -210,7 +203,7 @@ function home(props) {
     })
     console.log('gsap')
     console.log(context.data)
-    return()=> {
+    return () => {
       // settime
     };
   })
@@ -227,33 +220,47 @@ function home(props) {
         background: 'linear-gradient(0deg, #be8acd, transparent, transparent, #d2e4f4)',
       }, { background: 'linear-gradient(360deg, #be8acd, transparent, transparent, #d2e4f4)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
     }
-  }, {dependencies:[value]})
+  }, { dependencies: [value] })
 
   useEffect(() => {
     document.title = 'Mannu Dhaba'
+    //== pure veg and linear anm 
+    console.log('nnnnnnnnnnnnnn')
+    tm.current.fromTo(pureveg.current, { webkitTextStroke: 0 + 'px #de8dff' }, { webkitTextStroke: 1 + 'px #de8dff', duration: 1, })
+      .fromTo(mealimg.current, { transform: 'rotate3d(1,1,1, 70deg)' }, { transform: 'rotate3d(1,1,1,0deg)', duration: 1, delay: -.5 })
+      .fromTo(linearline.current, { backgroundSize: '0% 100%' }, {
+        backgroundSize: '100% 100%', scrollTrigger: {
+          trigger: linearline.current, start: 'top 80%', end: 'top 50%', scrub: 1,
+        }
+      })
+    return () => {
+      tm.current.kill()
+      clearTimeout(timeout1.current);
+      clearTimeout(timeout2.current);
+    };
   }, [])
 
-  let timeout1;
-  let timeout2;
-  const {contextSafe} = useGSAP();
+
+  const { contextSafe } = useGSAP();
   let mealDivover = contextSafe((e) => {
+    //  gsap.killTweensOf(mealimg.current);
     mealimg.current.style.zIndex = '-1'
-    gsap.to(mealimg.current, { position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 0.4, ease: 'none', translate: '0%' })
+    gsap.to(mealimg.current, { position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 1.2, ease: 'power3', translate: '0%' })
 
-    clearTimeout(timeout1);
-    clearTimeout(timeout2);
+    clearTimeout(timeout1.current);
+    clearTimeout(timeout2.current);
 
-    timeout2 = setTimeout(() => {
+    timeout2.current = setTimeout(() => {
       gsap.to(mealimg.current, {
-        transform: 'rotate3d(1,1,1, 0deg)', duration: 1
+        transform: 'rotate3d(1,1,1, 0deg)', ease: 'power3', duration: 1
       })
-    }, 500)
+    }, 1300)
 
-    timeout1 = setTimeout(() => {
+    timeout1.current = setTimeout(() => {
       console.log("Mouse stopped moving!");
       gsap.to(mealimg.current, {
         left: '50%',
-        translate: '-50%',
+        translate: '-50%', ease: 'power3',
         duration: 1.5
       })
     }, 2000);
@@ -262,7 +269,7 @@ function home(props) {
   const updateCart = (variety, heading) => {
     const updatedCards = menucard.map(card => {
       if (card.heading === heading && card.variety === variety) {
-        setfixedMsg(prev => ({ ...prev,msg: card.inCart?'item removed successfully':'item added successfully', random: !prev.random , initial :!prev.initial,cardIncard: !card.inCart}))
+        setfixedMsg(prev => ({ ...prev, msg: card.inCart ? 'item removed successfully' : 'item added successfully', random: !prev.random, initial: !prev.initial, cardIncard: !card.inCart }))
         return { ...card, inCart: !card.inCart };
       }
       return card;
@@ -276,13 +283,13 @@ function home(props) {
         <div className='hero  flex items-center overflow-x-hidden min-h-[90vh] relative p-[20px]'>
           <div className="homecontent mx-auto py-14 px-[20px] sm:w-[75%] flex flex-col items-center gap-4">
             <div className='overflow-y-hidden '>
-              <h1 className='relative uppercase text-4xl text-center'>Taste the different: <span className='text-stroke' ref={pureveg}>pure veg </span> Now</h1>
+              <h1 className='relative uppercase text-4xl text-center'>Taste the different: <span className='text-stroke inline-block' ref={pureveg}>pure veg </span> Now</h1>
             </div>
 
             {/* food img */}
             <div className={`h-[250px] relative self-stretch`} ref={mealDiv} onMouseMove={mealDivover}>
               <Link to='/menu' className='h-full w-full flex justify-center'>
-                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_30px_35px_rgba(0,0,0,63%)] duration-[50]' />
+                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_30px_35px_rgba(0,0,0,63%)]' />
               </Link>
             </div>
 
@@ -325,6 +332,7 @@ function home(props) {
 
           {/*==== food cards  ====*/}
           <div className="flex p-[20px] flex-wrap justify-center gap-y-[50px] gap-5">
+            <hr />
             {
               homecardObj.map((menu, index) => (
                 <div key={index} ref={homecard} className="homecard relative pt-4 grid overflow-hidden w-[300px] min-h-[300px] bg-[#00000012] border border-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] rounded-lg ">
@@ -340,7 +348,7 @@ function home(props) {
                   </div>
 
                   <div className="card-body p-[15px]">
-                    <h3 className="dark:text-white text-slate-950  font-bold capitalize">{menu.heading}</h3>
+                    <h3 className="dark:text-white tracking-[.5px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
                     <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; {menu.price}</h4>
                   </div>
                   <div className="flex text-[14px]">
@@ -382,7 +390,7 @@ function home(props) {
               <div className="flex flex-nowrap gap-[30px] pl-[30px] will-change-scroll">
                 {
                   ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-                    <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg'>&#9829;</span></p>
+                    <p key={ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg'>&#9829;</span></p>
                   ))
                 }
               </div>
@@ -393,7 +401,7 @@ function home(props) {
               <div className="flex flex-nowrap gap-[30px] pl-[30px] will-change-scroll">
                 {
                   ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-                    <p key={el + ind} className={`flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+                    <p key={el + ind} className={`flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
                   ))
                 }
               </div>
