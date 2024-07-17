@@ -3,17 +3,19 @@ import { counterContext } from '../context/context'
 import { Menulink } from '../home/home.jsx'
 import Form from '../form.jsx'
 import { NavLink } from 'react-router-dom'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 
 function MsgCompo({ modalref, cardvalueP, modaltype }) {
-  const { value, menucard, setmenucard ,setfixedMsg} = useContext(counterContext)
+  const { value, menucard, setmenucard, setfixedMsg } = useContext(counterContext)
   // for removing modal and updating menucard array 
   function removeModal(value) {
     if (value) {
       const updatedCards = menucard.map(card => {
         if (card.heading === cardvalueP.heading && card.variety === cardvalueP.variety) {
-          setfixedMsg(prev => ({ ...prev,msg: card.inCart?'item removed successfully':'item added successfully', random: !prev.random , initial :!prev.initial,cardIncard: !card.inCart}))
-          return { ...card,quantity:1, inCart: !card.inCart };
+          setfixedMsg(prev => ({ ...prev, msg: card.inCart ? 'item removed successfully' : 'item added successfully', random: !prev.random, initial: !prev.initial, cardIncard: !card.inCart }))
+          return { ...card, quantity: 1, inCart: !card.inCart };
         }
         return card;
       });
@@ -71,7 +73,7 @@ function cart() {
   let modal = useRef(null)
   let [sum, setsum] = useState()
   const [cardvalue, setcardvalue] = useState({ heading: null, variety: null })
-  const { value, menucard, setmenucard, PageHeading, addToCartItemValue ,setfixedMsg} = useContext(counterContext)
+  const { value, menucard, setmenucard, PageHeading, addToCartItemValue, setfixedMsg } = useContext(counterContext)
   useEffect(() => {
     document.title = 'Mannu Dhaba Cart';
   }, [])
@@ -97,22 +99,35 @@ function cart() {
   }
   // for item quantity end
 
-
-
   // for opening modal 
   function openModal() {
     modal.current.parentElement.classList.remove('z-[-10]')
     modal.current.parentElement.classList.add('z-[4]')
     modal.current.classList.remove('scale-0', 'opacity-0')
   }
-  const handleDataFromChild = (data) => {
-    console.log(data +" from menu")
-  };
+
+  useGSAP(() => {
+    gsap.utils.toArray('.cartItem').forEach(element => {
+      gsap.fromTo(element,
+        { y: 50 , ease:'power3.out'
+        },
+        {
+          y: 0, scrollTrigger: {
+            trigger: element,
+            start: 'top 70%',
+            end: 'top 50%',
+            scrub: 1,
+            scroller: 'body',
+            // markers: true,
+          }
+        })
+    })
+  },{dependencies:[addToCartItemValue.length]})
 
   return (
     <div>
       <section className='relative min-h-[70vh] cartPage backdrop-blur-[70px]'>
-        <PageHeading mode={value} heading={' your cart'} />
+        <PageHeading  heading={' your cart'} />
         <div className="p-[20px]">
           {addToCartItemValue.length < 1 ? <div className='sm:w-[60%] mx-auto'>
             <p className='flex justify-center mb-4'>
@@ -132,12 +147,12 @@ function cart() {
             </div>
           </div>
             :
-            <div className="flex flex-wrap sm:w-[80%] justify-center items-start gap-5 mx-auto ">
+            <div className="flex flex-wrap sm:w-[80%] justify-center items-start gap-5 mx-auto mb-7">
               {/* cart start  */}
-              <div className="sm:w-[65%] flex-1 grid gap-3">
+              <div className="sm:w-[65%] flex-1 grid gap-3 ">
                 {addToCartItemValue.map((menu, index) => (
                   <div key={menu.heading + index} className="cartItemWrapper relative">
-                    <div className="absolute h-full w-full z-[-1] bg-[linear-gradient(to_bottom,rgb(235_135_188)_-1%,transparent_1%)] rounded-lg"></div>
+                    {/* <div className="absolute h-full w-full z-[-1] bg-[linear-gradient(151deg,transparent_33%,rgb(235_135_188)_66%,transparent_79%)] rounded-lg"></div> */}
                     <div key={menu.heading + index} className='flex overflow-hidden cartItem relative p-[15px] rounded-lg items-center border flex-wrap justify-center backdrop-blur-[100px]'>
                       {/* remove btn start */}
                       <div onClick={() => { openModal(); setcardvalue({ heading: menu.heading, variety: menu.variety }) }} className="absolute cursor-pointer p-[2px] top-[0px] dark:bg-[#f6f6f6] bg-white flex justify-center items-center right-[0px] w-[23px] h-[23px] shadow-[1px_1px_3px_-1px]">
@@ -160,8 +175,8 @@ function cart() {
                         <div className="border-b grid gap-[2px] p-2">
                           <h3 className="dark:text-white text-[18px] text-slate-950  font-bold capitalize">{menu.heading}</h3>
                           {'contains' in menu && <details className='cursor-pointer text-[14px]'>
-                          <summary>{`${menu.contains.length} items`}</summary>
-                          {menu.contains.map((e,ind)=>(<span key={e+ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind+1 ? ',':''}`}</span>))} </details>}
+                            <summary>{`${menu.contains.length} items`}</summary>
+                            {menu.contains.map((e, ind) => (<span key={e + ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind + 1 ? ',' : ''}`}</span>))} </details>}
                           {/* <h4 className="text-[rgb(232 124 187)] font-semibold font-serif"> &#8377; 190</h4> */}
 
                           {/* <p className='text-[13px]'>Ref:
@@ -170,7 +185,7 @@ function cart() {
                           <h4 className="text-nowrap ">Price :  &#8377; {menu.price}</h4>
                           <p className='capitalize text-[14px] flex gap-1'>
                             <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" color="#9eff00" fill="none">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" color={`${value === 'dark' ? '#9eff00' : 'rgb(111 180 0)'}`} fill="none">
                                 <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                               </svg>
                             </span>
@@ -180,7 +195,7 @@ function cart() {
                           </p>
                           <p className='capitalize text-[14px] flex gap-1'>
                             <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" color="#9eff00" fill="none">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" color={`${value === 'dark' ? '#9eff00' : 'rgb(111 180 0)'}`} fill="none">
                                 <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                               </svg>
                             </span>

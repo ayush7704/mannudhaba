@@ -6,7 +6,7 @@ import whiteLogo from './White logo - no background.svg'
 import blacklogo from './Black logo - no background.svg'
 import { counterContext } from '../context/context'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import React, { useEffect, useState, useRef, useContext, memo } from 'react'
+import React, { useEffect, useState, useRef, useContext, memo, useLayoutEffect } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 
@@ -21,13 +21,14 @@ function Navbar(props) {
   let [navHeight, setnavHeight] = useState(75)
 
 
+
   function toggleBtn() {
-    let moon = document.querySelector('.moon')
-    moon.classList.toggle('left-[4px]')
-    document.querySelector('.yellow').classList.toggle('left-[6px]')
+    // let moon = document.querySelector('.moon')
+    // moon.classList.toggle('left-[4px]')
+    // document.querySelector('.yellow').classList.toggle('left-[6px]')
     document.documentElement.classList.toggle('dark')
     document.body.classList.toggle('bg-slate-50')
-    document.querySelector('.sunbg').classList.toggle('opacity-0')
+    // document.querySelector('.sunbg').classList.toggle('opacity-0')
     setvalue(`${document.documentElement.classList.contains('dark') === true ? 'dark' : 'light'}`)
   }
 
@@ -104,27 +105,7 @@ function Navbar(props) {
               <path d="M2 11.1185C2.61902 11.0398 3.24484 11.001 3.87171 11.0023C6.52365 10.9533 9.11064 11.6763 11.1711 13.0424C13.082 14.3094 14.4247 16.053 15 18" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               <path d="M12.9998 7H13.0088" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>)
-          },
-          // {
-          //   name: 'cart', svg: (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color={value === 'dark' ? 'white' : 'black'} fill="none">
-          //     <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          //     <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          //     <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-          //     <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-          //     <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          //     <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          //   </svg>)
-          // },
-
-          // {
-          //   name: 'contact', svg: (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color={value === 'dark' ? 'white' : 'black'} fill="none">
-          //     <path d="M12 22C7.99306 22 5.98959 22 4.7448 20.682C3.5 19.364 3.5 17.2426 3.5 13C3.5 8.75736 3.5 6.63604 4.7448 5.31802C5.98959 4 7.99306 4 12 4C16.0069 4 18.0104 4 19.2552 5.31802C20.5 6.63604 20.5 8.75736 20.5 13C20.5 17.2426 20.5 19.364 19.2552 20.682C18.0104 22 16.0069 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          //     <path d="M8 4V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          //     <path d="M16 4V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          //     <path d="M14.018 9.49261C14.018 10.5972 13.1226 11.4926 12.0181 11.4926C10.9135 11.4926 10.0181 10.5972 10.0181 9.49261C10.0181 8.38808 10.9135 7.49268 12.0181 7.49268C13.1226 7.49268 14.018 8.38808 14.018 9.49261Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          //     <path d="M8.06298 16.7161C9.12133 15.0868 10.802 14.4762 12.0181 14.4774C13.2341 14.4787 14.8656 15.0868 15.9239 16.7161C15.9923 16.8215 16.0112 16.9512 15.9494 17.0607C15.7019 17.4996 14.9334 18.3705 14.3784 18.4296C13.7406 18.4974 12.0723 18.5069 12.0194 18.5072C11.9664 18.5069 10.2466 18.4974 9.60851 18.4296C9.05345 18.3705 8.28496 17.4996 8.03745 17.0607C7.9757 16.9512 7.99456 16.8215 8.06298 16.7161Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          //   </svg>)
-          // }
+          }
         ]
           .map((item, index) => (
             <NavLink to={item.name == 'home' ? '/' : item.name} key={index} className={`${item.name === 'home' && location.pathname === '/' ? 'dark:bg-darkgradient bg-lightgradient' : ''} ${item.name === (location.pathname).replace(/%20/g, ' ').slice(1) ? 'dark:bg-darkgradient bg-lightgradient' : ''}  md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]  font-bold  transition-all duration-[200ms]  capitalize px-5 text-nowrap py-[10px]`} onClick={() => { ham() }}>
@@ -141,7 +122,8 @@ function Navbar(props) {
             <img src={togglebg} className='absolute w-full h-full object-cover inset-0' alt="img" />
 
             {/* <img src={moon} className='moon transition-all duration-1000 left-[6px] left-[100px] w-[26px] h-[26px] absolute top-[50%] translate-y-[-50%] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20]' alt="img" /> */}
-            <div className='moon  top-[50%] translate-y-[-50%] transition-all duration-1000 left-[4px] left-[100px] relative w-[26px] bg-[#E7E7E7] h-[26px] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20] overflow-hidden'>
+            <div className={`moon top-[50%] translate-y-[-50%] transition-all duration-1000 left-[100px] relative w-[26px] bg-[#E7E7E7] h-[26px] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20] overflow-hidden ${value=== 'dark' ? 'left-[4px]':''} `}>
+
               <div className="absolute top-0 right-0 w-[40%] h-[40%] rounded-[50%] bg-[#CDCDCD]"></div>
               <div className="absolute top-1 right-3 w-[30%] h-[30%] rounded-[50%] bg-[#CDCDCD]"></div>
               <div className="absolute top-1/2 right-3 w-[10%] h-[10%] rounded-[50%] bg-[#CDCDCD]"></div>
@@ -151,8 +133,8 @@ function Navbar(props) {
             </div>
 
             {/* sun bg  */}
-            <img src={sunbg} className='sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 opacity-0 ' alt="img" />
-            <div className="yellow transition-all duration-1000 absolute left-[-100px] top-[50%] translate-y-[-50%] bg-radial-gradient  from-[#ff7000] to-[yellow_90%]  w-[26px] h-[26px] rounded-full shadow-[0_0_0px_6px_#fbff0030,_0_0_0px_12px_#fbff0025,_0_0_0px_18px_#fbff0020]"></div>
+            <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${value=== 'dark' ? 'opacity-0':''}`} alt="img" />
+            <div className={`yellow transition-all duration-1000 absolute left-[-100px] top-[50%] translate-y-[-50%] bg-radial-gradient  from-[#ff7000] to-[yellow_90%]  w-[26px] h-[26px] rounded-full shadow-[0_0_0px_6px_#fbff0030,_0_0_0px_12px_#fbff0025,_0_0_0px_18px_#fbff0020] ${value=== 'light' ? 'left-[6px]':''} `}></div>
 
           </div>
         </div>

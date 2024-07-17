@@ -55,12 +55,12 @@ html {
 
 .ball:nth-of-type(2) {
     background: hsla(64, 41%, 92%, 1);
+    /* linear-gradient(90deg, hsl(258.79deg 100% 76.33%) 0%, hsl(175.71deg 100% 83.19%) 50%, hsla(305, 75%, 83%, 1) 100%) */
+    background: linear-gradient(90deg, hsl(258.79deg 100% 76.33%) 0%, hsl(175.71deg 100% 83.19%) 50%, hsla(305, 75%, 83%, 1) 100%);
 
-    background: linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsl(258.79deg 100% 76.33%) 0%, hsl(175.71deg 100% 83.19%) 50%, hsla(305, 75%, 83%, 1) 100%);
 
-    background: -moz-linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
-
-    background: -webkit-linear-gradient(90deg, hsla(64, 41%, 92%, 1) 0%, hsla(196, 83%, 84%, 1) 50%, hsla(305, 75%, 83%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsl(258.79deg 100% 76.33%) 0%, hsl(175.71deg 100% 83.19%) 50%, hsla(305, 75%, 83%, 1) 100%);
 
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F2F3E2", endColorstr="#B2E5F8", GradientType=1);
 }
@@ -162,7 +162,7 @@ input.acco:checked+.detail::after {
     animation: outline-hover 0.8s ease;
 }
 
-:is(.outLine,.filterBtn):active {
+:is(.outLine, .filterBtn):active {
     transition: all 0.2s ease;
     outline-offset: 7px;
     outline-width: 1px;
@@ -180,6 +180,7 @@ input.acco:checked+.detail::after {
         outline-color: transparent;
     }
 }
+
 @keyframes outlineinput {
     0% {
         outline-width: 1px;
@@ -208,20 +209,23 @@ input.acco:checked+.detail::after {
     }
 }
 
-.filterBtn{
+.filterBtn {
     outline: solid 0px;
-    background-image:linear-gradient(145deg, rgb(197 148 209), rgb(0 0 0));
+    background-image: linear-gradient(145deg, rgb(197 148 209), rgb(0 0 0));
     color: white;
 }
-.filterBtn.activeFilter{
-    outline:#A3E636 solid 2px;
+
+.filterBtn.activeFilter {
+    outline: #A3E636 solid 2px;
 }
-.filterBtn:hover{
+
+.filterBtn:hover {
     animation: outlinefil 0.5s ease;
 }
+
 @keyframes outlinefil {
     0% {
-        outline-width: 1px; 
+        outline-width: 1px;
         outline-color: #A3E636;
     }
 
@@ -230,13 +234,30 @@ input.acco:checked+.detail::after {
         outline-color: transparent;
     }
 }
+
 .menuPage,
 .gallery {
     user-select: none;
 }
+
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
+}
+
+.cartItemWrapper>.flex::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* display: none; */
+}
+
+.dark .cartItemWrapper>.flex::before{
+    background:linear-gradient(151deg, transparent 33%, rgb(235 135 188) 66%, transparent 79%);
+}
+.cartItemWrapper>.flex::before{
+    background:linear-gradient(151deg, transparent 33%, rgb(215 178 217) 66%, transparent 79%);
 }
 
 /* .cartItem{

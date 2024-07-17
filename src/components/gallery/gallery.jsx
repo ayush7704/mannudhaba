@@ -70,7 +70,7 @@ function gallery() {
 
   return (
     <section className='relative gallery backdrop-blur-[70px]'>
-      <PageHeading mode={value} heading={'gallery'} />
+      <PageHeading heading={'gallery'} />
       <div className=' sm:p-[20px]'>
         {/* gallery filter start */}
         <div className="flex gap-4 sm:justify-center p-[20px] overflow-x-auto">

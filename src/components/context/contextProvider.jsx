@@ -6,16 +6,17 @@ import foodimg from '../home/hero-food.webp'
 import { matarPaneer, saahiPaneer, paneerButterMasala } from '../varieties imgs/varietyImgs'
 
 
-console.log('upparka')
+// console.log('upparka')
 let ContextProvider = ({ children }) => {
-  console.log('andarka')
+  // console.log('andarka')
+  const [value, setvalue] = useState('dark')
   const [menucard, setmenucard] = useState(
     [
       // panner only 
       { heading: 'paneer pasanda', variety: 'paneer special', img: foodimg, price: 240, inCart: false, quantity: 1 },
       { heading: 'kadai paneer', variety: 'paneer special', img: foodimg, price: 190, inCart: false, quantity: 1 },
       { heading: 'matar paneer', variety: 'paneer special', img: matarPaneer, price: 160, inCart: false, quantity: 1 },
-      { heading: 'chota paneer', variety: 'paneer special', img: foodimg, price: 160, inCart: false, quantity: 1 },
+      { heading: 'chola paneer', variety: 'paneer special', img: foodimg, price: 160, inCart: false, quantity: 1 },
       { heading: 'paneer punjabi', variety: 'paneer special', img: foodimg, price: 200, inCart: false, quantity: 1 },
       { heading: 'paneer masala', variety: 'paneer special', img: foodimg, price: 170, inCart: false, quantity: 1 },
       { heading: 'butter paneer masala', variety: 'paneer special', img: paneerButterMasala, price: 180, inCart: false, quantity: 1 },
@@ -24,13 +25,13 @@ let ContextProvider = ({ children }) => {
       { heading: 'kaaju paneer', variety: 'paneer special', img: foodimg, price: 220, inCart: false, quantity: 1 },
       { heading: 'paneer tikka masala', variety: 'paneer special', img: foodimg, price: 250, inCart: false, quantity: 1 },
       { heading: 'paalak paneer', variety: 'paneer special', img: foodimg, price: 160, inCart: false, quantity: 1 },
-      { heading: 'handa paneer', variety: 'paneer special', img: foodimg, price: 170, inCart: false, quantity: 1 },
+      { heading: 'haandi paneer', variety: 'paneer special', img: foodimg, price: 170, inCart: false, quantity: 1 },
       { heading: 'saahi paneer', variety: "paneer special", img: saahiPaneer, price: 170, inCart: false, quantity: 1 },
-      
+
       // thali
-      { heading: 'shaahi thali', variety:"other's",contains:['paneer','jeera rice','daal','papad','4 butter roti'], img: foodimg, price: 180, inCart: false, quantity: 1 },
-      { heading: 'thali', variety:"other's",contains:['pudi','sabji','chaval','papad'], img: foodimg, price: 150, inCart: false, quantity: 1 },
-      { heading: 'saada thali', variety:"other's",contains:['daal sabji','chaval','papad','4 roti'], img: foodimg, price: 130, inCart: false, quantity: 1 },
+      { heading: 'shaahi thali', variety: "other's", contains: ['paneer', 'jeera rice', 'daal', 'papad', '4 butter roti'], img: foodimg, price: 180, inCart: false, quantity: 1 },
+      { heading: 'thali', variety: "other's", contains: ['pudi', 'sabji', 'chaval', 'papad'], img: foodimg, price: 150, inCart: false, quantity: 1 },
+      { heading: 'saada thali', variety: "other's", contains: ['daal sabji', 'chaval', 'papad', '4 roti'], img: foodimg, price: 130, inCart: false, quantity: 1 },
       { heading: 'kheer', variety: "other's", img: foodimg, price: 70, inCart: false, quantity: 1 },
       { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180, inCart: false, quantity: 1 },
       { heading: 'dam aalu', variety: "other's", img: foodimg, price: 150, inCart: false, quantity: 1 },
@@ -111,35 +112,45 @@ let ContextProvider = ({ children }) => {
       { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30, inCart: false, quantity: 1 },
       { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15, inCart: false, quantity: 1 },
       { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20, inCart: false, quantity: 1 },
-      
+
     ])
   useLayoutEffect(() => {
     let menucardLocal = localStorage.getItem('menucard')
     if (menucardLocal) {
       let setmenulocal = JSON.parse(localStorage.getItem('menucard'))
       setmenucard(setmenulocal)
-      console.log('context setmenu')
+      // console.log('context setmenu')
+    }
+    const time = (new Date)
+    console.log(time + ' time   ')
+    console.log(document.documentElement.classList.contains('dark') === true && time.getHours() >= 8 && time.getHours() <= 17)
+    if (document.documentElement.classList.contains('dark') === true && time.getHours() >= 8 && time.getHours() <= 17) {
+      document.documentElement.classList.toggle('dark')
+      document.body.classList.toggle('bg-slate-50')
+      setvalue('light')
+      // alert()
     }
   }, [])
 
   let render = useRef(0)
   useEffect(() => {
     render.current = render.current + 1;
-    console.log('context render  ' + render.current)
-    console.log(menucard)
+    // console.log('context render  ' + render.current)
+    // console.log(menucard)
   })
 
   let addToCartItemValue = useMemo(() => { return (menucard.filter((menu) => { return menu.inCart === true })) }, [menucard])
 
 
+
   useLayoutEffect(() => {
     localStorage.setItem('menucard', JSON.stringify(menucard))
     // console.log('context render  ' + render.current)
-    console.log('context menucard')
+    // console.log('context menucard')
   }, [menucard])
 
+
   const [fixedMsg, setfixedMsg] = useState({ msg: 'initial', initial: 'initial', random: true })
-  const [value, setvalue] = useState('dark')
   return (
     <counterContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue }}>
       {children}
@@ -150,24 +161,11 @@ export default memo(ContextProvider)
 
 console.log('nicheka')
 function Fixed() {
-  let render = useRef(0);
   const mainPopupEl = useRef(null);
 
   const { addToCartItemValue, fixedMsg } = useContext(counterContext)
-  const [addtocarditemlength, setaddtocarditemlength] = useState(addToCartItemValue.length)
-
-  // useLayoutEffect(() => {
-  //   render.current = render.current + 1;
-  //   console.log('fixed render  ' + render.current)
-  // })
 
   console.log(fixedMsg)
-
-  useLayoutEffect(() => {
-    console.log('fixed render  ' + render.current + ' uselayout ' + addToCartItemValue.length)
-    console.log(addtocarditemlength)
-    setaddtocarditemlength(addToCartItemValue.length)
-  }, [addToCartItemValue])
 
   useEffect(() => {
     let timeout;
@@ -178,7 +176,6 @@ function Fixed() {
     timeout = setTimeout(() => {
       gsap.to(mainPopupEl.current, { opacity: 0, bottom: 0, duration: 0.2, ease: 'none' })
     }, 1700);
-    setaddtocarditemlength(addToCartItemValue.length)
     return () => {
       clearTimeout(timeout);
     };
@@ -190,12 +187,13 @@ function Fixed() {
   )
 }
 
-let PageHeading = memo(({ heading, mode }) => {
+let PageHeading = memo(({ heading }) => {
+  const {value} = useContext(counterContext)
   console.log('pageheading')
   return (
     <div className='flex items-center py-5 px-5'>
       {/* return btn  */}
-      <div className='text-3xl capitalize inline-flex w-[40px] h-[40px] items-center justify-center cursor-pointer dark:hover:shadow-[4px_0px_5px_-2px_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[3px_0px_5px_-2px_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={mode === 'dark' ? 'white' : 'black'} fill="none" className='dark:drop-shadow-[4px_1px_1px_black] drop-shadow-[3px_0px_1px_black]'>
+      <div className='text-3xl capitalize inline-flex w-[40px] h-[40px] items-center justify-center cursor-pointer dark:hover:shadow-[4px_0px_5px_-2px_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[3px_0px_5px_-2px_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={value === 'dark' ? 'white' : 'black'} fill="none" className='dark:drop-shadow-[4px_1px_1px_black] drop-shadow-[3px_0px_1px_black]'>
         <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg> </span></div>

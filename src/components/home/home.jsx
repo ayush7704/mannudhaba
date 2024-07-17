@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { counterContext } from '../context/context.js'
+import Map from '../map.jsx'
 // import { SplitText } from 'gsap/all'
 gsap.registerPlugin(ScrollTrigger)
 
@@ -201,8 +202,8 @@ function home(props) {
         end: 'center 80%',
       }
     })
-    console.log('gsap')
-    console.log(context.data)
+    // console.log('gsap')
+    // console.log(context.data)
     return () => {
       // settime
     };
@@ -283,13 +284,13 @@ function home(props) {
         <div className='hero  flex items-center overflow-x-hidden min-h-[90vh] relative p-[20px]'>
           <div className="homecontent mx-auto py-14 px-[20px] sm:w-[75%] flex flex-col items-center gap-4">
             <div className='overflow-y-hidden '>
-              <h1 className='relative uppercase text-4xl text-center'>Taste the different: <span className='text-stroke inline-block' ref={pureveg}>pure veg </span> Now</h1>
+              <h1 className='relative uppercase text-4xl text-center'>Taste the different: <span className='text-stroke inline-block' style={{textShadow:'1px 1px 1px aliceblue, 4px 3px 2px black'}} ref={pureveg}>pure veg </span> Now</h1>
             </div>
 
             {/* food img */}
             <div className={`h-[250px] relative self-stretch`} ref={mealDiv} onMouseMove={mealDivover}>
               <Link to='/menu' className='h-full w-full flex justify-center'>
-                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_30px_35px_rgba(0,0,0,63%)]' />
+                <img ref={mealimg} src={foodimg} alt="img" className='md:absolute translate-x-0 h-[250px] w-[250px] drop-shadow-[0_20px_35px_rgba(0,0,0,63%)] dark:drop-shadow-[0_20px_35px_rgba(255,255,255,25%)] sm:dark:drop-shadow-[0_20px_35px_rgba(255,255,255,45%)]' />
               </Link>
             </div>
 
@@ -410,9 +411,9 @@ function home(props) {
           </div>
         </div>
         <ReasonAndtiming />
-        <div>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d916.486984201125!2d77.25028019195072!3d23.24498154910111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c614107f0d14d%3A0x17c8d7aee88d59fa!2sMannu%20Dhaba%20%26%20family%20Restaurant!5e0!3m2!1sen!2sin!4v1709424647844!5m2!1sen!2sin" className='border border-white w-full h-[350px]' allowFullScreen="" referrerPolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+        <section className='h-[300px]'>
+       <Map/>
+        </section>
       </div>
 
     </section>

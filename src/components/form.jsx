@@ -167,11 +167,11 @@ const WhatsAppForm = ({ subtotal, orders }) => {
       <div className="grid gap-2 py-2 items-center">
         <button
           type="submit"
-          className="bg-[linear-gradient(to_left_top,_hsla(43,_84%,_85%,_1)_0%,_hsla(325,_71%,_70%,_1)_50%,_hsla(236,_67%,_55%,_1)_100%)] text-white font-bold py-2 px-4 rounded"
+          className="bg-[linear-gradient(to_left_top,_hsla(43,_84%,_85%,_1)_0%,_hsla(325,_71%,_70%,_1)_50%,_hsla(236,_67%,_55%,_1)_100%)] text-white font-bold py-2 px-4 rounded capitalize"
         >
-          conform order
+          order
         </button>
-        <button type="reset" className="bg-[rgba(100,106,120,0.08)] hover:bg-[rgba(100,106,120,18%)] text-red font-bold py-2 px-4 rounded"> reset</button>
+        <button type="reset" className="bg-[rgba(100,106,120,0.08)] capitalize hover:bg-[rgba(100,106,120,18%)] text-red font-bold py-2 px-4 rounded"> reset</button>
 
       </div>
     </form>
