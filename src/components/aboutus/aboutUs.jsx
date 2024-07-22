@@ -73,7 +73,7 @@ function aboutUs() {
           </div>
 
           <h2 className=' text-2xl capitalize  mb-4'>more about mannu dhaba</h2>
-          <p ref={secondPRef} className=' mb-2 sm:w-[75%] mx-auto text-justify text-[18px]'>
+          <p ref={secondPRef} className=' mb-2 sm:w-[75%] mx-auto text-justify text-[17px]'>
             {"mannu dhaba & restaurant at Khajoori Sadak Bhopal sehore road is a reliable name in the industry as we aim to deliver the best experience of pure veg dishes to our customers in our family friendly atmoshphere since year 2000 . This has helped us build up a loyal customer base. And as we are exactly located at on Khajuri Sadak , Indore Bhopal Highway 18, Bairagarh-462030 , it is easy to locate us on the map. For any kind of assistance or questions, feel free to call us directly on these numbers.".split(' ').map((char, charind) => (
               <span key={charind}>
                 <span className={`${value === 'dark' ? 'dark-secondPCharSpan' : 'secondPCharSpan'} dark:text-[#606060] text-[#606060] ${char === 'pure' || char === 'veg' || char === "cousin's" || char === 'family' || char === 'friendly' || char === 'year' || char === '2000' || char === 'atmoshphere' ? 'font-extrabold' : ''}`}>{`${char} `}</span>

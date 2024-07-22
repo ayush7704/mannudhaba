@@ -1,5 +1,5 @@
 :is(.links, .linkswrapper) {
-    top: calc(var(--navHeight) + 0.3px);
+    top: calc(var(--navHeight));
 }
 
 @media (max-width:400px) {

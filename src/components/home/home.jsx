@@ -333,7 +333,6 @@ function home(props) {
 
           {/*==== food cards  ====*/}
           <div className="flex p-[20px] flex-wrap justify-center gap-y-[50px] gap-5">
-            <hr />
             {
               homecardObj.map((menu, index) => (
                 <div key={index} ref={homecard} className="homecard relative pt-4 grid overflow-hidden w-[300px] min-h-[300px] bg-[#00000012] border border-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] rounded-lg ">

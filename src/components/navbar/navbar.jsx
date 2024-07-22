@@ -38,12 +38,17 @@ function Navbar(props) {
     linkswrapper.current.classList.toggle('hidden')
   }
 
-  window.addEventListener('resize', () => {
-    document.documentElement.style.setProperty(`--navHeight`, `${nav.current.offsetHeight}px`)
-  })
-
   useEffect(() => {
-    document.documentElement.style.setProperty(`--navHeight`, `${nav.current.offsetHeight}px`)
+    const imgRandor = () => {
+      document.documentElement.style.setProperty(`--navHeight`, `${nav.current.getBoundingClientRect().height}px`)
+    }
+    window.addEventListener('resize', imgRandor)
+    document.querySelector('.nav-logo').addEventListener('load', imgRandor)
+    document.documentElement.style.setProperty(`--navHeight`, `${nav.current.getBoundingClientRect().height}px`)
+    return () => {
+      document.querySelector('.nav-logo').removeEventListener('load', imgRandor)
+      window.removeEventListener('resize', imgRandor)
+    }
   })
 
   useGSAP(() => {
@@ -51,15 +56,14 @@ function Navbar(props) {
   }, [addToCartItemValue.length])
   return (
     // dark:bg-[rgb(30,30,30)]  bg-[#ebedec] dark:bg-[#1e1e1e]
-    <nav ref={nav} className=' z-[5] dark:bg-[rgb(13,13,13)] bg-[#f5fffa]  flex items-center py-[5px] justify-between lg:pl-[20px] pl-[10px] pr-[20px]  sticky top-0'>
+    <nav ref={nav} className='z-[5] dark:bg-[rgb(13,13,13)] bg-[#f5fffa]  flex items-center py-[5px] justify-between lg:pl-[20px] pl-[10px] pr-[20px]  sticky top-0'>
 
       {/* blur bg for nav  */}
       {/* <div className='absolute inset-0 z-[-1] w-full h-full backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e]'></div> */}
 
       {/*======== logo and name   ======*/}
       <div className="name-logo flex gap-4 items-center">
-        <img src={`${document.querySelector('html').classList.contains('dark') ? whiteLogo : blacklogo}`} alt="logo" className='nav-logo rounded-full w-[190px] md:w-[210px] ' />
-        {/* <h3 className={`capitalize font-bold dark:text-white text-black`} >mannu dhaba</h3> */}
+        <img src={`${document.querySelector('html').classList.contains('dark') ? whiteLogo : blacklogo}`} alt="logo" className='nav-logo rounded-full w-[190px] md:w-[210px]' />
       </div>
 
 
@@ -122,7 +126,7 @@ function Navbar(props) {
             <img src={togglebg} className='absolute w-full h-full object-cover inset-0' alt="img" />
 
             {/* <img src={moon} className='moon transition-all duration-1000 left-[6px] left-[100px] w-[26px] h-[26px] absolute top-[50%] translate-y-[-50%] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20]' alt="img" /> */}
-            <div className={`moon top-[50%] translate-y-[-50%] transition-all duration-1000 left-[100px] relative w-[26px] bg-[#E7E7E7] h-[26px] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20] overflow-hidden ${value=== 'dark' ? 'left-[4px]':''} `}>
+            <div className={`moon top-[50%] translate-y-[-50%] transition-all duration-1000 left-[100px] relative w-[26px] bg-[#E7E7E7] h-[26px] rounded-full shadow-[0_0_0px_6px_#ffffff30,_0_0_0px_12px_#ffffff25,_0_0_0px_18px_#ffffff20] overflow-hidden ${value === 'dark' ? 'left-[4px]' : ''} `}>
 
               <div className="absolute top-0 right-0 w-[40%] h-[40%] rounded-[50%] bg-[#CDCDCD]"></div>
               <div className="absolute top-1 right-3 w-[30%] h-[30%] rounded-[50%] bg-[#CDCDCD]"></div>
@@ -133,8 +137,8 @@ function Navbar(props) {
             </div>
 
             {/* sun bg  */}
-            <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${value=== 'dark' ? 'opacity-0':''}`} alt="img" />
-            <div className={`yellow transition-all duration-1000 absolute left-[-100px] top-[50%] translate-y-[-50%] bg-radial-gradient  from-[#ff7000] to-[yellow_90%]  w-[26px] h-[26px] rounded-full shadow-[0_0_0px_6px_#fbff0030,_0_0_0px_12px_#fbff0025,_0_0_0px_18px_#fbff0020] ${value=== 'light' ? 'left-[6px]':''} `}></div>
+            <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${value === 'dark' ? 'opacity-0' : ''}`} alt="img" />
+            <div className={`yellow transition-all duration-1000 absolute left-[-100px] top-[50%] translate-y-[-50%] bg-radial-gradient  from-[#ff7000] to-[yellow_90%]  w-[26px] h-[26px] rounded-full shadow-[0_0_0px_6px_#fbff0030,_0_0_0px_12px_#fbff0025,_0_0_0px_18px_#fbff0020] ${value === 'light' ? 'left-[6px]' : ''} `}></div>
 
           </div>
         </div>

@@ -175,13 +175,13 @@ function menus(props) {
   const { value, menucard, setmenucard, setfixedMsg } = useContext(counterContext)
 
   useEffect(() => {
-    console.log(menucard)
+    // console.log(menucard)
   })
 
   let [finalfilter, setfinalfilter] = useState(menucard);
 
   useLayoutEffect(() => {
-    console.log(selection.current.value)
+    // console.log(selection.current.value)
     setselect(selection.current.value)
     filter1 = menucard.filter((n) => {
       if (select === 'all') {
@@ -200,22 +200,8 @@ function menus(props) {
 
   useEffect(() => {
     document.title = 'Mannu Dhaba Menu'
-    // gsap.set(popup.current, { y: 100, opacity: 0 })
   }, [])
 
-  const { contextSafe } = useGSAP()
-  const listener = contextSafe(() => {
-    let lastScrollTop = 0;
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    if (currentScroll > lastScrollTop) {
-      gsap.to(searchDiv.current, { position: 'static' })
-    } else {
-      gsap.to(searchDiv.current, { position: 'sticky', top: 'var(--navHeight)' })
-    }
-    lastScrollTop = currentScroll;
-    // })
-  })
-  window.addEventListener('scroll', listener())
 
   useGSAP(() => {
     gsap.utils.toArray('.homecard').forEach(element => {
@@ -238,13 +224,13 @@ function menus(props) {
   useGSAP((context,contextSafe) => {
     let lastScrollTop = 0;
     const listener = contextSafe(() => {
-      // console.log('iiinnnnn')
+      console.log('iiinnnnn')
       let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
       if (currentScroll > lastScrollTop) {
-        // console.log(`iiinnnnn true ${currentScroll} ${lastScrollTop}`)
+        console.log(`inside listener true ${ currentScroll}` )
         gsap.to(searchDiv.current, { position: 'static' })
         } else {
-        // console.log('iiinnnnn false')
+          console.log(`inside listener false ${ lastScrollTop}` )
         gsap.to(searchDiv.current, { position: 'sticky', top: 'var(--navHeight)' })
       }
       lastScrollTop = currentScroll;
@@ -267,7 +253,7 @@ function menus(props) {
   }, [formsubmitted])
 
   search = (e) => {
-    console.log('form submiteed')
+    // console.log('form submiteed')
     console.log(searchInput.current.value.toLowerCase().trim())
     e.preventDefault()
     searchInput.current.value = searchInput.current.value.trim()
@@ -275,7 +261,7 @@ function menus(props) {
     searchInput.current.value !== undefined && searchInput.current.value !== '' && window.scrollTo(0, 0)
     searchInput.current.value !== undefined && searchInput.current.value !== '' ? setsearchvalue(menucard.filter((e) => { return e.heading.toLowerCase().includes(searchInput.current.value.toLowerCase().trim()) || e.variety.toLowerCase().includes(searchInput.current.value.toLowerCase().trim()) })) : '';
     setformsubmitted(!formsubmitted)
-    console.log(searchvalue)
+    // console.log(searchvalue)
   }
 
   const updateCart = (variety, heading) => {
