@@ -109,7 +109,7 @@ function cart() {
   useGSAP(() => {
     gsap.utils.toArray('.cartItem').forEach(element => {
       gsap.fromTo(element,
-        { y: 50 , ease:'none'
+        { y: 36 , ease:'none'
         },
         {
           y: 0, scrollTrigger: {

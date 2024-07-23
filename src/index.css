@@ -260,15 +260,6 @@ input.acco:checked+.detail::after {
     background:linear-gradient(151deg, transparent 33%, rgb(215 178 217) 66%, transparent 79%);
 }
 
-/* .cartItem{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 50%;
-    background-color: red;
-} */
-/* .search-div{
+.search-div{
     top: var(--navHeight);
-} */
+}

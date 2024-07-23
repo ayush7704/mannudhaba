@@ -19,7 +19,6 @@ function footer(props) {
             {/* // border-t dark:border-t-slate-200 border-t-slate-500 */}
             {/* <div className='w-full h-[1px] dark:bg-slate-200 bg-slate-500  rounded-full overflow-hidden'></div> */}
             <div className='py-5 sm:px-5 grid gap-8'>
-                {/* changes in bg of whole website with moving gradient and fixed bug of menus searchbar stickyness */}
                 <div className='grid sm:grid-cols-3 gap-6'>
                     <div className='sm:order-[-1] order-1'>
                         <h2 className='capitalize text-lg mb-3'>explore more</h2>

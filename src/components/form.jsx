@@ -4,6 +4,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
   const [selectedOption, setSelectedOption] = useState('home delivery');
   const [villageOption, setvillageOption] = useState('');
   const [delifees, setdelifees] = useState(null)
+  const [platformFees, setplatformFees] = useState(Math.ceil((Number(subtotal) * 3) / 100))
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -16,8 +17,12 @@ const WhatsAppForm = ({ subtotal, orders }) => {
     ["pipaliya", 50]
   ])
   useEffect(() => {
+    console.log(platformFees)
     console.log(Array.isArray(orders))
   })
+  useEffect(() => {
+    setplatformFees(Math.ceil((Number(subtotal) * 3) / 100))
+  }, [subtotal])
   useEffect(() => {
     if (localStorage.getItem('formdata')) {
       setFormData(JSON.parse(localStorage.getItem('formdata')))
@@ -25,6 +30,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
     }
     setdelifees(deliveryFees.get(villageOption))
   }, [])
+
   useEffect(() => {
     localStorage.setItem('formdata', JSON.stringify(formData))
   }, [formData])
@@ -73,7 +79,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
     formdata += `(${[key + 1]}) ${orders[key].heading} qty:(${orders[key].quantity})  price:(${orders[key].price}) \n`
   }
   return (
-    <form action="https://formsubmit.co/nagarayush570@gmail.com"  method="POST" onReset={handleReset} className="relative sm:max-w-lg w-full mx-auto text-black p-4 bg-white shadow-md rounded-lg">
+    <form action="https://formsubmit.co/nagarayush570@gmail.com" method="POST" onReset={handleReset} className="relative sm:max-w-lg w-full mx-auto text-black p-4 bg-white shadow-md rounded-lg">
       <div className="py-2">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
           Your Name
@@ -115,8 +121,8 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
         ></textarea>
       </div>
-      <input type="hidden" value={formdata} name="orderData"/>
-      <input type="hidden" value={`${delifees === undefined ? 0 : delifees}`} name="deliver fees"/>
+      <input type="hidden" value={formdata} name="orderData" />
+      <input type="hidden" value={`${delifees === undefined ? 0 : delifees}`} name="deliver fees" />
       <input type="hidden" value={`${subtotal}`} name="subTotal" />
       <input type="hidden" value={`${selectedOption === 'home delivery' ? (delifees === undefined ? 0 : delifees) + subtotal : subtotal}`} name="finalbill" />
 
@@ -157,10 +163,16 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           <span>Delivery</span>
           <span className={`${selectedOption !== 'home delivery' ? 'line-through' : ''}`}> &#8377; {delifees === undefined ? 0 : delifees}</span>
         </p>
+        <p className='flex justify-between'>
+          <span>platform fee</span>
+          <span>
+            &#8377;  {platformFees}
+          </span>
+        </p>
       </div>
       <div className='py-2 border-b text-[17px]'>
         <h2 className='flex justify-between'>
-          <span>Total</span><span>{`${selectedOption === 'home delivery' ? (delifees === undefined ? 0 : delifees) + subtotal : subtotal}`}</span>
+          <span> Total</span><span> &#8377; {`${selectedOption === 'home delivery' ? (delifees === undefined ? 0 : delifees) + subtotal + platformFees : subtotal + platformFees}`}</span>
         </h2>
       </div>
 
