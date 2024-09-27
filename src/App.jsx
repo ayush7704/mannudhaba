@@ -35,10 +35,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/menu' element={<Menus />} />
-        <Route path='/about Us' element={<About />} />
+        <Route path='/about-us' element={<About />} />
         <Route path='/gallery' element={<Gallery />} />
         <Route path='/cart' element={<Cart />} />
-        {/* <Route path='/form' element={<Form />} /> */}
       </Routes>
       <Footer />
       <div>

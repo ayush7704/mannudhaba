@@ -1,14 +1,11 @@
 import { counterContext } from "./context";
 import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo } from "react";
 import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
 import foodimg from '../home/hero-food.webp'
-import { matarPaneer, saahiPaneer, paneerButterMasala } from '../varieties imgs/varietyImgs'
+import { matarPaneer, saahiPaneer, paneerButterMasala ,kheer} from '../varieties imgs/varietyImgs'
 
 
-// console.log('upparka')
 let ContextProvider = ({ children }) => {
-  // console.log('andarka')
   const [value, setvalue] = useState('dark')
   const [menucard, setmenucard] = useState(
     [
@@ -28,11 +25,11 @@ let ContextProvider = ({ children }) => {
       { heading: 'haandi paneer', variety: 'paneer special', img: foodimg, price: 170, inCart: false, quantity: 1 },
       { heading: 'saahi paneer', variety: "paneer special", img: saahiPaneer, price: 170, inCart: false, quantity: 1 },
 
-      // thali
+      // thali and others
       { heading: 'shaahi thali', variety: "other's", contains: ['paneer', 'jeera rice', 'daal', 'papad', '4 butter roti'], img: foodimg, price: 180, inCart: false, quantity: 1 },
       { heading: 'thali', variety: "other's", contains: ['pudi', 'sabji', 'chaval', 'papad'], img: foodimg, price: 150, inCart: false, quantity: 1 },
       { heading: 'saada thali', variety: "other's", contains: ['daal sabji', 'chaval', 'papad', '4 roti'], img: foodimg, price: 130, inCart: false, quantity: 1 },
-      { heading: 'kheer', variety: "other's", img: foodimg, price: 70, inCart: false, quantity: 1 },
+      { heading: 'kheer', variety: "other's", img: kheer, price: 70, inCart: false, quantity: 1 },
       { heading: 'veg kofta', variety: "other's", img: foodimg, price: 180, inCart: false, quantity: 1 },
       { heading: 'dam aalu', variety: "other's", img: foodimg, price: 150, inCart: false, quantity: 1 },
       { heading: 'raap tamatar', variety: "other's", img: foodimg, price: 170, inCart: false, quantity: 1 },
@@ -112,7 +109,11 @@ let ContextProvider = ({ children }) => {
       { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30, inCart: false, quantity: 1 },
       { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15, inCart: false, quantity: 1 },
       { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20, inCart: false, quantity: 1 },
-
+      
+      // salad 
+      { heading: 'green salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
+      { heading: 'kachumar salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
+      { heading: 'onion salad', variety: 'salad special', img: foodimg, price: 40, inCart: false, quantity: 1 },
     ])
   useLayoutEffect(() => {
     let menucardLocal = localStorage.getItem('menucard')
@@ -128,20 +129,15 @@ let ContextProvider = ({ children }) => {
       document.documentElement.classList.toggle('dark')
       document.body.classList.toggle('bg-slate-50')
       setvalue('light')
-      // alert()
     }
   }, [])
 
   let render = useRef(0)
   useEffect(() => {
     render.current = render.current + 1;
-    // console.log('context render  ' + render.current)
-    // console.log(menucard)
   })
 
   let addToCartItemValue = useMemo(() => { return (menucard.filter((menu) => { return menu.inCart === true })) }, [menucard])
-
-
 
   useLayoutEffect(() => {
     localStorage.setItem('menucard', JSON.stringify(menucard))
@@ -163,7 +159,7 @@ console.log('nicheka')
 function Fixed() {
   const mainPopupEl = useRef(null);
 
-  const { addToCartItemValue, fixedMsg } = useContext(counterContext)
+  const { fixedMsg } = useContext(counterContext)
 
   console.log(fixedMsg)
 
@@ -183,7 +179,7 @@ function Fixed() {
 
 
   return (
-    <div ref={mainPopupEl} className={`fixed z-10 opacity-0  dark:bg-white dark:text-[rgb(84_135_0)] capitalize left-1/2 -translate-x-1/2 inline-block  bg-black text-[#9eff00]  px-5 py-3 text-center w-max rounded-[8px] dark:shadow-[0px_0px_3px_0px_white] shadow-[0px_0px_3px_0px_black]`}>{fixedMsg.msg}</div>
+    <div ref={mainPopupEl} style={{pointerEvents:'none'}} className={`fixed z-10 opacity-0  dark:bg-white dark:text-[rgb(84_135_0)] capitalize left-1/2 -translate-x-1/2 inline-block  bg-black text-[#9eff00]  px-5 py-3 text-center w-max rounded-[8px] dark:shadow-[0px_0px_0.1875rem_0px_white] shadow-[0px_0px_0.1875rem_0px_black]`}>{fixedMsg.msg}</div>
   )
 }
 
@@ -193,11 +189,11 @@ let PageHeading = memo(({ heading }) => {
   return (
     <div className='flex items-center py-5 px-5'>
       {/* return btn  */}
-      <div className='text-3xl capitalize inline-flex w-[40px] h-[40px] items-center justify-center cursor-pointer dark:hover:shadow-[4px_0px_5px_-2px_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[3px_0px_5px_-2px_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color={value === 'dark' ? 'white' : 'black'} fill="none" className='dark:drop-shadow-[4px_1px_1px_black] drop-shadow-[3px_0px_1px_black]'>
+      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span><svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
         <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg> </span></div>
-      <h3 className='text-2xl ml-4 capitalize font-semibold' style={{ textShadow: '2px 1px 3px #3b3b3b94' }}>{heading}</h3>
+      <h3 className='text-[1.43rem] ml-4 capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>{heading}</h3>
     </div>
   )
 })

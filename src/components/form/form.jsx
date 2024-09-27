@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const WhatsAppForm = ({ subtotal, orders }) => {
   const [selectedOption, setSelectedOption] = useState('home delivery');
@@ -126,7 +126,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
       <input type="hidden" value={`${subtotal}`} name="subTotal" />
       <input type="hidden" value={`${selectedOption === 'home delivery' ? (delifees === undefined ? 0 : delifees) + subtotal : subtotal}`} name="finalbill" />
 
-      <div className="py-2 flex-wrap flex justify-between text-center items-center text-[14px]">
+      <div className="py-2 flex-wrap flex justify-between text-center items-center text-[0.875rem]">
         <label className='cursor-pointer flex-1 hover:bg-[#F6F6F6] rounded-lg px-2 py-1 text-nowrap' htmlFor="homeDelivery">
           <input type="radio" name="deliveryType" value='home delivery' id="homeDelivery" className='mr-2 align-middle' onChange={handleOptionChange} checked={selectedOption === 'home delivery'} />
           home delivery
@@ -136,7 +136,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           click & pickup
         </label>
       </div>
-      <div className={`py-2 flex-wrap flex justify-between text-center items-center text-[14px] ${selectedOption !== 'home delivery' ? 'hidden' : ''}`}>
+      <div className={`py-2 flex-wrap flex justify-between text-center items-center text-[0.875rem] ${selectedOption !== 'home delivery' ? 'hidden' : ''}`}>
         <label className='cursor-pointer flex-1 hover:bg-[#F6F6F6] rounded-lg px-2 py-1 text-nowrap' htmlFor="bakaniya">
           <input type="radio" name="village" value='bakaniya' id="bakaniya" className='mr-2 align-middle' onChange={handleOptionChangeVillage} checked={villageOption === 'bakaniya'} required={selectedOption === 'home delivery'} />
           bakaniya
@@ -150,7 +150,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           pipaliya
         </label>
       </div>
-      <div className='py-2 border-b text-[14px]'>
+      <div className='py-2 border-b text-[0.875rem]'>
         <p className='flex justify-between'>
           <span>Items:</span>
           <span>{orders.length}</span>
@@ -170,7 +170,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           </span>
         </p>
       </div>
-      <div className='py-2 border-b text-[17px]'>
+      <div className='py-2 border-b text-[1.0625rem]'>
         <h2 className='flex justify-between'>
           <span> Total</span><span> &#8377; {`${selectedOption === 'home delivery' ? (delifees === undefined ? 0 : delifees) + subtotal + platformFees : subtotal + platformFees}`}</span>
         </h2>
@@ -179,7 +179,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
       <div className="grid gap-2 py-2 items-center">
         <button
           type="submit"
-          className="bg-[linear-gradient(to_left_top,_hsla(43,_84%,_85%,_1)_0%,_hsla(325,_71%,_70%,_1)_50%,_hsla(236,_67%,_55%,_1)_100%)] text-white font-bold py-2 px-4 rounded capitalize"
+          className="bg-[linear-gradient(to_left_top,_hsla(43,_84%,_85%,_1)_0%,_hsla(325,_71%,_70%,_1)_50%,_hsla(236,_67%,_55%,_1)_100%)] text-white font-bold py-2 px-4 rounded capitalize tracking-wider"
         >
           order
         </button>

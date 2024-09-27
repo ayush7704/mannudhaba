@@ -30,19 +30,28 @@ html {
     background-color: rgb(0, 0, 0);
     /* font-family: "Tourney", sans-serif; */
     font-family: "Anta", sans-serif;
-    font-weight: 400;
+    /* font-weight: 400; */
     font-style: normal;
     transition: background-color 0.3s linear;
+}
+
+.ar-one-sans {
+    font-family: "AR One Sans", sans-serif;
+    font-optical-sizing: auto;
+    /* font-weight: <weight>; */
+    font-style: normal;
+    font-variation-settings:
+        "ARRR" 10;
 }
 
 .linear-btn {
     background: hsla(43, 84%, 85%, 1);
 
-    background: linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+    background: linear-gradient(270deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
 
-    background: -moz-linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+    background: -moz-linear-gradient(270deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
 
-    background: -webkit-linear-gradient(125deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
+    background: -webkit-linear-gradient(270deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%);
     transition: all 0.3s linear;
 }
 
@@ -131,6 +140,7 @@ input.acco~.check-content {
     transition: 0.35s linear;
     padding-block: 7px;
     max-height: 50rem;
+    border-radius: 0.125rem;
 }
 
 input.acco+label:hover {
@@ -206,18 +216,12 @@ input.acco:checked+.detail::after {
     scroll-behavior: smooth;
 }
 
-@media (max-width:500px) {
-
-    body,
-    html {
-        font-size: 15px;
-    }
-}
 
 .filterBtn {
     outline: solid 0px;
     background-image: linear-gradient(145deg, rgb(197 148 209), rgb(0 0 0));
     color: white;
+    font-size: .97rem;
 }
 
 .filterBtn.activeFilter {
@@ -253,13 +257,53 @@ input.acco:checked+.detail::after {
     /* display: none; */
 }
 
-.dark .cartItemWrapper>.flex::before{
-    background:linear-gradient(151deg, transparent 33%, rgb(235 135 188) 66%, transparent 79%);
-}
-.cartItemWrapper>.flex::before{
-    background:linear-gradient(151deg, transparent 33%, rgb(215 178 217) 66%, transparent 79%);
+.dark .cartItemWrapper>.flex::before {
+    background: linear-gradient(151deg, transparent 33%, rgb(235 135 188) 66%, transparent 79%);
 }
 
-.search-div{
+.cartItemWrapper>.flex::before {
+    background: linear-gradient(151deg, transparent 33%, rgb(215 178 217) 66%, transparent 79%);
+}
+
+.search-div {
     top: var(--navHeight);
+}
+
+
+/* .dark-secondPCharSpan{
+    color: #606060;
+}
+.secondPCharSpan{
+    color: rgb(96 96 96 / 38%);
+} */
+@media (max-width:500px) {
+
+    body,
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width:350px) {
+
+    body,
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width:300px) {
+
+    body,
+    html {
+        font-size: 13px;
+    }
+}
+
+@media (min-width:1450px) {
+
+    body,
+    html {
+        font-size: 17px;
+    }
 }
