@@ -82,7 +82,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
     <form action="https://formsubmit.co/nagarayush570@gmail.com" method="POST" onReset={handleReset} className="relative sm:max-w-lg w-full mx-auto text-black p-4 bg-white shadow-md rounded-lg">
       <div className="py-2">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-          Your Name
+          Your name
         </label>
         <input
           id="name"
@@ -164,7 +164,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
           <span className={`${selectedOption !== 'home delivery' ? 'line-through' : ''}`}> &#8377; {delifees === undefined ? 0 : delifees}</span>
         </p>
         <p className='flex justify-between'>
-          <span>platform fee</span>
+          <span>Platform fee</span>
           <span>
             &#8377;  {platformFees}
           </span>

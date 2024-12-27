@@ -144,12 +144,12 @@ input.acco~.check-content {
 }
 
 input.acco+label:hover {
-    background-color: #80808036;
+    background-color: #80808024;
     transition: all 0.35s;
 }
 
 input.acco~.check-content:hover {
-    background-color: #80808036;
+    background-color: #80808024;
 }
 
 input.acco+.detail::after {
@@ -222,6 +222,7 @@ input.acco:checked+.detail::after {
     background-image: linear-gradient(145deg, rgb(197 148 209), rgb(0 0 0));
     color: white;
     font-size: .97rem;
+    line-height: 0;
 }
 
 .filterBtn.activeFilter {
@@ -307,3 +308,17 @@ input.acco:checked+.detail::after {
         font-size: 17px;
     }
 }
+@media (min-width:1600px) {
+
+    body,
+    html {
+        font-size: 18px;
+    }
+}
+
+/* .flex.relative.p-\[1\.25rem\].flex-nowrap.overflow-x-auto.gap-\[0\.625rem\]{
+    cursor: grabbing;
+}
+.flex.relative.p-\[1\.25rem\].flex-nowrap.overflow-x-auto.gap-\[0\.625rem\]::-webkit-scrollbar{
+    display: none;
+} */

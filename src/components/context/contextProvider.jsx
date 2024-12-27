@@ -1,4 +1,4 @@
-import { counterContext } from "./context";
+import { globalContext } from "./context";
 import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo } from "react";
 import gsap from 'gsap'
 import foodimg from '../home/hero-food.webp'
@@ -148,9 +148,9 @@ let ContextProvider = ({ children }) => {
 
   const [fixedMsg, setfixedMsg] = useState({ msg: 'initial', initial: 'initial', random: true })
   return (
-    <counterContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue }}>
+    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue }}>
       {children}
-    </counterContext.Provider>
+    </globalContext.Provider>
   )
 }
 export default memo(ContextProvider)
@@ -159,7 +159,7 @@ console.log('nicheka')
 function Fixed() {
   const mainPopupEl = useRef(null);
 
-  const { fixedMsg } = useContext(counterContext)
+  const { fixedMsg } = useContext(globalContext)
 
   console.log(fixedMsg)
 
@@ -184,7 +184,7 @@ function Fixed() {
 }
 
 let PageHeading = memo(({ heading }) => {
-  const {value} = useContext(counterContext)
+  const {value} = useContext(globalContext)
   console.log('pageheading')
   return (
     <div className='flex items-center py-5 px-5'>

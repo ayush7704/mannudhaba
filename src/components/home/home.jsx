@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { counterContext } from '../context/context.js'
+import { globalContext } from '../context/context.js'
 import Map from '../map.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
@@ -40,27 +40,27 @@ const ReasonAndtiming = memo(() => {
         <ol>
           <li className='relative sm:p-4 py-3'>
             <input type="checkbox" className='acco opacity-0 absolute' name='accourding' id='cb1' />
-            <label htmlFor="cb1" className='flex detail cursor-pointer bg-[#80808024] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>1. &nbsp; Fresh Flavors, Friendly Prices</label>
-            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808024] sm:text-[1em] text-[0.95em]'>
+            <label htmlFor="cb1" className='flex detail cursor-pointer bg-[#80808016] backdrop-blur-[150px] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>1. &nbsp; Fresh Flavors, Friendly Prices</label>
+            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808016] backdrop-blur-[150px] sm:text-[1em] text-[0.95em]'>
               We use only the freshest ingredients to create mouthwatering dishes at budget-friendly prices.
             </p>
           </li>
           <li className='relative sm:p-4 py-3'>
             <input type="checkbox" className='acco opacity-0 absolute' name='accourding' id='cb2' />
-            <label htmlFor="cb2" className='flex detail cursor-pointer bg-[#80808024] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>2. &nbsp; fast free wifi</label>
-            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808024] sm:text-[1em] text-[0.95em]'>
+            <label htmlFor="cb2" className='flex detail cursor-pointer bg-[#80808016] backdrop-blur-[150px] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>2. &nbsp; fast free wifi</label>
+            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808016] backdrop-blur-[150px] sm:text-[1em] text-[0.95em]'>
               Stay connected while you dine! We offer complimentary Wi-Fi for all our customers. Catch up on work, browse the web, or share your meal with friends online.</p>
           </li>
           <li className='relative sm:p-4 py-3'>
             <input type="checkbox" className='acco opacity-0 absolute' name='accourding' id='cb3' />
-            <label htmlFor="cb3" className='flex detail cursor-pointer bg-[#80808024] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>3. &nbsp; More Than Just a Meal</label>
-            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808024] sm:text-[1em] text-[0.95em]'>
+            <label htmlFor="cb3" className='flex detail cursor-pointer bg-[#80808016] backdrop-blur-[150px] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>3. &nbsp; More Than Just a Meal</label>
+            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808016] backdrop-blur-[150px] sm:text-[1em] text-[0.95em]'>
               It's an experience! Come enjoy the perfect combination of fresh flavors, affordable prices, and satisfying portions in our welcoming atmosphere. We know you'll love it!</p>
           </li>
           <li className='relative sm:p-4 py-3'>
             <input type="checkbox" className='acco opacity-0 absolute' name='accourding' id='cb4' />
-            <label htmlFor="cb4" className='flex detail cursor-pointer bg-[#80808024] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>4. &nbsp; Come for the Food, Stay for the Experience</label>
-            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808024] sm:text-[1em] text-[0.95em]'>
+            <label htmlFor="cb4" className='flex detail cursor-pointer bg-[#80808016] backdrop-blur-[150px] text-center gap-3 rounded-sm mb-1 p-2 items-center justify-between font-bold capitalize text-[1.0625em] tracking-[0.8px]'>4. &nbsp; Come for the Food, Stay for the Experience</label>
+            <p className='check-content max-h-[0px] overflow-hidden px-2 bg-[#80808016] backdrop-blur-[150px] sm:text-[1em] text-[0.95em]'>
               Our restaurant is more than just a meal; it's an experience. Enjoy delicious food made with fresh ingredients, friendly service, and a welcoming atmosphere. We offer free Wi-Fi to keep you connected, making it the perfect spot for a relaxing lunch or a fun dinner with friends.
             </p>
           </li>
@@ -76,7 +76,7 @@ function LoopSlide() {
     <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
       {
         ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
+          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
         ))
       }
     </div>
@@ -87,7 +87,7 @@ function LoopSlide2() {
     <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
       {
         ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 === 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md  ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
         ))
       }
     </div>
@@ -113,10 +113,10 @@ function home(props) {
   const timeout2 = useRef(null);
   const tm = useRef(gsap.timeline());
 
-  const { value, menucard, setmenucard, setfixedMsg } = useContext(counterContext)
+  const { value, menucard, setmenucard, setfixedMsg } = useContext(globalContext)
   // fitering these arrays values start 
   let homecardObj = [];
-  let arr = ['butter paneer masala', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'paneer paratha']
+  let arr = ['butter paneer masala', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'kheer']
   for (let i = 0; i < menucard.length; i++) {
     for (let ii = 0; ii < arr.length; ii++) {
       if (menucard[i].heading === arr[ii]) {
@@ -128,10 +128,8 @@ function home(props) {
   // strokeWidth
 
   useEffect(() => {
-    console.log('render ' + render.current)
-    render.current = render.current + 1;
-    console.log('home render  ' + render.current)
-  })
+     document.title = 'Mannu Dhaba & Restaurant'
+  },[])
 
   useGSAP((context) => {
     gsap.from(infi.current.children, {
@@ -152,10 +150,12 @@ function home(props) {
     })
 
     gsap.utils.toArray('.homecardimg').forEach(element => {
-      gsap.from(element, {
-        top: '140px',
-        rotate: '79deg',
-        position: 'relative', stagger: 0.9,
+      gsap.fromTo(element, {scale:1.2},{
+      scale:1,
+        // top: '140px',
+        // rotate: '79deg',
+        position: 'relative', 
+        // stagger: 0.9,
         scrollTrigger: {
           trigger: element.parentElement,
           start: 'top bottom',
@@ -168,7 +168,7 @@ function home(props) {
     })
 
     gsap.from(menubtn.current, {
-      y: '100%',
+      y: '100%',ease:"power4.out",
       scrollTrigger: {
         trigger: menubtn.current,
         scrub: 1,
@@ -178,20 +178,20 @@ function home(props) {
       }
     })
     gsap.from(menubtn.current.nextElementSibling, {
-      y: '100%',
+      y: '140%',ease:"power4.out",
       scrollTrigger: {
         trigger: menubtn.current.nextElementSibling,
         scrub: 1,
         // markers:true,
         start: 'bottom bottom',
-        end: 'center 80%',
+        end: 'center 70%',
       }
     })
 
     return () => {
       // settime
     };
-  })
+  },[])
 
   useGSAP(() => {
     if (value === 'dark') {
@@ -205,8 +205,7 @@ function home(props) {
     }
   }, { dependencies: [value] })
 
-  useEffect(() => {
-    document.title = 'Mannu Dhaba & Restaurant'
+  useGSAP(() => {   
     //== pure veg and linear anm     
     tm.current.fromTo(pureveg.current, { webkitTextStroke: 0 + 'px #de8dff' }, { webkitTextStroke: 1 + 'px #de8dff', duration: 1, })
       .fromTo(mealimg.current, { transform: 'rotate3d(1,1,1, 70deg)' }, { transform: 'rotate3d(1,1,1,0deg)', duration: 1, delay: -.5 })
@@ -215,19 +214,19 @@ function home(props) {
           trigger: linearline.current, start: 'top 80%', end: 'top 50%', scrub: 1,
         }
       })
-    return () => {
-      tm.current.kill()
-      clearTimeout(timeout1.current);
-      clearTimeout(timeout2.current);
-    };
-  }, [])
+    // return () => {
+    //   tm.current.kill()
+    //   clearTimeout(timeout1.current);
+    //   clearTimeout(timeout2.current);
+    // };
+  })
 
 
   const { contextSafe } = useGSAP();
   let mealDivover = contextSafe((e) => {
 
     mealimg.current.style.zIndex = '-1'
-    gsap.to(mealimg.current, { position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 1.2, ease: 'power3', translate: '0%' })
+    gsap.to(mealimg.current,{ position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 1.2, ease: 'power3', translate: '0%' })
 
     clearTimeout(timeout1.current);
     clearTimeout(timeout2.current);
@@ -312,7 +311,7 @@ function home(props) {
           <div className="flex p-[1.25rem] flex-wrap justify-center gap-y-[3.125rem] gap-5">
             {
               homecardObj.map((menu, index) => (
-                <div key={index} ref={homecard} className="homecard ar-one-sans relative pt-4 grid overflow-hidden w-[18.75rem] min-h-[18.75rem] bg-[#00000012] border border-white shadow-[0_2.1875rem_3.75rem_-0.9375rem_rgba(0,0,0,0.3)] rounded-lg ">
+                <div key={index} ref={homecard} className="homecard ar-one-sans relative grid overflow-hidden w-[18.75rem] min-h-[18.75rem] bg-[#00000012] border border-white shadow-[0_2.1875rem_3.75rem_-0.9375rem_rgba(0,0,0,0.3)] rounded-lg ">
                   <div className="absolute right-3 top-5 z-[1]">
                     <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-1 rounded-xl inline-block dark:bg-white bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                       {
@@ -339,15 +338,15 @@ function home(props) {
                       }
                     </button>
                   </div>
-                  <div className="w-[60%] mx-auto relative">
-                    <img ref={homecardsImg} src={menu.img} className='homecardimg w-full' alt={menu.heading + ' img'} />
+                  <div className="max-h-[11.25rem] mx-auto relative">
+                    <img ref={homecardsImg} src={menu.img} className='homecardimg w-full h-full object-contain' alt={menu.heading + ' img'} />
                   </div>
 
-                  <div className="card-body p-[0.9375rem]">
-                    <h3 className="dark:text-white tracking-[.5px] text-slate-950 font-medium capitalize">{menu.heading}</h3>
-                    <h4 className="text-[rgb(232 124 187)] font-semibold"> &#8377; {menu.price}</h4>
+                  <div className="card-body p-[0.9375rem] self-end">
+                    <h3 className="dark:text-white tracking-[.5px] text-slate-950 max-md:text-[0.975rem] font-medium capitalize">{menu.heading}</h3>
+                    <h4 className="text-[rgb(232 124 187)] max-md:text-[0.975rem] font-semibold"> &#8377; {menu.price}</h4>
                   </div>
-                  <div className="flex text-[0.875rem] font-medium mt-auto">
+                  <div className="flex text-[0.875rem] font-medium self-end">
                     {
                       menu.inCart ?
                         <Link to={'/cart'} className={`svgbtn flex items-center justify-center gap-2 flex-1 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
@@ -389,23 +388,23 @@ function home(props) {
             }
           </div>
           <div className="py-[1.875rem] infi" style={{ userSelect: 'none' }}>
-            <div className="flex justify-end py-5  flex-nowrap whitespace-nowrap overflow-hidden" ref={infi2}>
+            <div className="flex justify-end sm:py-5 py-3 flex-nowrap whitespace-nowrap overflow-hidden" ref={infi2}>
               <LoopSlide />
               <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
                 {
                   ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
+                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
                   ))
                 }
               </div>
               <LoopSlide />
             </div>
-            <div className="flex py-5 flex-nowrap  whitespace-nowrap overflow-hidden" ref={infi}>
+            <div className="flex sm:py-5 py-3 flex-nowrap  whitespace-nowrap overflow-hidden" ref={infi}>
               <LoopSlide2 />
               <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
                 {
                   ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-                    <p key={el + ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full ${ind % 2 !== 0 ? 'shadow-md border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+                    <p key={el + ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
                   ))
                 }
               </div>

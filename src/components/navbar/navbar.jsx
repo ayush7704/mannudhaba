@@ -1,9 +1,9 @@
 import './navbar.css'
 import sunbg from './layered-waves-haikei.png'
 import moonbg from './symbol-scatter-haikei.svg'
-import whiteLogo from './White logo - no background.svg'
-import blacklogo from './Black logo - no background.svg'
-import { counterContext } from '../context/context'
+import WhiteLogo from '../logos/whitelogo.jsx'
+import Blacklogo from '../logos/blacklogo.jsx'
+import { globalContext } from '../context/context'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useEffect, useRef, useContext, memo, useCallback } from 'react'
 import { gsap } from 'gsap'
@@ -16,7 +16,7 @@ function Navbar() {
   let location = useLocation()
   let linkswrapper = useRef(null)
   let cartref = useRef(null)
-  let { value, setvalue, addToCartItemValue } = useContext(counterContext)
+  let { value, setvalue, addToCartItemValue } = useContext(globalContext)
 
   useEffect(() => {
     console.log(location.pathname)
@@ -33,13 +33,13 @@ function Navbar() {
     links.current.classList.toggle('w-0')
     linkswrapper.current.classList.toggle('hidden')
     console.log('ham')
-  },[])
+  }, [])
   let cartHam = useCallback(() => {
     links.current.classList.remove('w-9/12')
     links.current.classList.add('w-0')
     linkswrapper.current.classList.add('hidden')
     console.log('cartHam')
-  },[])
+  }, [])
 
   useEffect(() => {
     const imgRandor = () => {
@@ -54,20 +54,62 @@ function Navbar() {
     }
   })
 
+  // useGSAP(() => {
+  //   // let shadowtime = gsap.timeline({ defaults: { duration: 4, repeat: -1 } });
+  //   let shadowtime = gsap.timeline({ defaults: { duration: 4, repeat: -1 } });
+
+  //   shadowtime.fromTo('.moon_shadow', 
+  //     { inset: '0', opacity: 1 }, 
+  //     { 
+  //       inset: '-1.5rem', 
+  //       opacity: 0, 
+  //       stagger: {
+  //         amount: -1.5, // Total stagger time for all elements
+  //         from: "start", // Start staggering from the first element
+  //         // ease: "power1.inOut" // Easing function for smooth transitions
+  //       },
+  //       repeatRefresh
+
+  //     }
+  //   );
+  //   // shadowtime.fromTo('.moon_shadow1',
+  //   //   { inset: '0', opacity: 1 },
+  //   //   { inset: '-1.5rem', opacity: 0 }, '+=0' // Starts immediately
+  //   // );
+
+  //   // shadowtime.fromTo('.moon_shadow2',
+  //   //   { inset: '0', opacity: 1 },
+  //   //   { inset: '-1.5rem', opacity: 0 }, '+=1' // Starts after 1 second
+  //   // );
+
+  //   // shadowtime.fromTo('.moon_shadow3',
+  //   //   { inset: '0', opacity: 1 },
+  //   //   { inset: '-1.5rem', opacity: 0 }, '+=1' // Starts after 1 second
+  //   // );
+
+  //   // shadowtime.fromTo('.moon_shadow4',
+  //   //   { inset: '0', opacity: 1 },
+  //   //   { inset: '-1.5rem', opacity: 0 }, '+=1' // Starts after 1 second
+  //   // );
+  // }, [])
+
   useGSAP(() => {
     gsap.fromTo(cartref.current, { scale: 1.2 }, { scale: 1, duration: 2.5, ease: 'elastic' })
   }, [addToCartItemValue.length])
 
   return (
     // dark:bg-[rgb(30,30,30)]  bg-[#ebedec] dark:bg-[#1e1e1e]
-    <nav ref={nav} className='z-[5] dark:bg-[rgb(13,13,13)] bg-[#f5fffa]  flex items-center gap-4 py-[5px] justify-between lg:pl-[1.25rem] pl-[0.625rem] md:pr-[1.25rem] pr-[0.5rem] sticky top-0'>
+    <nav ref={nav} className='z-[5] dark:bg-[rgb(13,13,13)] bg-[#f5fffa] flex items-center sm:gap-4 py-[5px] justify-between lg:pl-[1.25rem] pl-[0.625rem] md:pr-[1.25rem] pr-[0.5rem] sticky top-0'>
 
       {/* blur bg for nav  */}
       {/* <div className='absolute inset-0 z-[-1] w-full h-full backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e]'></div> */}
 
       {/*======== logo and name   ======*/}
-      <div className="name-logo flex gap-4 items-center">
-        <img src={`${document.querySelector('html').classList.contains('dark') ? whiteLogo : blacklogo}`} alt="logo" className='nav-logo rounded-full w-[11.875rem] md:w-[13.125rem]' />
+      {/* <div className="name-logo flex gap-4 items-center">   */}
+      <div className="name-logo">  
+        {
+          value === 'dark' ? <WhiteLogo classes={'nav-logo max-[280px]:w-[9rem] w-[11.875rem] md:w-[13.125rem]'}/>:<Blacklogo classes={'nav-logo max-[280px]:w-[9rem] w-[11.875rem] md:w-[13.125rem]'}/>
+        }
       </div>
 
 
@@ -80,7 +122,11 @@ function Navbar() {
 
         {/*======== close btn x   ======*/}
         <div className='md:hidden py-[0.625rem] px-5 cursor-pointer' onClick={() => { ham() }}>
-          <button className='px-[0.75rem] w-full pt-[0.5rem] text-right pb-[0.5625rem] font-black text-sm bg-gradient-to-l dark:from-[#ff000042] from-[#ff00008a] to-[transparent] rounded-full text-white'>&#9587;</button>
+          <button className='px-[0.75rem] w-full pt-[0.5rem] flex items-center justify-end pb-[0.5625rem] bg-gradient-to-l dark:from-[#ff000042] from-[#ff00008a] to-[transparent] rounded-full text-white'>
+            <svg className='w-5 h-5' viewBox="0 0 24 24" fill="none">
+              <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
 
         {/*========  anchors   ======*/}
@@ -114,15 +160,12 @@ function Navbar() {
                 <path d="M12.9998 7H13.0088" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>)
             }
-          ].map((item, index) => (
-            // <NavLink to={item.to} key={item.name} className={`${item.to === location.pathname === '/' ? 'dark:bg-darkgradient bg-lightgradient' : ''} ${({ isActive }) => isActive && 'dark:bg-darkgradient bg-lightgradient'} md:max-lg:p-2 flex gap-2 dark:hover:bg-[#43434352] hover:bg-[#d1d1d159] font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]`} onClick={() => { ham() }}>
-            //   {item?.svg} <span>{item.name}</span>
-            // </NavLink>
+          ].map((item, index) => (           
             <NavLink
               to={item.to}
               key={item.name}
               className={({ isActive }) => {
-                const baseClasses = 'md:max-lg:p-2 flex gap-2 font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]';
+                const baseClasses = 'md:max-lg:p-2 rounded-[10rem] flex gap-2 font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]';
                 const activeClasses = isActive ? 'dark:bg-darkgradient bg-lightgradient' : '';
                 const hoverClasses = 'dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]';
 
@@ -141,19 +184,34 @@ function Navbar() {
             {/* moonbg  */}
             <img src={moonbg} className='absolute w-full h-full object-cover inset-0' alt="img" />
 
-            <div className={`moon top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625rem] bg-[#E7E7E7] h-[1.5625rem] rounded-full shadow-[0_0_0px_0.375rem_#ffffff30,_0_0_0px_0.75rem_#ffffff25,_0_0_0px_1.125rem_#ffffff20] overflow-hidden ${value === 'dark' ? 'translate-x-[0.33rem]' : 'translate-x-[6.25rem]'} `}>
-
-              <div className="absolute top-0 right-0 w-[40%] h-[40%] rounded-[50%] bg-[#CDCDCD]"></div>
-              <div className="absolute top-1 right-3 w-[30%] h-[30%] rounded-[50%] bg-[#CDCDCD]"></div>
-              <div className="absolute top-1/2 right-3 w-[10%] h-[10%] rounded-[50%] bg-[#CDCDCD]"></div>
-              <div className="absolute top-1/2 right-1 w-[15%] h-[15%] rounded-[50%] bg-[#CDCDCD]"></div>
-              <div className="absolute top-[70%] right-0 w-[25%] h-[25%] rounded-[50%] bg-[#CDCDCD]"></div>
-              <div className="absolute top-[75%] right-2 w-[10%] h-[10%] rounded-[50%] bg-[#CDCDCD]"></div>
+            <div className={`moon_container top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625rem] bg-[#E7E7E7] h-[1.5625rem] rounded-full ${value === 'dark' ? 'translate-x-[0.33rem]' : 'translate-x-[6.25rem]'}`}>
+              {Array(4).fill(null).map((_, index) => (
+                <div key={'shadow ' + index} className={`${value === 'dark' ? `moon_shadow ${'moon_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
+              ))}
+              <div className={`moon inset-0 transition-all duration-1000 absolute bg-[#E7E7E7] rounded-full  overflow-hidden  `}>
+                {Array(6).fill(null).map((_, index) => (
+                  <div key={index} className={`absolute rounded-[50%] bg-[#CDCDCD] 
+                  ${index === 0 ? 'top-0 right-0 w-[40%] h-[40%]' : ''}
+                  ${index === 1 ? 'top-1 right-3 w-[30%] h-[30%]' : ''}
+                  ${index === 2 ? 'top-1/2 right-3 w-[10%] h-[10%]' : ''}
+                  ${index === 3 ? 'top-1/2 right-1 w-[15%] h-[15%]' : ''}
+                  ${index === 4 ? 'top-[70%] right-0 w-[25%] h-[25%]' : ''}
+                  ${index === 5 ? 'top-[75%] right-2 w-[10%] h-[10%]' : ''}`}></div>
+                ))}
+              </div>
             </div>
+
 
             {/* sun bg  */}
             <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${value === 'dark' ? 'opacity-0' : ''}`} alt="img" />
-            <div className={`yellow transition-all duration-1000 absolute top-[50%] translate-y-[-50%]  bg-radial-gradient  from-[#ff7000] to-[yellow_90%]  w-[1.5625rem] h-[1.5625rem] rounded-full shadow-[0_0_0px_.375rem_#fbff0030,_0_0_0px_0.75rem_#fbff0025,_0_0_0px_1.125rem_#fbff0020] ${value === 'light' ? 'translate-x-[0.33rem]' : 'translate-x-[-6.25rem]'} `}></div>
+
+            <div className={`sun_container top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625rem] bg-[#E7E7E7] h-[1.5625rem] rounded-full ${value === 'light' ? 'translate-x-[0.33rem]' : 'translate-x-[-6.25rem]'}`}>
+              {Array(4).fill(null).map((_, index) => (
+                <div key={'shadow ' + index} className={`${value === 'light' ? `sun_shadow ${'sun_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
+              ))}
+              <div className={`yellow sun inset-0 transition-all duration-1000 absolute bg-radial-gradient  from-[#ff7000] to-[yellow_90%] rounded-full `}>
+              </div>
+            </div>
 
           </button>
         </div>
@@ -163,7 +221,7 @@ function Navbar() {
       {
         [
           {
-            name: 'Cart', to:'cart', svg: (<svg className={`w-[1.25rem] h-[1.25rem]`} color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
+            name: 'Cart', to: 'cart', svg: (<svg className={`w-[1.25rem] h-[1.25rem]`} color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
               <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
@@ -172,14 +230,14 @@ function Navbar() {
               <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>)
           }
         ].map((item, index) => (<NavLink to={'cart'} key={index} className={({ isActive }) => {
-          const baseClasses = 'md:max-lg:p-2 flex gap-2 font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]';
+          const baseClasses = 'md:max-lg:p-2 max-md:ml-auto rounded-[10rem] flex gap-2 font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]';
           const activeClasses = isActive ? 'dark:bg-darkgradient bg-lightgradient' : '';
           const hoverClasses = 'dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]';
           return `${baseClasses} ${activeClasses} ${hoverClasses}`;
         }} onClick={() => cartHam()}>
-          {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.250rem] right-0 w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem]'>{addToCartItemValue.length}</span>
+          {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.350rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans'>{addToCartItemValue.length}</span>
           </span>}
-          <span>{item.name}</span>
+          <span className='max-sm:hidden'>{item.name}</span>
         </NavLink>))
       }
       {/* add to cart end */}

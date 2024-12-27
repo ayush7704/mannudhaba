@@ -1,10 +1,10 @@
 import  { useContext, useRef, useState, useMemo, useEffect } from 'react'
-import { counterContext } from '../context/context'
+import { globalContext } from '../context/context'
 import { img1, img2, img3, img4, img5, img6, img7, img8, img9, img10 } from './imgs/imgsFile'
 import gsap from 'gsap'
 
 function gallery() {
-  let { PageHeading } = useContext(counterContext)
+  let { PageHeading } = useContext(globalContext)
   let currentImgRef = useRef(null)
   let imgsList = useRef(null)
   const [galleryFilter, setgalleryFilter] = useState('all')
@@ -71,7 +71,7 @@ function gallery() {
       <PageHeading heading={'gallery'} />
       <div className='sm:p-[1.25rem]'>
         {/* gallery filter start */}
-        <div className="flex gap-4 sm:justify-center my-[0.9375rem] p-[0.3125rem_1.25rem] overflow-x-auto">
+        <div className="flex gap-4 sm:justify-center p-[1.25rem_1.25rem] overflow-x-auto">
 
           {
             ['all', 'food', 'vibe', "customer's"].map((elm, ind) => (

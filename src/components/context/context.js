@@ -1,4 +1,4 @@
 import { createContext } from "react";
 
-export const counterContext = createContext(null)
+export const globalContext = createContext(null)
  

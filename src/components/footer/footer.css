@@ -1,0 +1,9 @@
+/* simple hovering effect */
+:not(html.dark) .footerElm:hover svg,
+:not(html.dark) .footerElm:hover{
+    color: black;
+}
+html.dark .footerElm:hover svg,
+html.dark .footerElm:hover{
+    color: white;
+}
