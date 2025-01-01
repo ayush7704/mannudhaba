@@ -94,9 +94,15 @@ function aboutUs() {
             ))}
           </p>
           <div className='flex flex-wrap gap-x-5 justify-evenly'>
-            <button title='copy phone number' onClick={copyNumber}>7999741488</button>
-            <button title='copy phone number' onClick={copyNumber}>9669087745</button>
-            <button title='copy phone number' onClick={copyNumber}>9754742477</button>
+            {
+              [
+                {number:7999741488,title:'copy calling number',icon:( <svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z" /></svg>)},
+                {number:9669087745,title:'copy whatsApp number',icon:(<svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 16 16"><path fill="currentColor" d="M13.95 4.24C11.86 1 7.58.04 4.27 2.05C1.04 4.06 0 8.44 2.09 11.67l.17.26l-.7 2.62l2.62-.7l.26.17c1.13.61 2.36.96 3.58.96c1.31 0 2.62-.35 3.75-1.05c3.23-2.1 4.19-6.39 2.18-9.71Zm-1.83 6.74c-.35.52-.79.87-1.4.96c-.35 0-.79.17-2.53-.52c-1.48-.7-2.71-1.84-3.58-3.15c-.52-.61-.79-1.4-.87-2.19c0-.7.26-1.31.7-1.75c.17-.17.35-.26.52-.26h.44c.17 0 .35 0 .44.35c.17.44.61 1.49.61 1.58c.09.09.05.76-.35 1.14c-.22.25-.26.26-.17.44c.35.52.79 1.05 1.22 1.49c.52.44 1.05.79 1.66 1.05c.17.09.35.09.44-.09c.09-.17.52-.61.7-.79c.17-.17.26-.17.44-.09l1.4.7c.17.09.35.17.44.26c.09.26.09.61-.09.87Z"></path></svg>)},
+                {number:9165308504,title:'copy whatsApp number',icon:( <svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 16 16"><path fill="currentColor" d="M13.95 4.24C11.86 1 7.58.04 4.27 2.05C1.04 4.06 0 8.44 2.09 11.67l.17.26l-.7 2.62l2.62-.7l.26.17c1.13.61 2.36.96 3.58.96c1.31 0 2.62-.35 3.75-1.05c3.23-2.1 4.19-6.39 2.18-9.71Zm-1.83 6.74c-.35.52-.79.87-1.4.96c-.35 0-.79.17-2.53-.52c-1.48-.7-2.71-1.84-3.58-3.15c-.52-.61-.79-1.4-.87-2.19c0-.7.26-1.31.7-1.75c.17-.17.35-.26.52-.26h.44c.17 0 .35 0 .44.35c.17.44.61 1.49.61 1.58c.09.09.05.76-.35 1.14c-.22.25-.26.26-.17.44c.35.52.79 1.05 1.22 1.49c.52.44 1.05.79 1.66 1.05c.17.09.35.09.44-.09c.09-.17.52-.61.7-.79c.17-.17.26-.17.44-.09l1.4.7c.17.09.35.17.44.26c.09.26.09.61-.09.87Z"></path></svg>)},
+              ].map((numberSet)=>(                                
+                <button title={numberSet.title} className='flex gap-2 items-center' onClick={copyNumber}>{numberSet.icon} {numberSet.number}</button>                
+              ))
+            }
           </div>
         </div>
         {/* </div> */}

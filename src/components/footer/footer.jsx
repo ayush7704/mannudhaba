@@ -26,7 +26,7 @@ function footer() {
                     <div className='sm:order-[-1] order-1'>
                         <h2 className='capitalize text-lg mb-3'>explore more</h2>
                         <div className="grid grid-cols-1 justify-between gap-1 dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
-                        {
+                            {
                                 [
                                     {
                                         name: 'Cart', to: 'cart', svg: (<svg className={`w-[1.25rem] h-[1.25rem]`} color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
@@ -39,9 +39,9 @@ function footer() {
                                     }
                                 ].map((item, index) => (<NavLink to={'cart'} key={index} className={({ isActive }) => {
                                     const baseClasses = `svgbtn text-center flex py-2 px-4 sm:px-4 rounded-[0.9375rem] text-nowrap  gap-2 capitalize active:scale-[0.9] dark:active:bg-[#80808059] active:bg-[#e6e6e6] transition duration-100`;
-                                        const hoverClasses = `${value === 'light' ? 'hover:bg-white hover:shadow-[0px_0.1875rem_0.1875rem_0px_#54545447]' : 'hover:bg-[#d1d1d159]'}`;
-                                        const activeClasses = isActive ? `${value === 'light' ? 'bg-white shadow-[0px_0.1875rem_0.1875rem_0px_#54545447] ' : 'dark:bg-darkgradient'}` : '';
-                                        return `${baseClasses} ${hoverClasses} ${activeClasses}`
+                                    const hoverClasses = `${value === 'light' ? 'hover:bg-white hover:shadow-[0px_0.1875rem_0.1875rem_0px_#54545447]' : 'hover:bg-[#d1d1d159]'}`;
+                                    const activeClasses = isActive ? `${value === 'light' ? 'bg-white shadow-[0px_0.1875rem_0.1875rem_0px_#54545447] ' : 'dark:bg-darkgradient'}` : '';
+                                    return `${baseClasses} ${hoverClasses} ${activeClasses}`
                                 }}>
                                     {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.350rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans'>{addToCartItemValue.length}</span>
                                     </span>}
@@ -91,46 +91,27 @@ function footer() {
                                         <span>{el.name}</span>
                                     </NavLink>
                                 ))
-                            }                          
+                            }
                         </div>
                     </div>
 
                     <div>
                         <h2 className='capitalize text-lg mb-3'>Contact Us</h2>
                         <div className="flex flex-col items-start dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
-                            <a className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1' href="https://maps.app.goo.gl/9fbqpbeUvJ6TfNWt6">
-                                {/* <span> */}
-                                <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none">
-                                    <path d="M7 18C5.17107 18.4117 4 19.0443 4 19.7537C4 20.9943 7.58172 22 12 22C16.4183 22 20 20.9943 20 19.7537C20 19.0443 18.8289 18.4117 17 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                    <path d="M14.5 9C14.5 10.3807 13.3807 11.5 12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9Z" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M13.2574 17.4936C12.9201 17.8184 12.4693 18 12.0002 18C11.531 18 11.0802 17.8184 10.7429 17.4936C7.6543 14.5008 3.51519 11.1575 5.53371 6.30373C6.6251 3.67932 9.24494 2 12.0002 2C14.7554 2 17.3752 3.67933 18.4666 6.30373C20.4826 11.1514 16.3536 14.5111 13.2574 17.4936Z" stroke="currentColor" strokeWidth="2" />
-                                </svg>
-                                {/* </span> */}
+                            <a className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1' href="https://maps.app.goo.gl/9fbqpbeUvJ6TfNWt6">                                
+                                    <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24"><mask id="lineMdMapMarkerRadiusFilled0"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path fill="#fff" fill-opacity="0" stroke-dasharray="40" stroke-dashoffset="40" d="M12 18c0 0 -5.14 -6 -5.14 -9.86c0 -2.84 2.3 -5.14 5.14 -5.14c2.84 0 5.14 2.3 5.14 5.14c0 3.86 -5.14 9.86 -5.14 9.86Z"><animate fill="freeze" attributeName="fill-opacity" begin="0.6s" dur="0.5s" values="0;1" /><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="40;0" /></path><circle cx="12" cy="8.143" r="2.5" fill="#000" fill-opacity="0" stroke="none"><animate fill="freeze" attributeName="fill-opacity" begin="1.1s" dur="0.5s" values="0;1" /></circle><path fill="#fff" stroke="none" d="M12 18c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0Z"><animate fill="freeze" attributeName="d" begin="1.6s" dur="0.2s" values="M12 18c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0Z;M12 21C15.3 21 18 19.9 18 18.5C18 17.8 17.3 17.2 16.2 16.7L16.8 15.8C18.8 16.6 20 17.7 20 19C20 21.2 16.4 23 12 23C7.6 23 4 21.2 4 19C4 17.7 5.2 16.6 7.1 15.8L7.7 16.7C6.7 17.2 6 17.8 6 18.5C6 19.9 8.7 21 12 21z" /></path></g></mask><rect width="24" height="24" fill="currentColor" mask="url(#lineMdMapMarkerRadiusFilled0)" /></svg>
                                 <span>Location</span> </a>
-                            <div onClick={copyNumber} className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2 cursor-pointer'>
-                                {/* <span> */}
-                                <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none">
-                                    <path d="M3.77762 11.9424C2.8296 10.2893 2.37185 8.93948 2.09584 7.57121C1.68762 5.54758 2.62181 3.57081 4.16938 2.30947C4.82345 1.77638 5.57323 1.95852 5.96 2.6524L6.83318 4.21891C7.52529 5.46057 7.87134 6.08139 7.8027 6.73959C7.73407 7.39779 7.26737 7.93386 6.33397 9.00601L3.77762 11.9424ZM3.77762 11.9424C5.69651 15.2883 8.70784 18.3013 12.0576 20.2224M12.0576 20.2224C13.7107 21.1704 15.0605 21.6282 16.4288 21.9042C18.4524 22.3124 20.4292 21.3782 21.6905 19.8306C22.2236 19.1766 22.0415 18.4268 21.3476 18.04L19.7811 17.1668C18.5394 16.4747 17.9186 16.1287 17.2604 16.1973C16.6022 16.2659 16.0661 16.7326 14.994 17.666L12.0576 20.2224Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                                </svg>
-                                {/* </span> */}
-                                <span title='copy phone number'>7999741488</span>
-                            </div>
-                            <div onClick={copyNumber} className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2 cursor-pointer'>
-                                {/* <span> */}
-                                <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none">
-                                    <path d="M3.77762 11.9424C2.8296 10.2893 2.37185 8.93948 2.09584 7.57121C1.68762 5.54758 2.62181 3.57081 4.16938 2.30947C4.82345 1.77638 5.57323 1.95852 5.96 2.6524L6.83318 4.21891C7.52529 5.46057 7.87134 6.08139 7.8027 6.73959C7.73407 7.39779 7.26737 7.93386 6.33397 9.00601L3.77762 11.9424ZM3.77762 11.9424C5.69651 15.2883 8.70784 18.3013 12.0576 20.2224M12.0576 20.2224C13.7107 21.1704 15.0605 21.6282 16.4288 21.9042C18.4524 22.3124 20.4292 21.3782 21.6905 19.8306C22.2236 19.1766 22.0415 18.4268 21.3476 18.04L19.7811 17.1668C18.5394 16.4747 17.9186 16.1287 17.2604 16.1973C16.6022 16.2659 16.0661 16.7326 14.994 17.666L12.0576 20.2224Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                                </svg>
-                                {/* </span> */}
-                                <span title='copy phone number'>9669087745</span>
-                            </div>
-                            <div onClick={copyNumber} className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2 cursor-pointer'>
-                                {/* <span> */}
-                                <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none">
-                                    <path d="M3.77762 11.9424C2.8296 10.2893 2.37185 8.93948 2.09584 7.57121C1.68762 5.54758 2.62181 3.57081 4.16938 2.30947C4.82345 1.77638 5.57323 1.95852 5.96 2.6524L6.83318 4.21891C7.52529 5.46057 7.87134 6.08139 7.8027 6.73959C7.73407 7.39779 7.26737 7.93386 6.33397 9.00601L3.77762 11.9424ZM3.77762 11.9424C5.69651 15.2883 8.70784 18.3013 12.0576 20.2224M12.0576 20.2224C13.7107 21.1704 15.0605 21.6282 16.4288 21.9042C18.4524 22.3124 20.4292 21.3782 21.6905 19.8306C22.2236 19.1766 22.0415 18.4268 21.3476 18.04L19.7811 17.1668C18.5394 16.4747 17.9186 16.1287 17.2604 16.1973C16.6022 16.2659 16.0661 16.7326 14.994 17.666L12.0576 20.2224Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                                </svg>
-                                {/* </span> */}
-                                <span title='copy phone number'>9754742477</span>
-                            </div>
+                            {
+                                [{ number: 7999741488, title: 'copy calling number', icon: (<svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 24 24" fill="none"><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z" /></svg>) },
+                                { number: 9669087745, title: 'copy whatsApp number', icon: (<svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 16 16"><path fill="currentColor" d="M13.95 4.24C11.86 1 7.58.04 4.27 2.05C1.04 4.06 0 8.44 2.09 11.67l.17.26l-.7 2.62l2.62-.7l.26.17c1.13.61 2.36.96 3.58.96c1.31 0 2.62-.35 3.75-1.05c3.23-2.1 4.19-6.39 2.18-9.71Zm-1.83 6.74c-.35.52-.79.87-1.4.96c-.35 0-.79.17-2.53-.52c-1.48-.7-2.71-1.84-3.58-3.15c-.52-.61-.79-1.4-.87-2.19c0-.7.26-1.31.7-1.75c.17-.17.35-.26.52-.26h.44c.17 0 .35 0 .44.35c.17.44.61 1.49.61 1.58c.09.09.05.76-.35 1.14c-.22.25-.26.26-.17.44c.35.52.79 1.05 1.22 1.49c.52.44 1.05.79 1.66 1.05c.17.09.35.09.44-.09c.09-.17.52-.61.7-.79c.17-.17.26-.17.44-.09l1.4.7c.17.09.35.17.44.26c.09.26.09.61-.09.87Z"></path></svg>) }
+                                    , { number: 9165308504, title: 'copy whatsApp number', icon: (<svg className={`text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 16 16"><path fill="currentColor" d="M13.95 4.24C11.86 1 7.58.04 4.27 2.05C1.04 4.06 0 8.44 2.09 11.67l.17.26l-.7 2.62l2.62-.7l.26.17c1.13.61 2.36.96 3.58.96c1.31 0 2.62-.35 3.75-1.05c3.23-2.1 4.19-6.39 2.18-9.71Zm-1.83 6.74c-.35.52-.79.87-1.4.96c-.35 0-.79.17-2.53-.52c-1.48-.7-2.71-1.84-3.58-3.15c-.52-.61-.79-1.4-.87-2.19c0-.7.26-1.31.7-1.75c.17-.17.35-.26.52-.26h.44c.17 0 .35 0 .44.35c.17.44.61 1.49.61 1.58c.09.09.05.76-.35 1.14c-.22.25-.26.26-.17.44c.35.52.79 1.05 1.22 1.49c.52.44 1.05.79 1.66 1.05c.17.09.35.09.44-.09c.09-.17.52-.61.7-.79c.17-.17.26-.17.44-.09l1.4.7c.17.09.35.17.44.26c.09.26.09.61-.09.87Z"></path></svg>) }
+                                ].map((numberSet,index) => (
+                                    <div key={index} onClick={copyNumber} className='footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2 cursor-pointer'>
+                                        {numberSet.icon}
+                                        <span title={numberSet.title}>{numberSet.number}</span>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 

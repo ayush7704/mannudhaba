@@ -179,7 +179,7 @@ function Navbar() {
 
         {/* toggler  lg:ml-[4rem]*/}
         <div className='px-5 py-[0.625rem] cursor-pointer' onClick={toggleBtn}>
-          <button className={`toggler align-middle w-[4.375rem] relative h-[2.1875rem] rounded-full overflow-hidden cursor-pointer`}>
+          <button className={`toggler align-middle w-[4.375rem] relative h-[2.1875rem] rounded-full overflow-hidden cursor-pointer shadow-[0_0_2px_currentColor] `}>
 
             {/* moonbg  */}
             <img src={moonbg} className='absolute w-full h-full object-cover inset-0' alt="img" />
