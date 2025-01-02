@@ -18,11 +18,11 @@ let Menulink = memo((props) => {
   })
 
   return (
-    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} style={{ textShadow: '0.125rem 1px 3px #3b3b3b94' }} className='svgbtn outLine linear-btn font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] text-white px-[1.1875rem] min-w-[50%] text-nowrap flex gap-2 justify-center items-center shadow-md hover:shadow-xl'>
+    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} style={{ textShadow: '0.125rem 1px 3px #3b3b3b94' }} className='svgbtn outLine  linear-btn font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] text-white px-[1.1875rem] min-w-[50%] text-nowrap flex gap-2 justify-center items-center shadow-md hover:shadow-xl'>
       <span>{props.value}</span>
       <svg className='w-[1.1875rem] h-[1.1875rem]' viewBox="0 0 24 24" fill="none">
-        <path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke="#ffffff" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M12 7.80556C11.3131 7.08403 9.32175 5.3704 5.98056 4.76958C4.2879 4.4652 3.44157 4.31301 2.72078 4.89633C2 5.47965 2 6.42688 2 8.32133V15.1297C2 16.8619 2 17.728 2.4626 18.2687C2.9252 18.8095 3.94365 18.9926 5.98056 19.3589C7.79633 19.6854 9.21344 20.2057 10.2392 20.7285C11.2484 21.2428 11.753 21.5 12 21.5C12.247 21.5 12.7516 21.2428 13.7608 20.7285C14.7866 20.2057 16.2037 19.6854 18.0194 19.3589C20.0564 18.9926 21.0748 18.8095 21.5374 18.2687C22 17.728 22 16.8619 22 15.1297V8.32133C22 6.42688 22 5.47965 21.2792 4.89633C20.5584 4.31301 19 4.76958 18 5.5" stroke="#ffffff" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 7.80556C11.3131 7.08403 9.32175 5.3704 5.98056 4.76958C4.2879 4.4652 3.44157 4.31301 2.72078 4.89633C2 5.47965 2 6.42688 2 8.32133V15.1297C2 16.8619 2 17.728 2.4626 18.2687C2.9252 18.8095 3.94365 18.9926 5.98056 19.3589C7.79633 19.6854 9.21344 20.2057 10.2392 20.7285C11.2484 21.2428 11.753 21.5 12 21.5C12.247 21.5 12.7516 21.2428 13.7608 20.7285C14.7866 20.2057 16.2037 19.6854 18.0194 19.3589C20.0564 18.9926 21.0748 18.8095 21.5374 18.2687C22 17.728 22 16.8619 22 15.1297V8.32133C22 6.42688 22 5.47965 21.2792 4.89633C20.5584 4.31301 19 4.76958 18 5.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </Link>
   )
@@ -113,7 +113,7 @@ function home(props) {
   const timeout2 = useRef(null);
   const tm = useRef(gsap.timeline());
 
-  const { value, menucard, setmenucard, setfixedMsg } = useContext(globalContext)
+  const { value, menucard, setmenucard, setfixedMsg, WhatsAppLink } = useContext(globalContext)
   // fitering these arrays values start 
   let homecardObj = [];
   let arr = ['butter paneer masala', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'kheer']
@@ -128,8 +128,8 @@ function home(props) {
   // strokeWidth
 
   useEffect(() => {
-     document.title = 'Mannu Dhaba & Restaurant'
-  },[])
+    document.title = 'Mannu Dhaba & Restaurant'
+  }, [])
 
   useGSAP((context) => {
     gsap.from(infi.current.children, {
@@ -150,11 +150,11 @@ function home(props) {
     })
 
     gsap.utils.toArray('.homecardimg').forEach(element => {
-      gsap.fromTo(element, {scale:1.2},{
-      scale:1,
+      gsap.fromTo(element, { scale: 1.2 }, {
+        scale: 1,
         // top: '140px',
         // rotate: '79deg',
-        position: 'relative', 
+        position: 'relative',
         // stagger: 0.9,
         scrollTrigger: {
           trigger: element.parentElement,
@@ -168,7 +168,7 @@ function home(props) {
     })
 
     gsap.from(menubtn.current, {
-      y: '100%',ease:"power4.out",
+      y: '100%', ease: "power4.out",
       scrollTrigger: {
         trigger: menubtn.current,
         scrub: 1,
@@ -178,7 +178,7 @@ function home(props) {
       }
     })
     gsap.from(menubtn.current.nextElementSibling, {
-      y: '140%',ease:"power4.out",
+      y: '140%', ease: "power4.out",
       scrollTrigger: {
         trigger: menubtn.current.nextElementSibling,
         scrub: 1,
@@ -191,7 +191,7 @@ function home(props) {
     return () => {
       // settime
     };
-  },[])
+  }, [])
 
   useGSAP(() => {
     if (value === 'dark') {
@@ -205,7 +205,7 @@ function home(props) {
     }
   }, { dependencies: [value] })
 
-  useGSAP(() => {   
+  useGSAP(() => {
     //== pure veg and linear anm     
     tm.current.fromTo(pureveg.current, { webkitTextStroke: 0 + 'px #de8dff' }, { webkitTextStroke: 1 + 'px #de8dff', duration: 1, })
       .fromTo(mealimg.current, { transform: 'rotate3d(1,1,1, 70deg)' }, { transform: 'rotate3d(1,1,1,0deg)', duration: 1, delay: -.5 })
@@ -226,7 +226,7 @@ function home(props) {
   let mealDivover = contextSafe((e) => {
 
     mealimg.current.style.zIndex = '-1'
-    gsap.to(mealimg.current,{ position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 1.2, ease: 'power3', translate: '0%' })
+    gsap.to(mealimg.current, { position: 'absolute', transform: 'rotate3d(0, 0, 1, -25deg)', left: e.nativeEvent.offsetX - 125 + 'px', duration: 1.2, ease: 'power3', translate: '0%' })
 
     clearTimeout(timeout1.current);
     clearTimeout(timeout2.current);
@@ -278,14 +278,15 @@ function home(props) {
             </h3>
 
             {/* btn  */}
-            <a href="https://wa.me/919165308504">
+            <WhatsAppLink number={7999741488} msg='Hello! Mannu Dhaba and Family Restaurant.'>
               <svg viewBox="0 0 24 24" className='dark:hover:text-[#25D366] dark:text-[#00ff5f] text-[#00cd4d] hover:text-[#25d366] sm:w-[2.1875rem] sm:h-[2.1875rem] w-[2rem] h-[2rem]' fill="none">
                 <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                 <path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" stroke="currentColor" strokeWidth="1.5" />
               </svg>
-            </a>
+            </WhatsAppLink>
+
             <Menulink value='Menu' reff={menubtn} />
-            <Link to="/about-us" className='svgbtn outLine font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] dark:text-white px-[1.1875rem] md:w-1/2 flex gap-2 justify-center items-center border transition-all shadow-md hover:shadow-xl' style={{ lineHeight: '100%', textShadow: '0.125rem 1px 3px #3b3b3b94' }}><svg className='w-[1.5rem] h-[1.5rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
+            <Link to="/about-us" className='svgbtn outLine outline-[red] font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] dark:text-white px-[1.1875rem] md:w-1/2 flex gap-2 justify-center items-center border transition-all shadow-md hover:shadow-xl' style={{ lineHeight: '100%', textShadow: '0.125rem 1px 3px #3b3b3b94' }}><svg className='w-[1.5rem] h-[1.5rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
               <path d="M21.1677 7C22.2774 9.54466 22.2774 12.4569 21.1677 15.0015M2.83226 15.0015C1.72258 12.4569 1.72258 9.54466 2.83226 7" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M13.3472 19.9619C12.9858 20.3071 12.5028 20.5 12.0002 20.5C11.4975 20.5 11.0145 20.3071 10.6531 19.9619C7.34389 16.7821 2.90913 13.2299 5.07183 8.07272C6.24118 5.28428 9.04815 3.5 12.0002 3.5C14.9522 3.5 17.7591 5.28428 18.9285 8.07272C21.0885 13.2234 16.6646 16.793 13.3472 19.9619Z" stroke="currentColor" strokeWidth="1.75" />
               <path d="M15 11C15 12.6569 13.6569 14 12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11Z" stroke="currentColor" strokeWidth="1.75" />

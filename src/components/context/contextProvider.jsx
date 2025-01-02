@@ -2,10 +2,11 @@ import { globalContext } from "./context";
 import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo } from "react";
 import gsap from 'gsap'
 import foodimg from '../home/hero-food.webp'
-import { matarPaneer, saahiPaneer, paneerButterMasala ,kheer} from '../varieties imgs/varietyImgs'
+import { matarPaneer, saahiPaneer, paneerButterMasala, kheer } from '../varieties imgs/varietyImgs'
 
 
 let ContextProvider = ({ children }) => {
+
   const [value, setvalue] = useState('dark')
   const [menucard, setmenucard] = useState(
     [
@@ -109,7 +110,7 @@ let ContextProvider = ({ children }) => {
       { heading: 'papad masala', variety: 'papad special', img: foodimg, price: 30, inCart: false, quantity: 1 },
       { heading: 'papad dry', variety: 'papad special', img: foodimg, price: 15, inCart: false, quantity: 1 },
       { heading: 'papad fry', variety: 'papad special', img: foodimg, price: 20, inCart: false, quantity: 1 },
-      
+
       // salad 
       { heading: 'green salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
       { heading: 'kachumar salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
@@ -148,7 +149,7 @@ let ContextProvider = ({ children }) => {
 
   const [fixedMsg, setfixedMsg] = useState({ msg: 'initial', initial: 'initial', random: true })
   return (
-    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue }}>
+    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink }}>
       {children}
     </globalContext.Provider>
   )
@@ -179,12 +180,12 @@ function Fixed() {
 
 
   return (
-    <div ref={mainPopupEl} style={{pointerEvents:'none'}} className={`fixed z-10 opacity-0  dark:bg-white dark:text-[rgb(84_135_0)] capitalize left-1/2 -translate-x-1/2 inline-block  bg-black text-[#9eff00]  px-5 py-3 text-center w-max rounded-[8px] dark:shadow-[0px_0px_0.1875rem_0px_white] shadow-[0px_0px_0.1875rem_0px_black]`}>{fixedMsg.msg}</div>
+    <div ref={mainPopupEl} style={{ pointerEvents: 'none' }} className={`fixed z-10 opacity-0  dark:bg-white dark:text-[rgb(84_135_0)] capitalize left-1/2 -translate-x-1/2 inline-block  bg-black text-[#9eff00]  px-5 py-3 text-center w-max rounded-[8px] dark:shadow-[0px_0px_0.1875rem_0px_white] shadow-[0px_0px_0.1875rem_0px_black]`}>{fixedMsg.msg}</div>
   )
 }
 
 let PageHeading = memo(({ heading }) => {
-  const {value} = useContext(globalContext)
+  const { value } = useContext(globalContext)
   console.log('pageheading')
   return (
     <div className='flex items-center py-5 px-5'>
@@ -197,3 +198,13 @@ let PageHeading = memo(({ heading }) => {
     </div>
   )
 })
+
+function WhatsAppLink({ children,number, msg ,classes}) {
+  // got help from gpt here in (rel,default text)
+  const whatsappUrl = `https://wa.me/91${number}?text=${encodeURIComponent(msg)}`;
+  return (
+    <a href={whatsappUrl} className={classes} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  )
+}
