@@ -149,14 +149,13 @@ let ContextProvider = ({ children }) => {
 
   const [fixedMsg, setfixedMsg] = useState({ msg: 'initial', initial: 'initial', random: true })
   return (
-    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink }}>
+    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink,CartIcon ,CartRmvIcon,CartAddIcon}}>
       {children}
     </globalContext.Provider>
   )
 }
 export default memo(ContextProvider)
 
-console.log('nicheka')
 function Fixed() {
   const mainPopupEl = useRef(null);
 
@@ -190,10 +189,14 @@ let PageHeading = memo(({ heading }) => {
   return (
     <div className='flex items-center py-5 px-5'>
       {/* return btn  */}
-      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span><svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
+      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span>
+        {/* <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
         <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg> </span></div>
+      </svg>  */}          
+      <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]'  color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1"/></svg>
+      </span>
+      </div>
       <h3 className='text-[1.43rem] ml-4 capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>{heading}</h3>
     </div>
   )
@@ -206,5 +209,21 @@ function WhatsAppLink({ children,number, msg ,classes}) {
     <a href={whatsappUrl} className={classes} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
+  )
+}
+ 
+function CartIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+  return (
+    <svg className={classes} color={color} viewBox={viewBox} ><path fill="currentColor" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" strokeWidth={strokeWidth}></path></svg>
+  )
+}
+function CartRmvIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+  return (
+    <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M14.1 8.5L12 6.4L9.9 8.5L8.5 7.1L10.6 5L8.5 2.9l1.4-1.4L12 3.6l2.1-2.1l1.4 1.4L13.4 5l2.1 2.1zM7 18c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m10 0c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m-9.8-3.2c0 .1.1.2.2.2H19v2H7c-1.1 0-2-.9-2-2c0-.4.1-.7.2-1l1.3-2.4L3 4H1V2h3.3l4.3 9h7l3.9-7l1.7 1l-3.9 7c-.3.6-1 1-1.7 1H8.1l-.9 1.6z" strokeWidth={strokeWidth} /></svg>
+  )
+}
+function CartAddIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+  return (
+    <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m10 0c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m-9.8-3.2v-.1l.9-1.7h7.4c.7 0 1.4-.4 1.7-1l3.9-7l-1.7-1l-3.9 7h-7L4.3 2H1v2h2l3.6 7.6L5.2 14c-.1.3-.2.6-.2 1c0 1.1.9 2 2 2h12v-2H7.4c-.1 0-.2-.1-.2-.2"/></svg>
   )
 }

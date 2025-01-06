@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 
 const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardSpecial, menuName, menuRef }) => {
-  let { value, menucard, setmenucard, setfixedMsg } = useContext(globalContext)
+  let { value, menucard, setmenucard, setfixedMsg ,CartAddIcon,CartIcon,CartRmvIcon} = useContext(globalContext)
 
   const updateCart = (variety, heading) => {
     const updatedCards = menucard.map(card => {
@@ -52,26 +52,10 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
                 <div className="absolute right-2 top-5 z-[1]">
                   <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-1 rounded-xl inline-block dark:bg-white bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                     {
-                      menu.inCart ?
-                        <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                          <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M6 6H8M22 6H18.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M10.5 3L13.5 6M13.5 6L16.5 9M13.5 6L10.5 9M13.5 6L16.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                          <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                          <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
+                      menu.inCart ?                       
+                        <CartRmvIcon strokeWidth="1.5" classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                         :
-                        <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                          <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M6 6H6.5M22 6H19.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M9.5 6H16.5M13 9.5V2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                          <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                          <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
+                        <CartAddIcon strokeWidth="1.5" classes={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                     }
                   </button>
                 </div>
@@ -92,25 +76,12 @@ const MenusMaker = memo(({ filterRef, menuFilterPrice, setMenuFilterPrice, cardS
                     menu.inCart ?
                       <Link to={'/cart'} className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
                         <span>{`Go to cart`}</span>
-                        <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                          <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                          <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                          <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                        <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                       </Link>
                       :
                       < button className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
                         <span>Add to cart</span>
-                        <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                          <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                          <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                          <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
+                        <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                       </button>
                   }
 
@@ -159,17 +130,11 @@ const MenusNavigation = ({ menusRef }) => {
   }, [menusRef]);
   return (
     <div className={`${hidden !== true && 'hidden'}`}>
-      <div onClick={() => { gsap.to(menusRef.current, { scrollLeft: menusRef.current.scrollLeft - (menusRef.current.firstElementChild.offsetWidth + parseInt(getComputedStyle(menusRef.current).gap)) }) }} className='absolute z-[1] top-1/2 cursor-pointer left-[-1.25rem] -translate-y-1/2 flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-[50px] bg-[#cecdda24] dark:hover:bg-[#cfcfcf1a]  hover:bg-[#0000001a] backdrop-blur-[20px]'>
-        <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-          <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      <div onClick={() => { gsap.to(menusRef.current, { scrollLeft: menusRef.current.scrollLeft - (menusRef.current.firstElementChild.offsetWidth + parseInt(getComputedStyle(menusRef.current).gap)) }) }} className='absolute z-[1] top-1/2 cursor-pointer left-[-1.25rem] -translate-y-1/2 flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-[50px] bg-[#cecdda24] dark:hover:bg-[#cfcfcf1a]  hover:bg-[#0000001a] backdrop-blur-[20px]'>              
+      <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'}><path fill="currentColor" d="M17.51 3.87L15.73 2.1L5.84 12l9.9 9.9l1.77-1.77L9.38 12z"/></svg>
       </div>
-      <div onClick={() => { gsap.to(menusRef.current, { scrollLeft: menusRef.current.scrollLeft + (menusRef.current.firstElementChild.offsetWidth + parseInt(getComputedStyle(menusRef.current).gap)) }) }} className='absolute z-[1] top-1/2 cursor-pointer right-[-1.25rem] -translate-y-1/2 flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-[50px] bg-[#cecdda24] dark:hover:bg-[#cfcfcf1a] hover:bg-[#0000001a] backdrop-blur-[20px]'>
-        <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-          <path d="M20 12L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M15 17C15 17 20 13.3176 20 12C20 10.6824 15 7 15 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      <div onClick={() => { gsap.to(menusRef.current, { scrollLeft: menusRef.current.scrollLeft + (menusRef.current.firstElementChild.offsetWidth + parseInt(getComputedStyle(menusRef.current).gap)) }) }} className='absolute z-[1] top-1/2 cursor-pointer right-[-1.25rem] -translate-y-1/2 flex items-center justify-center w-[2.5rem] h-[2.5rem] rounded-[50px] bg-[#cecdda24] dark:hover:bg-[#cfcfcf1a] hover:bg-[#0000001a] backdrop-blur-[20px]'>       
+        <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'}><path fill="currentColor" d="M6.23 20.23L8 22l10-10L8 2L6.23 3.77L14.46 12z"/></svg>
       </div>
     </div>
   )
@@ -203,7 +168,7 @@ function menus(props) {
   const [formsubmitted, setformsubmitted] = useState(null)
   // const [noSearchResult, setnoSearchResult] = useState(false)
 
-  const { value, menucard, setmenucard, setfixedMsg } = useContext(globalContext)
+  const { value, menucard, setmenucard, setfixedMsg ,CartRmvIcon,CartIcon,CartAddIcon} = useContext(globalContext)
 
   useEffect(() => {
     console.log(menucard)
@@ -322,11 +287,8 @@ function menus(props) {
         <div ref={searchDiv} className='search-div flex flex-wrap gap-y-3 gap-x-7 items-center py-5 z-[5] justify-between backdrop-blur-[50px] dark:bg-[#1e1e1eb0] bg-[#f5fffa9e] px-5'>
           <div className='flex items-center'>
             {/* return btn  */}
-            <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.3125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.3125rem_black] rounded-full dark:text-white transition-all duration-200' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span>
-              <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.5rem] h-[1.5rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.3125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.3125rem_black] rounded-full dark:text-white transition-all duration-200' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span>             
+              <svg className='dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] w-[1.5rem] h-[1.5rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'}><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1"/></svg>
             </span>
             </div>
             <h3 className='text-[1.43rem] ml-4 capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>menu</h3>
@@ -405,26 +367,10 @@ function menus(props) {
                       <div className="absolute right-2 top-5 z-[1]">
                         <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-1 rounded-xl inline-block dark:bg-white bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                           {
-                            menu.inCart ?
-                              <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                                <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M6 6H8M22 6H18.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M10.5 3L13.5 6M13.5 6L16.5 9M13.5 6L10.5 9M13.5 6L16.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                                <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              </svg>
+                            menu.inCart ?                             
+                              <CartRmvIcon strokeWidth="1.5" classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                               :
-                              <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                                <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M6 6H6.5M22 6H19.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M9.5 6H16.5M13 9.5V2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                                <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              </svg>
+                              <CartAddIcon strokeWidth="1.5" classes={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                           }
                         </button>
                       </div>
@@ -446,25 +392,12 @@ function menus(props) {
                           menu.inCart ?
                             <Link to={'/cart'} className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
                               <span>{`Go to cart`}</span>
-                              <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                                <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                                <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                                <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                              <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                             </Link>
                             :
                             < button className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
                               <span>Add to cart</span>
-                              <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                                <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                                <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                                <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              </svg>
+                              <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                             </button>
                         }
 
@@ -516,26 +449,10 @@ function menus(props) {
                     <div className="absolute right-2 top-5 z-[1]">
                       <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-1 rounded-xl inline-block dark:bg-white bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                         {
-                          menu.inCart ?
-                            <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M6 6H8M22 6H18.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M10.5 3L13.5 6M13.5 6L16.5 9M13.5 6L10.5 9M13.5 6L16.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            </svg>
+                          menu.inCart ?                           
+                            <CartRmvIcon strokeWidth="1.5" classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                             :
-                            <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M6 6H6.5M22 6H19.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M9.5 6H16.5M13 9.5V2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            </svg>
+                            <CartAddIcon strokeWidth="1.5" classes={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                         }
                       </button>
                     </div>
@@ -556,25 +473,12 @@ function menus(props) {
                         menu.inCart ?
                           <Link to={'/cart'} className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
                             <span>{`Go to cart`}</span>
-                            <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                            <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                           </Link>
                           :
                           < button className={`svgbtn flex-[1_1_50%] flex items-center justify-center gap-2 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
                             <span>Add to cart</span>
-                            <svg className='w-[0.9375rem] h-[0.9375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            </svg>
+                            <CartIcon classes='w-[0.9775rem] h-[0.9775rem]' color={value === 'dark' ? 'white' : 'black'} />
                           </button>
                       }
 

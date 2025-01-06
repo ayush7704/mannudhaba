@@ -76,7 +76,12 @@ function LoopSlide() {
     <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
       {
         ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
+          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-inherit leading-[100%]'> <svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
+
+          <path fill="red" d="M16 3.23Q17.065 2 18.7 2c.91 0 1.67.33 2.3 1s.96 1.43 1 2.3c0 .7-.33 1.51-1 2.46s-1.32 1.74-1.97 2.39q-.975.96-3.03 2.85q-2.085-1.89-3.06-2.85c-.975-.96-1.31-1.44-1.97-2.39S10 6 10 5.3c0-.91.32-1.67.97-2.3s1.43-.96 2.34-1c1.07 0 1.96.41 2.69 1.23" />
+
+          <path fill='currentColor' d="M22 19v1l-8 2.5l-7-1.94V22H1V11h7.97l6.16 2.3A2.89 2.89 0 0 1 17 16h2c1.66 0 3 1.34 3 3M5 20v-7H3v7zm14.9-1.43c-.16-.33-.51-.57-.9-.57h-5.35c-.54 0-1.07-.08-1.58-.25l-2.38-.79l.63-1.9l2.38.79c.3.1 2.3.15 2.3.15c0-.37-.23-.7-.57-.83L8.61 13H7v5.5l6.97 1.91z" />
+        </svg></span></p>
         ))
       }
     </div>
@@ -113,7 +118,7 @@ function home(props) {
   const timeout2 = useRef(null);
   const tm = useRef(gsap.timeline());
 
-  const { value, menucard, setmenucard, setfixedMsg, WhatsAppLink } = useContext(globalContext)
+  const { value, menucard, setmenucard, setfixedMsg, WhatsAppLink ,CartIcon,CartRmvIcon,CartAddIcon} = useContext(globalContext)
   // fitering these arrays values start 
   let homecardObj = [];
   let arr = ['butter paneer masala', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'kheer']
@@ -286,11 +291,13 @@ function home(props) {
             </WhatsAppLink>
 
             <Menulink value='Menu' reff={menubtn} />
-            <Link to="/about-us" className='svgbtn outLine outline-[red] font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] dark:text-white px-[1.1875rem] md:w-1/2 flex gap-2 justify-center items-center border transition-all shadow-md hover:shadow-xl' style={{ lineHeight: '100%', textShadow: '0.125rem 1px 3px #3b3b3b94' }}><svg className='w-[1.5rem] h-[1.5rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-              <path d="M21.1677 7C22.2774 9.54466 22.2774 12.4569 21.1677 15.0015M2.83226 15.0015C1.72258 12.4569 1.72258 9.54466 2.83226 7" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M13.3472 19.9619C12.9858 20.3071 12.5028 20.5 12.0002 20.5C11.4975 20.5 11.0145 20.3071 10.6531 19.9619C7.34389 16.7821 2.90913 13.2299 5.07183 8.07272C6.24118 5.28428 9.04815 3.5 12.0002 3.5C14.9522 3.5 17.7591 5.28428 18.9285 8.07272C21.0885 13.2234 16.6646 16.793 13.3472 19.9619Z" stroke="currentColor" strokeWidth="1.75" />
-              <path d="M15 11C15 12.6569 13.6569 14 12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11Z" stroke="currentColor" strokeWidth="1.75" />
-            </svg> <span><span>Location</span> & <span className='inline-block'>About us</span> </span> <svg className='w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
+            <Link to="/about-us" className='svgbtn outLine outline-[red] font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] dark:text-white px-[1.1875rem] md:w-1/2 flex gap-2 justify-center items-center border transition-all shadow-md hover:shadow-xl' style={{ lineHeight: '100%', textShadow: '0.125rem 1px 3px #3b3b3b94' }}>          
+            <svg  className={`w-[1.5rem] h-[1.5rem]`} color={value === 'dark' ? 'white' : 'black'}viewBox="0 0 12 12"><path fill="currentColor" d="M6 2a2.5 2.5 0 0 0-2.5 2.5c0 .453.259 1.04.691 1.674c.42.617.953 1.204 1.387 1.641c.238.24.606.24.844 0c.434-.437.966-1.024 1.387-1.64C8.24 5.54 8.5 4.952 8.5 4.5A2.5 2.5 0 0 0 6 2M2.5 4.5a3.5 3.5 0 1 1 7 0c0 .77-.408 1.568-.865 2.238c-.469.687-1.048 1.323-1.503 1.781a1.585 1.585 0 0 1-2.264 0c-.455-.458-1.034-1.094-1.503-1.781C2.908 6.068 2.5 5.269 2.5 4.5m4.5 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2.42 8.065c.122-.125.267-.236.427-.336c.21.277.43.54.643.782a1.5 1.5 0 0 0-.36.256C3.017 8.884 3 8.962 3 9s.016.116.13.233c.118.118.312.248.592.368C4.28 9.84 5.085 10 6 10s1.72-.16 2.278-.399c.28-.12.474-.25.591-.368C8.984 9.116 9 9.038 9 9s-.016-.116-.13-.233q-.122-.125-.36-.256c.214-.241.433-.505.643-.782q.242.15.428.336c.239.242.419.559.419.935s-.18.693-.42.935c-.236.24-.554.434-.908.585c-.71.304-1.654.48-2.672.48s-1.963-.176-2.672-.48c-.354-.151-.672-.345-.909-.585C2.18 9.693 2 9.376 2 9s.18-.693.42-.935" strokeWidth='1.75'/></svg>
+            <span>
+              <span>Location</span>
+               & 
+               <span className='inline-block'>About us</span> 
+               </span> <svg className='w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
                 <path d="M18 13C20.2091 13 22 11.2091 22 9C22 6.79086 20.2091 5 18 5C17.1767 5 16.4115 5.24874 15.7754 5.67518M6 13C3.79086 13 2 11.2091 2 9C2 6.79086 3.79086 5 6 5C6.82332 5 7.58854 5.24874 8.22461 5.67518M15.7754 5.67518C15.2287 4.11714 13.7448 3 12 3C10.2552 3 8.77132 4.11714 8.22461 5.67518M15.7754 5.67518C15.9209 6.08981 16 6.53566 16 7C16 7.3453 15.9562 7.68038 15.874 8M9.46487 7C9.15785 6.46925 8.73238 6.0156 8.22461 5.67518" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M6 17.5C7.59905 16.8776 9.69952 16.5 12 16.5C14.3005 16.5 16.401 16.8776 18 17.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
                 <path d="M5 21C6.86556 20.3776 9.3161 20 12 20C14.6839 20 17.1344 20.3776 19 21" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
@@ -317,25 +324,9 @@ function home(props) {
                     <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-1 rounded-xl inline-block dark:bg-white bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                       {
                         menu.inCart ?
-                          <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                            <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M6 6H8M22 6H18.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M10.5 3L13.5 6M13.5 6L16.5 9M13.5 6L10.5 9M13.5 6L16.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                            <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          </svg>
-                          :
-                          <svg className={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} viewBox="0 0 24 24" fill="none">
-                            <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M6 6H6.5M22 6H19.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M9.5 6H16.5M13 9.5V2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                            <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M8 20L15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                            <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                          </svg>
+                          <CartRmvIcon strokeWidth='1.5' classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
+                          :                          
+                          <CartAddIcon strokeWidth='1.5' classes={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                       }
                     </button>
                   </div>
@@ -352,26 +343,12 @@ function home(props) {
                       menu.inCart ?
                         <Link to={'/cart'} className={`svgbtn flex items-center justify-center gap-2 flex-1 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
                           <span>{`Go to cart`}</span>
-                          <svg className='w-[1.0625rem] h-[1.0625rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                            <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                            <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                            <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          </svg>
+                          <CartIcon color={value === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]'/>
                         </Link>
                         :
                         <button className={`svgbtn flex items-center justify-center gap-2 flex-1 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
                           <span>Add to cart</span>
-                          <svg className='w-[1.0625rem] h-[1.0625rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-                            <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                            <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-                            <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          </svg>
+                          <CartIcon color={value === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]'/>
                         </button>
                     }
 
@@ -394,7 +371,13 @@ function home(props) {
               <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
                 {
                   ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-[red] text-lg leading-[100%]'>&#9829;</span></p>
+                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-inherit leading-[100%]'><svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
+
+                    <path fill="red" d="M16 3.23Q17.065 2 18.7 2c.91 0 1.67.33 2.3 1s.96 1.43 1 2.3c0 .7-.33 1.51-1 2.46s-1.32 1.74-1.97 2.39q-.975.96-3.03 2.85q-2.085-1.89-3.06-2.85c-.975-.96-1.31-1.44-1.97-2.39S10 6 10 5.3c0-.91.32-1.67.97-2.3s1.43-.96 2.34-1c1.07 0 1.96.41 2.69 1.23" />
+
+                    <path fill='currentColor' d="M22 19v1l-8 2.5l-7-1.94V22H1V11h7.97l6.16 2.3A2.89 2.89 0 0 1 17 16h2c1.66 0 3 1.34 3 3M5 20v-7H3v7zm14.9-1.43c-.16-.33-.51-.57-.9-.57h-5.35c-.54 0-1.07-.08-1.58-.25l-2.38-.79l.63-1.9l2.38.79c.3.1 2.3.15 2.3.15c0-.37-.23-.7-.57-.83L8.61 13H7v5.5l6.97 1.91z" />
+                  </svg>
+                  </span></p>
                   ))
                 }
               </div>

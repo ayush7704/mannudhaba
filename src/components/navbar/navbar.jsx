@@ -16,7 +16,7 @@ function Navbar() {
   let location = useLocation()
   let linkswrapper = useRef(null)
   let cartref = useRef(null)
-  let { value, setvalue, addToCartItemValue } = useContext(globalContext)
+  let { value, setvalue, addToCartItemValue ,CartIcon} = useContext(globalContext)
 
   useEffect(() => {
     console.log(location.pathname)
@@ -219,15 +219,9 @@ function Navbar() {
       </div>
       {/* add to cart start  */}
       {
-        [
+        [       
           {
-            name: 'Cart', to: 'cart', svg: (<svg className={`w-[1.25rem] h-[1.25rem]`} color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
-              <path d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <path d="M6 6H22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <circle cx="6" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-              <circle cx="17" cy="20" r="2" stroke="currentColor" strokeWidth="2" />
-              <path d="M8 20L15 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              <path d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>)
+            name: 'Cart', to: 'cart', svg: (<CartIcon color={value === 'dark' ? 'white' : 'black'} classes={'w-[1.29rem] h-[1.29rem]'}/>)
           }
         ].map((item, index) => (<NavLink to={'cart'} key={index} className={({ isActive }) => {
           const baseClasses = 'md:max-lg:p-2 max-md:ml-auto rounded-[10rem] flex gap-2 font-medium text-[0.95rem] transition-all duration-[200ms] px-5 text-nowrap py-[0.625rem]';
@@ -235,7 +229,7 @@ function Navbar() {
           const hoverClasses = 'dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]';
           return `${baseClasses} ${activeClasses} ${hoverClasses}`;
         }} onClick={() => cartHam()}>
-          {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.350rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans'>{addToCartItemValue.length}</span>
+          {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans'>{addToCartItemValue.length}</span>
           </span>}
           <span className='max-sm:hidden'>{item.name}</span>
         </NavLink>))
