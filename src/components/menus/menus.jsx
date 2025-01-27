@@ -161,7 +161,7 @@ function menus(props) {
   let [daalPrice, setdaalPrice] = useState(1000)
   let [parathaPrice, setparathaPrice] = useState(1000)
   const [select, setselect] = useState('all')
-  const [range, setrange] = useState(250)
+  const [range, setrange] = useState(1000)
   let filter1;
   let search;
   const [searchvalue, setsearchvalue] = useState([])
@@ -424,17 +424,19 @@ function menus(props) {
             <h3 className='text-xl dark:text-[gold] text-black capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>full menu</h3>
             {/*======= selection   =====*/}
             <select className='text-white bg-black cursor-pointer p-3 border border-white rounded-md' ref={selection} onChange={(e) => { setselect(selection.current.value) }}>
-              <option className='p-4' value="all">Full menu</option>
-              <option className='p-4' value="chinese special">Chinese menu</option>
-              <option className='p-4' value="daal special">Daal menu</option>
-              <option className='p-4' value="paneer special">Paneer menu</option>
-              <option className='p-4' value="paratha special">Paratha menu</option>
-              <option className='p-4' value="rayta special">Rayta menu</option>
-              <option className='p-4' value="papad special">Papad menu</option>
-              <option className='p-4' value="rice special">Rice menu</option>
-              <option className='p-4' value="roti special">Roti menu</option>
-              <option className='p-4' value="salad special">salad menu</option>
-              <option className='p-4' value="other's">Other's varieties</option>
+              <option className='p-4' value="all">Full Menu</option>
+              <option className='p-4' value="paneer special">Paneer Menu</option>
+              <option className='p-4' value="daal special">Daal Menu</option>
+              <option className='p-4' value="snacks special">snacks Menu</option>
+              <option className='p-4' value="thali">thali Menu</option>
+              <option className='p-4' value="chinese special">Chinese Menu</option>
+              <option className='p-4' value="paratha special">Paratha Menu</option>
+              <option className='p-4' value="rayta special">Rayta Menu</option>
+              <option className='p-4' value="papad special">Papad Menu</option>
+              <option className='p-4' value="rice special">Rice Menu</option>
+              <option className='p-4' value="roti special">Roti Menu</option>
+              <option className='p-4' value="salad special">salad Menu</option>
+              <option className='p-4' value="other's">Other varieties</option>
             </select>
           </div>
           <div className='relative'>

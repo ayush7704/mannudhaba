@@ -149,7 +149,7 @@ function cart() {
               <div className="sm:w-[65%] flex-1 grid gap-3 ">
                 {addToCartItemValue.map((menu, index) => (
                   <div key={menu.heading + index} className="cartItemWrapper relative">
-                    <div key={menu.heading + index} className='flex overflow-hidden cartItem ar-one-sans relative sm:p-[0.9375rem] p-[0_0.9375rem_0.9375rem] rounded-lg items-center border flex-wrap justify-center backdrop-blur-[500px] shadow-md hover:shadow-xl transition-all duration-200'>
+                    <div key={menu.heading + index} className='flex overflow-hidden cartItem ar-one-sans relative sm:p-[0.9375rem] p-[0_0.9375rem_0.9375rem] rounded-lg items-center border flex-wrap justify-center backdrop-blur-[500px] shadow-md hover:shadow-xl transition-all duration-200 dark:bg-black bg-white'>
                       {/* remove btn start */}
                       <div onClick={() => { openModal(); setcardvalue({ heading: menu.heading, variety: menu.variety }) }} className="absolute rounded-[0_0_0_3px] cursor-pointer p-[0.125rem] top-[0px] dark:bg-[#f6f6f6] bg-white flex justify-center items-center right-[0px] w-[1.4375rem] h-[1.4375rem] shadow-[0.0625rem_0.0625rem_0.1875rem_-0.0625rem]">
                         <span>

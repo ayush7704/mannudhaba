@@ -121,7 +121,7 @@ function home(props) {
   const { value, menucard, setmenucard, setfixedMsg, WhatsAppLink ,CartIcon,CartRmvIcon,CartAddIcon} = useContext(globalContext)
   // fitering these arrays values start 
   let homecardObj = [];
-  let arr = ['butter paneer masala', 'Daal baafle', 'veg kofta', 'Daal baati', 'paneer chilli', 'paneer nudals', 'kheer']
+  let arr = ['butter paneer masala', 'Daal baafle', 'Daal fry', 'kadai paneer', 'paneer chilli', 'paneer nudals', 'kheer']
   for (let i = 0; i < menucard.length; i++) {
     for (let ii = 0; ii < arr.length; ii++) {
       if (menucard[i].heading === arr[ii]) {
