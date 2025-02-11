@@ -420,7 +420,7 @@ function footer() {
                   </button>
                 )
               )}
-              <a
+              <a target='_blank'
                 className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1"
                 href="https://www.instagram.com/mannudhaba?igsh=MTgwdjVvdnQxbmR3NQ=="
               >

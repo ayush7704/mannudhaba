@@ -101,8 +101,6 @@ function LoopSlide2() {
 
 //==== main home compo 
 function home(props) {
-
-
   let linearline = useRef(null)
   let pureveg = useRef(null)
   let mealimg = useRef(null)
@@ -218,12 +216,7 @@ function home(props) {
         backgroundSize: '100% 100%', scrollTrigger: {
           trigger: linearline.current, start: 'top 80%', end: 'top 50%', scrub: 1,
         }
-      })
-    // return () => {
-    //   tm.current.kill()
-    //   clearTimeout(timeout1.current);
-    //   clearTimeout(timeout2.current);
-    // };
+      }) 
   })
 
 
