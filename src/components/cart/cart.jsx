@@ -6,75 +6,11 @@ import { NavLink } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-
-function MsgCompo({ modalref, cardvalueP, modaltype }) {
-  const { value, menucard, setmenucard, setfixedMsg } = useContext(globalContext)
-  // for removing modal and updating menucard array 
-  function removeModal(value) {
-    if (value) {
-      const updatedCards = menucard.map(card => {
-        if (card.heading === cardvalueP.heading && card.variety === cardvalueP.variety) {
-          setfixedMsg(prev => ({ ...prev, msg: card.inCart ? 'item removed successfully' : 'item added successfully', random: !prev.random, initial: !prev.initial, cardIncard: !card.inCart }))
-          return { ...card, quantity: 1, inCart: !card.inCart };
-        }
-        return card;
-      });
-      setmenucard(updatedCards)
-    }
-    modalref.current.parentElement.classList.remove('z-[4]'); modalref.current.parentElement.classList.add('z-[-10]'); modalref.current.classList.add('scale-0', 'opacity-0')
-  }
-  // for removing modal and updating menucard array end
-  return (
-    <>
-      {modaltype === 'cartModal' ?
-        (
-          // {/* remove item modal start  */ }
-          < div className='fixed top-0 left-0 z-[-10] h-dvh w-dvw grid place-items-center bg-[#000000a1]' onClick={() => { removeModal(false); }
-          }>
-            <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='transition-all shadow-[0_0_7px_0px_#000000] duration-200 rounded-md sm:w-[25rem] w-[75%] bg-black dark:bg-white dark:text-black p-[1.0625rem] text-white scale-0 opacity-0 '>
-              <h2 className='capitalize font-bold mb-2 text-[1.0625rem]'>remove item</h2>
-              <p className='mb-2 text-[0.97rem]'>Are you sure want to remove this item?</p>
-              <div className="flex justify-end gap-2 mt-4 sm:mt-6">
-                <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-medium py-[0.3125rem] rounded-sm px-4 dark:bg-black dark:hover:bg-[#232323] dark:text-white transition-all duration-200 text-[0.94rem]'>cancel</button>
-                <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-medium py-[0.3125rem] rounded-sm px-2 text-white text-[0.94rem] transition-all duration-200'>remove</button>
-              </div>
-            </div>
-          </div >
-          // {/* remove item modal end  */ }
-        ) : modaltype === 'menusModal' ?
-          (
-            < div className='fixed top-0 left-0 z-[-10] h-dvh w-dvw grid place-items-center bg-[#000000a1]' onClick={() => { removeModal(false); }}>
-              <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='transition-all shadow-[0_0_7px_0px_#000000] duration-200 rounded-md sm:w-[25rem] w-[75%] bg-black dark:bg-white dark:text-black p-[1.0625rem] text-white scale-0 opacity-0 '>
-                <h2 className='capitalize font-bold mb-2 text-[0.97rem]'>Add item to cart for order</h2>
-                <p className='mb-2 text-[0.75rem] capitalize flex gap-2 items-center'><span>add or remove just by from click on </span>
-                  {/* heart  */}
-                  <span>
-                    <svg className={`w-[1.5rem] h-[1.5rem]`} fill="none" viewBox="0 0 24 24" color={value === 'dark' ? 'black' : 'white'}>
-                      <path d="M19.4626 3.99415C16.7809 2.34923 14.4404 3.01211 13.0344 4.06801C12.4578 4.50096 12.1696 4.71743 12 4.71743C11.8304 4.71743 11.5422 4.50096 10.9656 4.06801C9.55962 3.01211 7.21909 2.34923 4.53744 3.99415C1.01807 6.15294 0.221721 13.2749 8.33953 19.2834C9.88572 20.4278 10.6588 21 12 21C13.3412 21 14.1143 20.4278 15.6605 19.2834C23.7783 13.2749 22.9819 6.15294 19.4626 3.99415Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill={'red'} />
-                    </svg>
-                  </span>
-                  {/* heart  */}
-                </p>
-                <div className="flex justify-end gap-2 mt-4 sm:mt-6">
-                  <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-medium py-[0.3125rem] rounded-sm px-4 dark:bg-black dark:hover:bg-[#232323] dark:text-white transition-all duration-200 text-[0.94rem]'>Add Item</button>
-                  <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-medium py-[0.3125rem] rounded-sm px-2 text-white text-[0.94rem] transition-all duration-200'>remove</button>
-                </div>
-              </div>
-            </div >) : <div>hlo</div>
-
-      }
-    </>
-  )
-}
-
-
 function cart() {
   let cartmenubtn = useRef(null)
   let summ = 0
-  let modal = useRef(null)
-  let [sum, setsum] = useState()
-  const [cardvalue, setcardvalue] = useState({ heading: null, variety: null })
-  const { value, menucard, setmenucard, PageHeading, addToCartItemValue ,CartIcon} = useContext(globalContext)
+  let [sum, setsum] = useState()  
+  const { value, menucard, setmenucard, PageHeading, addToCartItemValue, CartIcon, setItemBeingRemoved } = useContext(globalContext)
   useEffect(() => {
     document.title = 'Mannu Dhaba Cart';
   }, [])
@@ -92,35 +28,27 @@ function cart() {
   const qty = ({ qnt, heading, variety }) => {
     let newmenucard = menucard.map((e, ind) => {
       if (e.heading === heading && e.variety === variety) {
-        return { ...e, quantity: qnt === '-' ? (e.quantity > 0 ? e.quantity - 1 : 0) : e.quantity + 1 };
+        return { ...e, quantity: qnt === '-' ? (e.quantity > 1 ? e.quantity - 1 : 1) : e.quantity + 1 };
       }
       return e
     })
     setmenucard(newmenucard)
   }
-  // for item quantity end
-
-  // for opening modal 
-  function openModal() {
-    modal.current.parentElement.classList.remove('z-[-10]')
-    modal.current.parentElement.classList.add('z-[4]')
-    modal.current.classList.remove('scale-0', 'opacity-0')
-  }
 
   useGSAP(() => {
-    gsap.utils.toArray('.cartItem').forEach(element => {
+    gsap.utils.toArray('.cartItemWrapper').forEach(element => {
       gsap.fromTo(element,
         {
-          y: 36, ease: 'none'
+          y: 20
         },
         {
-          y: 0, scrollTrigger: {
+          y: 0,
+          duration: 1, ease: 'power1',
+          scrollTrigger: {
             trigger: element,
-            start: 'top 70%',
-            end: 'top 50%',
-            scrub: 1,
-            scroller: 'body',
-            // markers: true,
+            start: 'top 95%',
+            end: 'top 95%',
+            // markers:true       
           }
         })
     })
@@ -128,30 +56,30 @@ function cart() {
 
   return (
     <div>
-      <section className='relative min-h-[70vh] cartPage backdrop-blur-[70px]'>
+      <section className='relative min-h-[70vh] cartPage backdrop-blur-[100px]'>
         <PageHeading heading={' your cart'} />
         <div className="p-[1.25rem]">
           {addToCartItemValue.length < 1 ? <div className='sm:w-[60%] mx-auto'>
             <p className='flex justify-center mb-4'>
               <NavLink to={'/menu'}>
-                  <CartIcon color={value === 'dark' ? 'white' : 'black'} classes={`w-[3.125rem] h-[3.125rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.1425rem_black]`}/>
-                  </NavLink>
+                <CartIcon color={value === 'dark' ? 'white' : 'black'} classes={`w-[3.125rem] h-[3.125rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.1425rem_black]`} />
+              </NavLink>
             </p>
-            <h3 className='relative flex flex-wrap justify-between capitalize text-lg px-3 pb-6 text-center' style={{ textShadow: '0.125rem 0.0625rem 1rem #3b3b3b94' }}> <div className='grow order-1 md:order-[0]'>add items in the cart to order.</div>
+            <h3 className='relative flex flex-wrap justify-between capitalize text-lg px-3 pb-6 text-center [textShadow:0.125rem_0.0625rem_1rem_#3b3b3b94]'> <div className='grow order-1 md:order-[0]'>add items in the cart to order.</div>
             </h3>
             <div className='flex justify-center'>
               <Menulink value='Return To Menu' reff={cartmenubtn} />
             </div>
           </div>
             :
-            <div className="flex flex-wrap sm:w-[80%] justify-center items-start gap-5 mx-auto mb-7">
+            <div className="flex flex-wrap sm:w-[90%] lg:w-[82%] justify-center items-start gap-5 mx-auto mb-7">
               {/* cart start  */}
               <div className="sm:w-[65%] flex-1 grid gap-3 ">
                 {addToCartItemValue.map((menu, index) => (
                   <div key={menu.heading + index} className="cartItemWrapper relative">
-                    <div key={menu.heading + index} className='flex overflow-hidden cartItem ar-one-sans relative sm:p-[0.9375rem] p-[0_0.9375rem_0.9375rem] rounded-lg items-center border flex-wrap justify-center backdrop-blur-[500px] shadow-md hover:shadow-xl transition-all duration-200 dark:bg-black bg-white'>
+                    <div key={menu.heading + index} className='flex overflow-hidden cartItem ar-one-sans relative sm:p-[0.9375rem] p-[0_0.9375rem_0.9375rem] rounded-lg items-center border flex-wrap justify-center backdrop-blur-[500px] shadow-xl hover:shadow-2xl transition-all duration-200 dark:bg-black bg-white'>
                       {/* remove btn start */}
-                      <div onClick={() => { openModal(); setcardvalue({ heading: menu.heading, variety: menu.variety }) }} className="absolute rounded-[0_0_0_3px] cursor-pointer p-[0.125rem] top-[0px] dark:bg-[#f6f6f6] bg-white flex justify-center items-center right-[0px] w-[1.4375rem] h-[1.4375rem] shadow-[0.0625rem_0.0625rem_0.1875rem_-0.0625rem]">
+                      <div onClick={() => { setItemBeingRemoved({ heading: menu.heading, variety: menu.variety }) }} className="absolute rounded-[0_0_0_3px] cursor-pointer p-[0.125rem] top-[0px] dark:bg-[#f6f6f6] bg-white flex justify-center items-center right-[0px] w-[1.4375rem] h-[1.4375rem] shadow-[0.0625rem_0.0625rem_0.1875rem_-0.0625rem]">
                         <span>
                           <svg className={`w-[1.1875rem] h-[1.1875rem]`} viewBox="0 0 24 24" color="#000000" fill="none">
                             <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -161,9 +89,7 @@ function cart() {
                           </svg>
                         </span>
                       </div>
-                      {/* remove btn end */}
-                      {/* img start */}
-                      {/* w-[7.5rem] h-[7.5rem] */}
+                      {/* remove btn end */}                    
                       <div className='sm:w-[11.875rem] sm:h-[11.875rem] w-[80%] h-[9.5rem] p-2 rounded-xl'>
                         <img src={menu.img} alt={menu.heading + ' img'} className='w-full h-full object-contain sm:object-cover rounded-[0.25rem]' />
                       </div>
@@ -230,8 +156,7 @@ function cart() {
             </div>
           }
         </div>
-      </section>
-      <MsgCompo modaltype={'cartModal'} cardvalueP={cardvalue} modalref={modal} />
+      </section>      
     </div>
   )
 }

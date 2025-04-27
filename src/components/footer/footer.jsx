@@ -9,17 +9,12 @@ import gsap from "gsap";
 
 function footer() {
   const cartref = useRef(null);
-  const { setfixedMsg, value, addToCartItemValue, WhatsAppLink } =
+  const { notificationMsgs, NotificationTimings, setnotificationState, value, addToCartItemValue, WhatsAppLink, CartIcon } =
     useContext(globalContext);
   function copyNumber(e) {
     navigator.clipboard.writeText(e.target.innerText);
     navigator.vibrate(20);
-    setfixedMsg((prev) => ({
-      ...prev,
-      msg: "number copied",
-      initial: !prev.initial,
-      random: !prev.random,
-    }));
+    setnotificationState({ msg: notificationMsgs.numberCopied, time: NotificationTimings.get(notificationMsgs.numberCopied) });
   }
   useGSAP(() => {
     gsap.fromTo(
@@ -30,7 +25,7 @@ function footer() {
   }, [addToCartItemValue.length]);
 
   return (
-    <footer className={`relative p-[1.25rem] backdrop-blur-[70px]`}>
+    <footer className={`relative p-[1.25rem] backdrop-blur-[100px]`}>
       <div className="py-5 sm:px-5 grid gap-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="sm:order-[-1] order-1">
@@ -39,54 +34,8 @@ function footer() {
               {[
                 {
                   name: "Cart",
-                  to: "cart",
-                  svg: (
-                    <svg
-                      className={`w-[1.25rem] h-[1.25rem]`}
-                      color={value === "dark" ? "white" : "black"}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M6 6H22"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <circle
-                        cx="6"
-                        cy="20"
-                        r="2"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        cx="17"
-                        cy="20"
-                        r="2"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                      <path
-                        d="M8 20L15 20"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  ),
+                  to: "cart",                
+                  svg: (<CartIcon color={value === "dark" ? "white" : "black"} classes={'w-[1.25rem] h-[1.25rem]'} />),
                 },
               ].map((item, index) => (
                 <NavLink
@@ -94,17 +43,15 @@ function footer() {
                   key={index}
                   className={({ isActive }) => {
                     const baseClasses = `svgbtn text-center flex py-2 px-4 sm:px-4 rounded-[0.9375rem] text-nowrap  gap-2 capitalize active:scale-[0.9] dark:active:bg-[#80808059] active:bg-[#e6e6e6] transition duration-100`;
-                    const hoverClasses = `${
-                      value === "light"
-                        ? "hover:bg-white hover:shadow-[0px_0.1875rem_0.1875rem_0px_#54545447]"
-                        : "hover:bg-[#d1d1d159]"
-                    }`;
+                    const hoverClasses = `${value === "light"
+                      ? "hover:bg-white hover:shadow-lg"
+                      : "hover:bg-[#d1d1d159]"
+                      }`;
                     const activeClasses = isActive
-                      ? `${
-                          value === "light"
-                            ? "bg-white shadow-[0px_0.1875rem_0.1875rem_0px_#54545447] "
-                            : "dark:bg-darkgradient"
-                        }`
+                      ? `${value === "light"
+                        ? "bg-white shadow-xl "
+                        : "dark:bg-darkgradient"
+                      }`
                       : "";
                     return `${baseClasses} ${hoverClasses} ${activeClasses}`;
                   }}
@@ -112,7 +59,7 @@ function footer() {
                   {
                     <span ref={cartref} className="relative">
                       {item?.svg}
-                      <span className="absolute dark:text-white text-black dark:outline-white outline-black top-[-0.350rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans">
+                      <span className="absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans leading-[100%] font-extrabold">
                         {addToCartItemValue.length}
                       </span>
                     </span>
@@ -249,21 +196,18 @@ function footer() {
                   key={ind}
                   className={({ isActive }) => {
                     const baseClasses = `svgbtn text-center flex py-2 px-4 sm:px-4 rounded-[0.9375rem] text-nowrap  gap-2 capitalize active:scale-[0.9] dark:active:bg-[#80808059] active:bg-[#e6e6e6] transition duration-100`;
-                    const hoverClasses = `${
-                      value === "light"
-                        ? "hover:bg-white hover:shadow-[0px_0.1875rem_0.1875rem_0px_#54545447]"
-                        : "hover:bg-[#d1d1d159]"
-                    }`;
+                    const hoverClasses = `${value === "light"
+                      ? "hover:bg-white hover:shadow-lg"
+                      : "hover:bg-[#d1d1d159]"
+                      }`;
                     const activeClasses = isActive
-                      ? `${
-                          value === "light"
-                            ? "bg-white shadow-[0px_0.1875rem_0.1875rem_0px_#54545447] "
-                            : "dark:bg-darkgradient"
-                        }`
+                      ? `${value === "light"
+                        ? "bg-white shadow-xl "
+                        : "dark:bg-darkgradient"
+                      }`
                       : "";
                     return `${baseClasses} ${hoverClasses} ${activeClasses}`;
-                  }}
-                >
+                  }}>
                   {el?.svg}
                   <span>{el.name}</span>
                 </NavLink>
@@ -274,7 +218,7 @@ function footer() {
           <div>
             <h2 className="capitalize text-lg mb-3">Contact Us</h2>
             <div className="flex flex-col items-start dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
-              <a
+              <a target="_blank"
                 className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1"
                 href="https://maps.app.goo.gl/9fbqpbeUvJ6TfNWt6"
               >
@@ -286,20 +230,20 @@ function footer() {
                     <g
                       fill="none"
                       stroke="#fff"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                     >
                       <path
                         fill="#fff"
-                        fill-opacity="0"
-                        stroke-dasharray="40"
-                        stroke-dashoffset="40"
+                        fillOpacity="0"
+                        strokeDasharray="40"
+                        strokeDashoffset="40"
                         d="M12 18c0 0 -5.14 -6 -5.14 -9.86c0 -2.84 2.3 -5.14 5.14 -5.14c2.84 0 5.14 2.3 5.14 5.14c0 3.86 -5.14 9.86 -5.14 9.86Z"
                       >
                         <animate
                           fill="freeze"
-                          attributeName="fill-opacity"
+                          attributeName="fillOpacity"
                           begin="0.6s"
                           dur="0.5s"
                           values="0;1"
@@ -316,12 +260,12 @@ function footer() {
                         cy="8.143"
                         r="2.5"
                         fill="#000"
-                        fill-opacity="0"
+                        fillOpacity="0"
                         stroke="none"
                       >
                         <animate
                           fill="freeze"
-                          attributeName="fill-opacity"
+                          attributeName="fillOpacity"
                           begin="1.1s"
                           dur="0.5s"
                           values="0;1"
@@ -421,16 +365,12 @@ function footer() {
                 )
               )}
               <a target='_blank'
-                className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1"
-                href="https://www.instagram.com/mannudhaba?igsh=MTgwdjVvdnQxbmR3NQ=="
-              >
+                className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2"
+                href="https://www.instagram.com/mannudhaba?igsh=MTgwdjVvdnQxbmR3NQ==">
                 <svg
-                  className="footerElm text-inherit w-[1.2rem] h-[1.2rem] drop-shadow-[0px_0px_5px_black]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 256 256"
-                >
+                  className="footerElm text-inherit w-[1.2rem] h-[1.2rem] drop-shadow-[1px_1px_4px_#000000b0]"
+                  xmlns="http://www.w3.org/2000/svg"                 
+                  viewBox="0 0 256 256">
                   <g fill="none">
                     <rect
                       width="256"
@@ -498,9 +438,9 @@ function footer() {
                 Pure veg, Affordable, and perfect for families. Your feedback
                 matters for us — share your experience with a review!
               </p>
-              <a
+              <a target='_blank'
                 href="https://g.page/r/CfpZjeiu18gXEBM/review"
-                className="flex gap-2 items-center justify-center px-4 py-2 bg-white text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-white font-medium border border-gray-300 rounded-md shadow hover:bg-gray-100 dark:hover:bg-gray-700  hover:shadow-md transition duration-200"
+                className="flex gap-2 items-center justify-center px-4 py-2 bg-white text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-white font-medium border border-gray-300 rounded-md shadow-md hover:bg-gray-100 dark:hover:bg-gray-700  hover:shadow-lg transition duration-200"
               >
                 <svg
                   className="w-[1.2rem] h-[1.2rem]"
@@ -533,17 +473,14 @@ function footer() {
         <div className="text-center">
           <address>{`design & developed by`}</address>
           <strong>
-            <a
-              className="uppercase"
-              href="https://ayushnagar-portfolio.netlify.app/"
-            >
-              Ayush Nagar
+            <a target="_blank"
+              className="uppercase [text-shadow:2px_2px_2px_#00000063]"
+              href="https://ayushnagar-portfolio.netlify.app/">Ayush Nagar
             </a>
           </strong>
         </div>
         <div className="w-full h-[1px] dark:bg-slate-200 bg-slate-500  rounded-full overflow-hidden"></div>
       </div>
-      {/* <img src={`${document.documentElement.classList.contains('dark') === true ? whiteLogo : blackLogo}`} alt="logo" className={`nav-logo rounded-full w-[11.875rem] sm:w-[13.125rem] mx-auto`} /> */}
       {value === "dark" ? (
         <WhiteLogo classes={"w-[11.875rem] sm:w-[13.125rem] mx-auto"} />
       ) : (

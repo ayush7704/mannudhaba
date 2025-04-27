@@ -19,6 +19,10 @@ input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 a,
 Link {
     user-select: none;
@@ -258,11 +262,11 @@ input.acco:checked+.detail::after {
 }
 
 .dark .cartItemWrapper>.flex::before {
-    background: linear-gradient(151deg, transparent 33%, rgb(235 135 188) 66%, transparent 79%);
+    background: linear-gradient(151deg, #000000 33%, rgb(95 63 96) 66%, #000000 79%);
 }
 
 .cartItemWrapper>.flex::before {
-    background: linear-gradient(151deg, transparent 33%, rgb(215 178 217) 66%, transparent 79%);
+    background: linear-gradient(151deg, #ffffff 33%, rgb(215 178 217) 66%, #ffffff 79%);
 }
 
 .search-div {
@@ -307,6 +311,7 @@ input.acco:checked+.detail::after {
         font-size: 17px;
     }
 }
+
 @media (min-width:1600px) {
 
     body,

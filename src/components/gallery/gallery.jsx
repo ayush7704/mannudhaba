@@ -71,7 +71,7 @@ function gallery() {
   }, [galleryFilter])
 
   return (
-    <section className='relative gallery backdrop-blur-[70px]'>
+    <section className='relative gallery backdrop-blur-[100px]'>
       <PageHeading heading={'gallery'} />
       <div className='sm:p-[1.25rem]'>
         {/* gallery filter start */}

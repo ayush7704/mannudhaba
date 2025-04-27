@@ -1,13 +1,13 @@
 import { globalContext } from "./context";
 import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo } from "react";
 import gsap from 'gsap'
+import { useGSAP } from "@gsap/react";
 import foodimg from '../home/hero-food.webp'
-import { matarPaneer, saahiPaneer, paneerButterMasala, kheer } from '../varieties imgs/varietyImgs'
-
+import { matarPaneer, saahiPaneer, paneerButterMasala, kheer, daalBaafle } from '../varieties imgs/varietyImgs'
 
 let ContextProvider = ({ children }) => {
-
   const [value, setvalue] = useState('dark')
+  const [itemBeingRemoved, setItemBeingRemoved] = useState(null)
   const [menucard, setmenucard] = useState(
     [
       // panner only 
@@ -28,8 +28,8 @@ let ContextProvider = ({ children }) => {
       { heading: 'malai kofta', variety: "paneer special", img: foodimg, price: 200, inCart: false, quantity: 1 },
 
       // thali 
-      { heading: 'shaahi thali', variety: "thali", contains: ['paneer', 'jeera rice', 'daal', 'papad','4 butter roti','salad'], img: foodimg, price: 200, inCart: false, quantity: 1 },
-      { heading: 'saada thali', variety: "thali", contains: ['daal','sabji', 'chaval', 'papad', '4 roti'], img: foodimg, price: 150, inCart: false, quantity: 1 },
+      { heading: 'shaahi thali', variety: "thali", contains: ['paneer', 'jeera rice', 'daal', 'papad', '4 butter roti', 'salad'], img: foodimg, price: 200, inCart: false, quantity: 1 },
+      { heading: 'saada thali', variety: "thali", contains: ['daal', 'sabji', 'chaval', 'papad', '4 roti'], img: foodimg, price: 150, inCart: false, quantity: 1 },
       { heading: 'thali', variety: "thali", contains: ['pudi', 'sabji',], img: foodimg, price: 150, inCart: false, quantity: 1 },
 
       // others
@@ -37,7 +37,7 @@ let ContextProvider = ({ children }) => {
       { heading: 'aalu matar', variety: "other's", img: foodimg, price: 100, inCart: false, quantity: 1 },
       { heading: 'matar masala', variety: "other's", img: foodimg, price: 100, inCart: false, quantity: 1 },
       { heading: 'aalu gobhi matar', variety: "other's", img: foodimg, price: 120, inCart: false, quantity: 1 },
-      { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 100, inCart: false, quantity: 1 },      
+      { heading: 'bhindi kurkuri', variety: "other's", img: foodimg, price: 100, inCart: false, quantity: 1 },
       { heading: 'kaaju handi', variety: "other's", img: foodimg, price: 220, inCart: false, quantity: 1 },
       { heading: 'mix vej', variety: "other's", img: foodimg, price: 170, inCart: false, quantity: 1 },
       { heading: 'sev tamatar', variety: "other's", img: foodimg, price: 110, inCart: false, quantity: 1 },
@@ -57,16 +57,16 @@ let ContextProvider = ({ children }) => {
       { heading: 'tamatar masala', variety: "other's", img: foodimg, price: 120, inCart: false, quantity: 1 },
       { heading: 'aalu chole', variety: "other's", img: foodimg, price: 120, inCart: false, quantity: 1 },
       { heading: 'jira aalu', variety: "other's", img: foodimg, price: 100, inCart: false, quantity: 1 },
-      
+
       { heading: 'kheer', variety: "other's", img: kheer, price: 70, inCart: false, quantity: 1 },
 
       // daal 
       { heading: 'Daal snacks', variety: 'daal special', img: foodimg, price: 120, inCart: false, quantity: 1 },
       { heading: 'Daal fry', variety: 'daal special', img: foodimg, price: 100, inCart: false, quantity: 1 },
-      { heading: 'Daal baafle', variety: 'daal special', img: foodimg, price: 150, inCart: false, quantity: 1 },
+      { heading: 'Daal baafle', variety: 'daal special', img: daalBaafle, price: 150, inCart: false, quantity: 1 },
       { heading: 'Daal baati', variety: 'daal special', img: foodimg, price: 150, inCart: false, quantity: 1 },
       { heading: 'Daal tadka', variety: 'daal special', img: foodimg, price: 120, inCart: false, quantity: 1 },
-      
+
       // snacks       
       { heading: 'chana rost', variety: 'snacks special', img: foodimg, price: 110, inCart: false, quantity: 1 },
       { heading: 'chana lesan', variety: 'snacks special', img: foodimg, price: 120, inCart: false, quantity: 1 },
@@ -138,19 +138,44 @@ let ContextProvider = ({ children }) => {
       { heading: 'kachumbar salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
     ])
   useLayoutEffect(() => {
-    let menucardLocal = localStorage.getItem('menucard')
-    if (menucardLocal) {
-      let setmenulocal = JSON.parse(localStorage.getItem('menucard'))
-      setmenucard(setmenulocal)
-      // console.log('context setmenu')
+
+    const clientMenu = JSON.parse(localStorage.getItem('menucard'))
+
+    async function loadMenu() {
+      if (clientMenu && Array.isArray(clientMenu)) {
+        const clientMenuAfter = structuredClone(menucard);
+
+        await Promise.all(
+          clientMenu.map(async (clientItem) => {
+            const clientItemIndex = menucard.findIndex(
+              (menuItem) =>
+                menuItem.heading === clientItem.heading &&
+                menuItem.variety === clientItem.variety &&
+                clientItem.inCart
+            );
+            if (clientItemIndex !== -1) {
+              const afterMenuItem = structuredClone(clientMenuAfter[clientItemIndex]);
+              afterMenuItem.inCart = true
+              afterMenuItem.quantity = clientItem?.quantity
+              clientMenuAfter[clientItemIndex] = afterMenuItem
+            }
+            console.log(clientItemIndex);
+          })
+        );
+        setmenucard(clientMenuAfter)
+      }
     }
-    const time = (new Date)
-    console.log(time + ' time   ')
-    console.log(document.documentElement.classList.contains('dark') === true && time.getHours() >= 8 && time.getHours() <= 17)
-    if (document.documentElement.classList.contains('dark') === true && time.getHours() >= 8 && time.getHours() <= 17) {
-      document.documentElement.classList.toggle('dark')
-      document.body.classList.toggle('bg-slate-50')
-      setvalue('light')
+
+    loadMenu();
+
+    const time = new Date();
+    const isDayTime = time.getHours() >= 8 && time.getHours() <= 17;
+    const isDark = document.documentElement.classList.contains('dark');
+
+    if (isDark && isDayTime) {
+      document.documentElement.classList.toggle('dark');
+      document.body.classList.toggle('bg-slate-50');
+      setvalue('light');
     }
   }, [])
 
@@ -163,59 +188,127 @@ let ContextProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     localStorage.setItem('menucard', JSON.stringify(menucard))
-    // console.log('context render  ' + render.current)
-    // console.log('context menucard')
   }, [menucard])
 
 
-  const [fixedMsg, setfixedMsg] = useState({ msg: 'initial', initial: 'initial', random: true })
+  const [notificationState, setnotificationState] = useState({ msg: notificationMsgs.loadMsg, time: NotificationTimings.get(notificationMsgs.loadMsg) })
   return (
-    <globalContext.Provider value={{ value, setvalue, Fixed, fixedMsg, setfixedMsg, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink,CartIcon ,CartRmvIcon,CartAddIcon}}>
+    <globalContext.Provider value={{ value, setvalue, Notification, notificationState, setnotificationState, notificationMsgs, NotificationTimings, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon,ItemRemovingModal,itemBeingRemoved, setItemBeingRemoved }}>
       {children}
     </globalContext.Provider>
   )
 }
 export default memo(ContextProvider)
 
-function Fixed() {
-  const mainPopupEl = useRef(null);
-
-  const { fixedMsg } = useContext(globalContext)
-
-  console.log(fixedMsg)
-
-  useEffect(() => {
-    let timeout;
-    if (fixedMsg.initial !== 'initial') {
-      clearTimeout(timeout)
-      gsap.fromTo(mainPopupEl.current, { bottom: 0, opacity: 0 }, { bottom: 80, opacity: 1, duration: 0.4, ease: 'none' })
-    }
-    timeout = setTimeout(() => {
-      gsap.to(mainPopupEl.current, { opacity: 0, bottom: 0, duration: 0.2, ease: 'none' })
-    }, 1700);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [fixedMsg])
-
-
-  return (
-    <div ref={mainPopupEl} style={{ pointerEvents: 'none' }} className={`fixed z-10 opacity-0  dark:bg-white dark:text-[rgb(84_135_0)] capitalize left-1/2 -translate-x-1/2 inline-block  bg-black text-[#9eff00]  px-5 py-3 text-center w-max rounded-[8px] dark:shadow-[0px_0px_0.1875rem_0px_white] shadow-[0px_0px_0.1875rem_0px_black]`}>{fixedMsg.msg}</div>
-  )
+const notificationMsgs = {
+  itemAdded: 'item added successfully',
+  itemRemoved: 'item removed successfully',
+  loadMsg: 'we are under development',
+  numberCopied: 'number copied'
 }
+const NotificationTimings = new Map([
+  [notificationMsgs.itemAdded, 2000],
+  [notificationMsgs.itemRemoved, 2000],
+  [notificationMsgs.loadMsg, 3000],
+  [notificationMsgs.numberCopied, 1000],
+])
+
+const Notification = memo(() => {
+  const { notificationState, notificationMsgs } = useContext(globalContext)
+  const mainPopupEl = useRef(null);
+  const timeout = useRef(null);
+
+
+  useGSAP(() => {
+    if (notificationState.msg === notificationMsgs.loadMsg) {
+      clearTimeout(timeout.current)
+      setTimeout(() => {
+        gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 40, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
+        timeout.current = setTimeout(() => {
+          gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' })
+        }, Number(notificationState.time + 600));
+      }, 3000);
+    } else {
+      clearTimeout(timeout.current)
+      gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 80, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
+      timeout.current = setTimeout(() => {
+        gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' })
+      }, Number(notificationState.time + 600));
+    }
+    return () => {
+      clearTimeout(timeout.current);
+    };
+  }, [notificationState])
+
+  function condtionalElm() {
+    if (notificationState.msg === notificationMsgs.loadMsg) {
+      return (
+        <>
+          <p className="dark:text-black text-white mr-1">{notificationState.msg}</p>
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex h-full w-full animate-ping duration-700 rounded-full dark:bg-[#3e8300] bg-lime-400 opacity-75"></span>
+            <span className="relative inline-flex size-2 rounded-full dark:bg-[#18af05] bg-lime-500"></span>
+          </span>
+        </>
+      )
+    }
+    else if (notificationState.msg === notificationMsgs.itemAdded) {
+      return (<>
+        <p className="dark:text-black text-white">{notificationState.msg}</p> <svg className={`w-[1.375rem] h-[1.375rem] text-[#9eff00] dark:text-[green]`} viewBox="0 0 24 24" fill="none">
+          <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </>)
+    }
+    else {
+      return (<p className="dark:text-black text-white">{notificationState.msg}</p>)
+    }
+  }
+  return (
+    <div ref={mainPopupEl} className={`fixed ar-one-sans flex gap-1 items-center z-10 opacity-0 capitalize left-1/2 -translate-x-1/2  p-[0.5rem_1rem] text-center w-max rounded-[8px] shadow-[0px_4px_8px_1px_#00000040] text-[0.91rem] md:text-[0.95rem] font-medium bg-[rgb(13,13,13)] dark:bg-[#f5fffa] pointer-events-none`}>
+      {condtionalElm()}
+    </div>
+  )
+})
+
 
 let PageHeading = memo(({ heading }) => {
+  const headingCom = useRef(null)
   const { value } = useContext(globalContext)
-  console.log('pageheading')
+  const { contextSafe } = useGSAP();
+  let lastScrollPos = 0
+
+  useEffect(() => {
+    const scrolling = contextSafe((e) => {
+      const currentScrollpos = window.pageYOffset || document.documentElement.scrollTop;
+      console.log(lastScrollPos)
+      console.log(currentScrollpos)
+      if (currentScrollpos < lastScrollPos) {
+        gsap.to(headingCom.current, {
+          top: "var(--navHeight)",
+          duration: 2,
+          ease: "circ",
+        });
+      } else if (currentScrollpos > lastScrollPos && currentScrollpos !== 0) {
+        gsap.to(headingCom.current, {
+          top: "-100%",
+          // duration: 0.7,
+          ease: "circ",
+        });
+      }
+      lastScrollPos = currentScrollpos;
+    })
+
+    window.addEventListener('scroll', scrolling)
+    return () => {
+      window.removeEventListener('scroll', scrolling)
+    }
+  }, [])
+  // dark:bg-[#0d0d0d80] bg-[#fff5f580]
   return (
-    <div className='flex items-center py-5 px-5'>
+    <div ref={headingCom} className='flex items-center py-4 px-5 sticky top-[var(--navHeight)] z-[5]  dark:bg-[rgb(13,13,13)] bg-[#f5fffa] backdrop-blur-md'>
       {/* return btn  */}
-      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300' style={{ userSelect: 'none' }} onClick={() => { window.history.back() }}> <span>
-        {/* <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
-        <path d="M4 12L20 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>  */}          
-      <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]'  color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1"/></svg>
+      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300 select-none' onClick={() => { window.history.back() }}> <span>
+        <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1" /></svg>
       </span>
       </div>
       <h3 className='text-[1.43rem] ml-4 capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>{heading}</h3>
@@ -223,7 +316,7 @@ let PageHeading = memo(({ heading }) => {
   )
 })
 
-function WhatsAppLink({ children,number, msg ,classes}) {
+const WhatsAppLink = memo(({ children, number, msg, classes }) => {
   // got help from gpt here in (rel,default text)
   const whatsappUrl = `https://wa.me/91${number}?text=${encodeURIComponent(msg)}`;
   return (
@@ -231,20 +324,88 @@ function WhatsAppLink({ children,number, msg ,classes}) {
       {children}
     </a>
   )
+})
+
+function ItemRemovingModal({ itemBeingRemovingValues }) {
+  const modalref = useRef(null)
+  const { menucard, setmenucard, notificationMsgs, NotificationTimings, setnotificationState,itemBeingRemoved, setItemBeingRemoved } = useContext(globalContext)
+
+  useGSAP(() => {
+    gsap.fromTo(modalref.current, { opacity: 0, scale: 0.9}, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.2,
+      ease: "power3",
+    });
+  },[])
+
+  // for removing modal and updating menucard array 
+  function removeModal(value) {
+    if (value) {
+      const updatedCards = menucard.map(card => {
+        if (card.heading === itemBeingRemovingValues.heading && card.variety === itemBeingRemovingValues.variety) {
+          if (card.inCart) {
+            setnotificationState(prev => ({ ...prev, msg: notificationMsgs.itemRemoved, time: NotificationTimings.get(notificationMsgs.itemRemoved) }))
+          } else {
+            setnotificationState(prev => ({ ...prev, msg: notificationMsgs.itemAdded, time: NotificationTimings.get(notificationMsgs.itemAdded) }))
+          }
+          return { ...card, quantity: 1, inCart: !card.inCart };
+        }
+        return card;
+      });
+      setmenucard(updatedCards)
+    } 
+    gsap.to(modalref.current, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.15,
+      ease: "power2.in",
+      onComplete: () => {
+        setItemBeingRemoved(null)
+      },
+    });
+  }
+  return (
+    <>
+      {/* remove item modal start  */}
+      < div className='fixed top-0 left-0 h-dvh w-dvw grid place-items-center bg-[#000000a1] z-[4]' onClick={() => { removeModal(false); }
+      }>
+        <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='opacity-0 scale-[0.9] transition-all shadow-[0_0_7px_0px_#00000075] duration-200 rounded-md sm:w-[25rem] w-[80%] bg-black dark:bg-white dark:text-black p-[1.5625rem_1rem] sm:p-[1.7625rem_1.2625rem] text-white'>
+          {/* ======= close btn starts ===== */}
+        <button
+          onClick={()=>{removeModal(false);}}
+          className="absolute p-[0.3rem] rounded-[50%] top-4 right-3 transition-all duration-200 bg-white hover:bg-[#d8d8d8] text-black dark:bg-black dark:hover:bg-[#232323] dark:text-white">
+          <svg className="w-[1.18rem] h-[1.18rem]" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+        {/* ======= close btn ends ===== */}
+          <h2 className='capitalize font-bold mb-2 text-[1.0625rem]'>remove item</h2>
+          <p className='mb-2 text-[0.97rem]'>Are you sure want to remove this item?</p>
+          <div className="flex justify-end gap-2 mt-4 sm:mt-6">
+            <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-medium py-[0.3125rem] rounded-sm px-4 dark:bg-black dark:hover:bg-[#232323] dark:text-white transition-all duration-200 text-[0.94rem]'>cancel</button>
+            <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-medium py-[0.3125rem] rounded-sm px-2 text-white text-[0.94rem] transition-all duration-200'>remove</button>
+          </div>
+        </div>
+      </div >
+    </>
+  )
 }
- 
-function CartIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+const CartIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth = 2 }) => {
   return (
     <svg className={classes} color={color} viewBox={viewBox} ><path fill="currentColor" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" strokeWidth={strokeWidth}></path></svg>
   )
-}
-function CartRmvIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+})
+const CartRmvIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth = 2 }) => {
   return (
     <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M14.1 8.5L12 6.4L9.9 8.5L8.5 7.1L10.6 5L8.5 2.9l1.4-1.4L12 3.6l2.1-2.1l1.4 1.4L13.4 5l2.1 2.1zM7 18c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m10 0c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m-9.8-3.2c0 .1.1.2.2.2H19v2H7c-1.1 0-2-.9-2-2c0-.4.1-.7.2-1l1.3-2.4L3 4H1V2h3.3l4.3 9h7l3.9-7l1.7 1l-3.9 7c-.3.6-1 1-1.7 1H8.1l-.9 1.6z" strokeWidth={strokeWidth} /></svg>
   )
-}
-function CartAddIcon({classes,color,viewBox="0 0 24 24",strokeWidth=2}) {
+})
+const CartAddIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth = 2 }) => {
   return (
-    <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m10 0c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m-9.8-3.2v-.1l.9-1.7h7.4c.7 0 1.4-.4 1.7-1l3.9-7l-1.7-1l-3.9 7h-7L4.3 2H1v2h2l3.6 7.6L5.2 14c-.1.3-.2.6-.2 1c0 1.1.9 2 2 2h12v-2H7.4c-.1 0-.2-.1-.2-.2"/></svg>
+    <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m10 0c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m-9.8-3.2v-.1l.9-1.7h7.4c.7 0 1.4-.4 1.7-1l3.9-7l-1.7-1l-3.9 7h-7L4.3 2H1v2h2l3.6 7.6L5.2 14c-.1.3-.2.6-.2 1c0 1.1.9 2 2 2h12v-2H7.4c-.1 0-.2-.1-.2-.2" /></svg>
   )
-}
+})

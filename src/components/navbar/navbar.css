@@ -2,14 +2,6 @@
     top: calc(var(--navHeight));
 }
 
-@media (max-width:400px) {
-    .nav-logo {
-        width: 175px;
-    }
-}
-
-
-
 .moon_shadow ,.sun_shadow{
     --shadow-color1: #ffffff30;
     background-color: var(--shadow-color1);
@@ -50,5 +42,17 @@
     to {
         inset: -1.5rem;
         opacity: 0;
+    }
+}
+
+
+@media (max-width:320px) {
+    .nav-logo {
+        width: 10.575em;
+    }
+}
+@media (max-width:280px) {
+    .nav-logo {
+        width: 9em;
     }
 }

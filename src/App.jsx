@@ -14,21 +14,22 @@ import { useEffect, useState, useContext, memo, useRef } from 'react';
 
 
 function App() {
-  // useEffect(() => {
-  //   window.addEventListener('load', () => {
-  //     setTimeout(() => {
-  //       document.querySelector('.alert').style.zIndex = '-5'
-  //     }, 1500);
-  //   })
-  // }, [])
+  const [siteLoaded, setSiteLoaded] = useState(false);
 
+  useEffect(() => {
+    const handleLoad = () => { setSiteLoaded(true); }
 
-  const { Fixed, fixedMsg } = useContext(globalContext)
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+    }
+    return () => { window.removeEventListener("load", handleLoad); }
+  }, []);
+
+  const { Notification, ItemRemovingModal, itemBeingRemoved } = useContext(globalContext)
   return (
     <main className='main dark:text-white text-black  min-h-dvh'>
-      <div className='grid alert top-0 left-0 justify-center items-center h-screen fixed z-[-5] w-screen bg-[#000000c4]'>
-        <h1 className='text-lg'>we are under development</h1>
-      </div>
       <ScrollToTop />
       <Bg />
       <Navbar />
@@ -41,7 +42,8 @@ function App() {
       </Routes>
       <Footer />
       <div>
-        <Fixed messege={fixedMsg} />
+        {siteLoaded && <Notification />}
+        {itemBeingRemoved && <ItemRemovingModal itemBeingRemovingValues={itemBeingRemoved} />}
       </div>
     </main>
   )

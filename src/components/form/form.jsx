@@ -79,7 +79,7 @@ const WhatsAppForm = ({ subtotal, orders }) => {
     formdata += `(${[key + 1]}) ${orders[key].heading} qty:(${orders[key].quantity})  price:(${orders[key].price}) \n`
   }
   return (
-    <form action="https://formsubmit.co/nagarayush570@gmail.com" method="POST" onReset={handleReset} className="relative sm:max-w-lg w-full mx-auto text-black p-4 bg-white shadow-md rounded-lg">
+    <form action="https://formsubmit.co/nagarayush570@gmail.com" method="POST" onReset={handleReset} className="relative sm:max-w-lg w-full mx-auto text-black p-4 bg-white shadow-xl rounded-lg">
       <div className="py-2">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
           Your name
