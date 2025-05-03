@@ -1,6 +1,6 @@
 import './home.css'
 import foodimg from './hero-food.webp'
-import React, { useEffect, useState, useRef, useContext, memo } from 'react'
+import React, { useEffect, useRef, useContext, memo } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
@@ -10,16 +10,16 @@ import Map from '../map.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
 //=== linear btn  
-let Menulink = memo((props) => {
+let Menulink = memo(({value,reff}) => {
   const { contextSafe } = useGSAP({ scope: '.homePage' });
 
   let btnmouse = contextSafe((event) => {
-    gsap.to(props.reff.current, { background: `-webkit-linear-gradient(${event.nativeEvent.offsetX}deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%)`, duration: 0.3 })
+    gsap.to(reff.current, { background: `-webkit-linear-gradient(${event.nativeEvent.offsetX}deg, hsla(43, 84%, 85%, 1) 0%, hsla(325, 71%, 70%, 1) 50%, hsla(236, 67%, 55%, 1) 100%)`, duration: 0.3 })
   })
 
   return (
-    <Link to="/menu" ref={props.reff} onMouseMove={btnmouse} className={`svgbtn outLine  linear-btn font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] text-white px-[1.1875rem] min-w-[50%] text-nowrap flex gap-2 justify-center items-center shadow-xl hover:shadow-2xl [textShadow:0.125rem_1px_3px_#3b3b3b94]`}>
-      <span>{props.value}</span>
+    <Link to="/menu" ref={reff} onMouseMove={btnmouse} className={`svgbtn outLine linear-btn font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] text-white px-[1.1875rem] min-w-[50%] text-nowrap flex gap-2 justify-center items-center shadow-xl hover:shadow-2xl [textShadow:0.125rem_1px_3px_#3b3b3b94]`}>
+      <span>{value}</span>
       <svg className='w-[1.1875rem] h-[1.1875rem]' viewBox="0 0 24 24" fill="none">
         <path d="M16.6127 16.0846C13.9796 17.5677 12.4773 20.6409 12 21.5V8C12.4145 7.25396 13.602 5.11646 15.6317 3.66368C16.4868 3.05167 16.9143 2.74566 17.4572 3.02468C18 3.30371 18 3.91963 18 5.15146V13.9914C18 14.6568 18 14.9895 17.8634 15.2233C17.7267 15.4571 17.3554 15.6663 16.6127 16.0846L16.6127 16.0846Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M12 7.80556C11.3131 7.08403 9.32175 5.3704 5.98056 4.76958C4.2879 4.4652 3.44157 4.31301 2.72078 4.89633C2 5.47965 2 6.42688 2 8.32133V15.1297C2 16.8619 2 17.728 2.4626 18.2687C2.9252 18.8095 3.94365 18.9926 5.98056 19.3589C7.79633 19.6854 9.21344 20.2057 10.2392 20.7285C11.2484 21.2428 11.753 21.5 12 21.5C12.247 21.5 12.7516 21.2428 13.7608 20.7285C14.7866 20.2057 16.2037 19.6854 18.0194 19.3589C20.0564 18.9926 21.0748 18.8095 21.5374 18.2687C22 17.728 22 16.8619 22 15.1297V8.32133C22 6.42688 22 5.47965 21.2792 4.89633C20.5584 4.31301 19 4.76958 18 5.5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -75,8 +75,8 @@ function LoopSlide() {
   return (
     <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
       {
-        ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-inherit leading-[100%]'> <svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
+       Array(5).fill('made with love').map((el, ind) => (
+          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-[.55rem] rounded-full shadow-md ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>{el} <span className='text-inherit leading-[100%]'> <svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
 
             <path fill="red" d="M16 3.23Q17.065 2 18.7 2c.91 0 1.67.33 2.3 1s.96 1.43 1 2.3c0 .7-.33 1.51-1 2.46s-1.32 1.74-1.97 2.39q-.975.96-3.03 2.85q-2.085-1.89-3.06-2.85c-.975-.96-1.31-1.44-1.97-2.39S10 6 10 5.3c0-.91.32-1.67.97-2.3s1.43-.96 2.34-1c1.07 0 1.96.41 2.69 1.23" />
 
@@ -91,8 +91,8 @@ function LoopSlide2() {
   return (
     <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
       {
-        ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md  ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+        Array(5).fill('you will love every bite').map((el, ind) => (
+          <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-[.55rem] rounded-full shadow-md  ${ind % 2 === 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>{el} &#128175;</p>
         ))
       }
     </div>
@@ -100,7 +100,7 @@ function LoopSlide2() {
 }
 
 //==== main home compo 
-function home(props) {
+const Home = memo(() =>{
   let linearline = useRef(null)
   let pureveg = useRef(null)
   let mealimg = useRef(null)
@@ -116,19 +116,17 @@ function home(props) {
   const timeout2 = useRef(null);
   const tm = useRef(gsap.timeline());
 
-  const { value, menucard, setmenucard,notificationMsgs, NotificationTimings,  setnotificationState, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon } = useContext(globalContext)
+  const { mode, menucard, setmenucard,notificationMsgs, NotificationTimings,  setnotificationState, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon } = useContext(globalContext)
   // fitering these arrays values start 
-  let homecardObj = [];
+  let specialItems = [];
   let arr = ['butter paneer masala', 'Daal baafle', 'Daal fry', 'kadai paneer', 'paneer chilli', 'paneer nudals', 'kheer']
   for (let i = 0; i < menucard.length; i++) {
     for (let ii = 0; ii < arr.length; ii++) {
       if (menucard[i].heading === arr[ii]) {
-        homecardObj[ii] = menucard[i]
+        specialItems[ii] = menucard[i]
       }
     }
   }
-  // fitering these arrays values start 
-  // strokeWidth
 
   useEffect(() => {
     document.title = 'Mannu Dhaba & Restaurant'
@@ -170,24 +168,6 @@ function home(props) {
       })
     })
 
-    // let tm = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: menubtn.current,
-    //     scrub: 1,
-    //     // markers: true,
-    //     start: 'bottom bottom',
-    //     end: 'center 80%',
-    //   }
-    // })
-    // tm.from(menubtn.current, {
-    //   y: '100%', ease: "power4.out",
-    // })
-    // .from(menubtn.current.nextElementSibling, {
-    //   y: '140%', ease: "power4.out",
-    // })
-
-
-
     gsap.fromTo(menubtn.current,
       { y: '100%' },
       {
@@ -212,23 +192,19 @@ function home(props) {
           end: 'center 80%',
         }
       })
-
-    return () => {
-      // settime
-    };
   }, [])
 
   useGSAP(() => {
-    if (value === 'dark') {
+    if (mode === 'dark') {
       gsap.fromTo(ourspecial.current, {
-        background: 'linear-gradient(0deg, #7d539b, transparent, transparent, #aabdcd)',
-      }, { background: 'linear-gradient(360deg, #7d539b, transparent, transparent, #aabdcd)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
+        background: 'linear-gradient(0deg, #7d539b, black, black, #aabdcd)',
+      }, { background: 'linear-gradient(360deg, #7d539b, black, black, #aabdcd)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
     } else {
       gsap.fromTo(ourspecial.current, {
-        background: 'linear-gradient(0deg, #be8acd, transparent, transparent, #d2e4f4)',
-      }, { background: 'linear-gradient(360deg, #be8acd, transparent, transparent, #d2e4f4)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
+        background: 'linear-gradient(0deg, #be8acd, white, white, #d2e4f4)',
+      }, { background: 'linear-gradient(360deg, #be8acd, white, white, #d2e4f4)', duration: 8, repeat: -1, yoyo: true, ease: 'none' })
     }
-  }, { dependencies: [value] })
+  }, { dependencies: [mode] })
 
   useGSAP(() => {
     //== pure veg and linear anm     
@@ -287,8 +263,8 @@ function home(props) {
       <div className='backdrop-blur-[100px]'>
         <div className='hero flex items-center overflow-x-hidden min-h-[90vh] relative p-[1.25rem]'>
           <div className="homecontent mx-auto py-14 px-[1.25rem] sm:w-[75%] lg:max-xl:w-[60%] xl:w-[55%] flex flex-col items-center gap-8">
-            <div className='overflow-y-hidden '>
-              <h1 className='relative uppercase text-4xl text-center'>Taste the different: <span className='whitespace-nowrap'><span className='text-stroke inline-block [textShadow:1px_1px_1px_aliceblue,_4px_3px_0.125rem_black]' ref={pureveg}>pure veg </span> Now</span></h1>
+            <div className='overflow-y-hidden'>
+              <h1 className='relative uppercase max-sm:text-[2.15rem] max-sm:leading-[2.5rem] sm:text-4xl text-center'>Taste the different: <span className='whitespace-nowrap'><span className='text-stroke inline-block [textShadow:1px_1px_1px_aliceblue,_4px_3px_0.125rem_black]' ref={pureveg}>pure veg </span> Now</span></h1>
             </div>
 
             {/* food img */}
@@ -298,7 +274,7 @@ function home(props) {
               </Link>
             </div>
 
-            <h3 className='text-center capitalize intro-line text-xl relative dark:text-white text-black'>Unforgettable flavors await, delicious dishes packed with flavor, <span className='intro-line-main tracking-[2px] [filter:drop-shadow(0_1px_1px_rgb(0_0_0))_drop-shadow(0_0px_0px_rgb(0_0_0))]' ref={linearline}>family-friendly atmosphere.</span> Gather, connect, and make memories! At your new favorite spot.
+            <h3 className='text-center capitalize intro-line max-sm:text-[1.15rem] max-sm:leading-[1.75rem] sm:text-xl relative dark:text-white text-black'>Unforgettable flavors await, delicious dishes packed with flavor, <span className='intro-line-main tracking-[2px] [filter:drop-shadow(0_1px_1px_rgb(0_0_0))_drop-shadow(0_0px_0px_rgb(0_0_0))]' ref={linearline}>family-friendly atmosphere.</span> Gather, connect, and make memories! At your new favorite spot.
             </h3>
 
             {/* btn  */}
@@ -312,12 +288,12 @@ function home(props) {
 
               <Menulink value='Menu' reff={menubtn} />
               <Link to="/about-us" className='svgbtn w-full outLine font-medium tracking-[0.5px] py-[0.625rem] text-center rounded-[6px] dark:text-white dark:bg-[rgb(13,13,13)] bg-[#f5fffa] px-[1.1875rem] flex gap-2 justify-center items-center border transition-all shadow-xl hover:shadow-2xl [textShadow:0.125rem_1px_3px_#3b3b3b94] leading-[100%]'>
-                <svg className={`w-[1.5rem] h-[1.5rem]`} color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 12 12"><path fill="currentColor" d="M6 2a2.5 2.5 0 0 0-2.5 2.5c0 .453.259 1.04.691 1.674c.42.617.953 1.204 1.387 1.641c.238.24.606.24.844 0c.434-.437.966-1.024 1.387-1.64C8.24 5.54 8.5 4.952 8.5 4.5A2.5 2.5 0 0 0 6 2M2.5 4.5a3.5 3.5 0 1 1 7 0c0 .77-.408 1.568-.865 2.238c-.469.687-1.048 1.323-1.503 1.781a1.585 1.585 0 0 1-2.264 0c-.455-.458-1.034-1.094-1.503-1.781C2.908 6.068 2.5 5.269 2.5 4.5m4.5 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2.42 8.065c.122-.125.267-.236.427-.336c.21.277.43.54.643.782a1.5 1.5 0 0 0-.36.256C3.017 8.884 3 8.962 3 9s.016.116.13.233c.118.118.312.248.592.368C4.28 9.84 5.085 10 6 10s1.72-.16 2.278-.399c.28-.12.474-.25.591-.368C8.984 9.116 9 9.038 9 9s-.016-.116-.13-.233q-.122-.125-.36-.256c.214-.241.433-.505.643-.782q.242.15.428.336c.239.242.419.559.419.935s-.18.693-.42.935c-.236.24-.554.434-.908.585c-.71.304-1.654.48-2.672.48s-1.963-.176-2.672-.48c-.354-.151-.672-.345-.909-.585C2.18 9.693 2 9.376 2 9s.18-.693.42-.935" strokeWidth='1.75' /></svg>
+                <svg className={`w-[1.5rem] h-[1.5rem]`} color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 12 12"><path fill="currentColor" d="M6 2a2.5 2.5 0 0 0-2.5 2.5c0 .453.259 1.04.691 1.674c.42.617.953 1.204 1.387 1.641c.238.24.606.24.844 0c.434-.437.966-1.024 1.387-1.64C8.24 5.54 8.5 4.952 8.5 4.5A2.5 2.5 0 0 0 6 2M2.5 4.5a3.5 3.5 0 1 1 7 0c0 .77-.408 1.568-.865 2.238c-.469.687-1.048 1.323-1.503 1.781a1.585 1.585 0 0 1-2.264 0c-.455-.458-1.034-1.094-1.503-1.781C2.908 6.068 2.5 5.269 2.5 4.5m4.5 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2.42 8.065c.122-.125.267-.236.427-.336c.21.277.43.54.643.782a1.5 1.5 0 0 0-.36.256C3.017 8.884 3 8.962 3 9s.016.116.13.233c.118.118.312.248.592.368C4.28 9.84 5.085 10 6 10s1.72-.16 2.278-.399c.28-.12.474-.25.591-.368C8.984 9.116 9 9.038 9 9s-.016-.116-.13-.233q-.122-.125-.36-.256c.214-.241.433-.505.643-.782q.242.15.428.336c.239.242.419.559.419.935s-.18.693-.42.935c-.236.24-.554.434-.908.585c-.71.304-1.654.48-2.672.48s-1.963-.176-2.672-.48c-.354-.151-.672-.345-.909-.585C2.18 9.693 2 9.376 2 9s.18-.693.42-.935" strokeWidth='1.75' /></svg>
                 <span>
                   <span>Location</span>
                   <span> & </span>
                   <span className='inline-block'>About us</span>
-                </span> <svg className='w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={value === 'dark' ? 'white' : 'black'} fill="none">
+                </span> <svg className='w-[1.375rem] h-[1.375rem]' viewBox="0 0 24 24" color={mode === 'dark' ? 'white' : 'black'} fill="none">
                   <path d="M18 13C20.2091 13 22 11.2091 22 9C22 6.79086 20.2091 5 18 5C17.1767 5 16.4115 5.24874 15.7754 5.67518M6 13C3.79086 13 2 11.2091 2 9C2 6.79086 3.79086 5 6 5C6.82332 5 7.58854 5.24874 8.22461 5.67518M15.7754 5.67518C15.2287 4.11714 13.7448 3 12 3C10.2552 3 8.77132 4.11714 8.22461 5.67518M15.7754 5.67518C15.9209 6.08981 16 6.53566 16 7C16 7.3453 15.9562 7.68038 15.874 8M9.46487 7C9.15785 6.46925 8.73238 6.0156 8.22461 5.67518" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M6 17.5C7.59905 16.8776 9.69952 16.5 12 16.5C14.3005 16.5 16.401 16.8776 18 17.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
                   <path d="M5 21C6.86556 20.3776 9.3161 20 12 20C14.6839 20 17.1344 20.3776 19 21" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
@@ -334,42 +310,41 @@ function home(props) {
             <span ref={ourspecial} className='capitalize font-semibold tracking-[0.5px] inline-block p-2 px-6 rounded text-center mx-auto origin-top shadow-xl'>our special</span>
           </h3>
           <h3 className='capitalize text-lg px-3 pb-6 text-center [textShadow:0.125rem_1px_2px_#3b3b3b94] font-medium'>A Taste of Tradition, A Touch of Innovation</h3>
-          {/* (Combines familiar flavors with new twists) */}
 
           {/*==== food cards  ====*/}
           <div className="flex p-[1.25rem] flex-wrap justify-center gap-y-[3.125rem] gap-5">
             {
-              homecardObj.map((menu, index) => (
+              specialItems.map((menu, index) => (
                 <div key={index} ref={homecard} className="homecard ar-one-sans relative grid overflow-hidden w-[18.75rem] min-h-[18.75rem] bg-[#00000012] border border-white shadow-[0_2.1875rem_3.75rem_-0.9375rem_rgba(0,0,0,0.3)] rounded-lg backdrop-blur-[100px]">
-                  <div className="absolute right-3 top-5 z-[1]">
-                    <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-[0.35rem] rounded-[.35rem] inline-block dark:bg-white shadow-[1px_2px_4px_#00000063] bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
+                  <div className="absolute right-3 top-3 z-[1]">
+                    <button onClick={(e) => { updateCart(menu.variety, menu.heading); }} className={`p-[0.35rem] transition-[scale] duration-200 active:scale-[.95] rounded-[.35rem] inline-block dark:bg-white shadow-[1px_2px_0.25rem_#00000063] bg-black ${menu.inCart ? 'bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] dark:bg-[linear-gradient(to_right,#6E4882,#000000)]' : ''}`}>
                       {
                         menu.inCart ?
-                          <CartRmvIcon strokeWidth='1.5' classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
+                          <CartRmvIcon strokeWidth='1.5' classes={`dark:text-black dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black] text-white w-[1.3rem] h-[1.3rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                           :
-                          <CartAddIcon strokeWidth='1.5' classes={`dark:text-black text-white w-[1.36rem] h-[1.36rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
+                          <CartAddIcon strokeWidth='1.5' classes={`dark:text-black text-white w-[1.3rem] h-[1.3rem] ${menu.inCart ? 'dark:text-white text-white' : ''}`} />
                       }
                     </button>
                   </div>
                   <div className="max-h-[11.25rem] mx-auto relative">
-                    <img ref={homecardsImg} src={menu.img} className='homecardimg w-full h-full object-contain' alt={menu.heading + ' img'} />
+                    <img ref={homecardsImg} src={menu.img} className='homecardimg w-full h-full object-contain' alt={menu.heading + ' image'} />
                   </div>
 
                   <div className="card-body p-[0.9375rem] self-end">
                     <h3 className="dark:text-white tracking-[.5px] text-slate-950 max-md:text-[0.975rem] font-medium capitalize">{menu.heading}</h3>
-                    <h4 className="text-[rgb(232 124 187)] max-md:text-[0.975rem] font-semibold"> &#8377; {menu.price}</h4>
+                    <h4 className="max-md:text-[0.955rem] font-semibold"> &#8377; {menu.price}</h4>
                   </div>
                   <div className="flex text-[0.875rem] font-medium self-end">
                     {
                       menu.inCart ?
                         <Link to={'/cart'} className={`svgbtn flex items-center justify-center gap-2 flex-1 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`}>
                           <span>{`Go to cart`}</span>
-                          <CartIcon color={value === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]' />
+                          <CartIcon color={mode === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]' />
                         </Link>
                         :
                         <button className={`svgbtn flex items-center justify-center gap-2 flex-1 transition duration-300 ease-[cubic-bezier(0.18,_0.89,_0.32,_1.28)] dark:bg-[linear-gradient(to_right,#6e4882,transparent)] dark:hover:bg-[linear-gradient(360deg,transparent,#6e4882)] bg-[linear-gradient(to_right,#d69ec6,transparent)] hover:bg-[linear-gradient(360deg,transparent,#d69ec6)] cursor-pointer`} onClick={(e) => { updateCart(menu.variety, menu.heading); }}>
                           <span>Add to cart</span>
-                          <CartIcon color={value === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]' />
+                          <CartIcon color={mode === 'dark' ? 'white' : 'black'} classes='w-[1.1625rem] h-[1.1625rem]' />
                         </button>
                     }
 
@@ -386,13 +361,13 @@ function home(props) {
               ))
             }
           </div>
-          <div className="py-[1.875rem] infi select-none">
+          <div className="py-[3.75rem] infi select-none">
             <div className="flex justify-end sm:py-5 py-3 flex-nowrap whitespace-nowrap overflow-hidden" ref={infi2}>
               <LoopSlide />
               <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
                 {
-                  ['made with love', 'made with love', 'made with love', 'made with love', 'made with love'].map((el, ind) => (
-                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px]  px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>made with love <span className='text-inherit leading-[100%]'><svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
+                  Array(5).fill('made with love').map((el, ind) => (
+                    <p key={ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-[.55rem] rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>{el} <span className='text-inherit leading-[100%]'><svg className='w-[1.2rem] h-[1.2rem]' viewBox="0 0 24 24">
 
                       <path fill="red" d="M16 3.23Q17.065 2 18.7 2c.91 0 1.67.33 2.3 1s.96 1.43 1 2.3c0 .7-.33 1.51-1 2.46s-1.32 1.74-1.97 2.39q-.975.96-3.03 2.85q-2.085-1.89-3.06-2.85c-.975-.96-1.31-1.44-1.97-2.39S10 6 10 5.3c0-.91.32-1.67.97-2.3s1.43-.96 2.34-1c1.07 0 1.96.41 2.69 1.23" />
 
@@ -408,8 +383,8 @@ function home(props) {
               <LoopSlide2 />
               <div className="flex flex-nowrap gap-[1.875rem] pl-[1.875rem] will-change-scroll">
                 {
-                  ['you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite', 'you will love every bite'].map((el, ind) => (
-                    <p key={el + ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-3 rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>you will love every bite &#128175;</p>
+                   Array(5).fill('you will love every bite').map((el, ind) => (
+                    <p key={el + ind} className={`text-[0.9rem] sm:text-[1rem] flex items-center gap-3 bg-[#1c1c1c] tracking-[.5px]  backdrop-blur-[10px] px-4 py-2 sm:px-7 sm:py-[.55rem] rounded-full shadow-md ${ind % 2 !== 0 ? 'border bg-[transparent] text-black dark:text-white' : 'dark:bg-[#ffffff] bg-[#1c1c1c] dark:text-black text-white'}`}>{el} &#128175;</p>
                   ))
                 }
               </div>
@@ -425,6 +400,6 @@ function home(props) {
 
     </section>
   )
-}
+})
 
-export default home
+export default Home

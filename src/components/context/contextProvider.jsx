@@ -1,3 +1,5 @@
+import sunbg from '/layered-waves-haikei.png'
+import moonbg from '/symbol-scatter-haikei.svg'
 import { globalContext } from "./context";
 import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo } from "react";
 import gsap from 'gsap'
@@ -6,7 +8,7 @@ import foodimg from '../home/hero-food.webp'
 import { matarPaneer, saahiPaneer, paneerButterMasala, kheer, daalBaafle } from '../varieties imgs/varietyImgs'
 
 let ContextProvider = ({ children }) => {
-  const [value, setvalue] = useState('dark')
+  const [mode, setMode] = useState('dark')
   const [itemBeingRemoved, setItemBeingRemoved] = useState(null)
   const [menucard, setmenucard] = useState(
     [
@@ -136,7 +138,8 @@ let ContextProvider = ({ children }) => {
       // salad 
       { heading: 'green salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
       { heading: 'kachumbar salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
-    ])
+  ])
+
   useLayoutEffect(() => {
 
     const clientMenu = JSON.parse(localStorage.getItem('menucard'))
@@ -175,7 +178,7 @@ let ContextProvider = ({ children }) => {
     if (isDark && isDayTime) {
       document.documentElement.classList.toggle('dark');
       document.body.classList.toggle('bg-slate-50');
-      setvalue('light');
+      setMode('light');
     }
   }, [])
 
@@ -193,7 +196,7 @@ let ContextProvider = ({ children }) => {
 
   const [notificationState, setnotificationState] = useState({ msg: notificationMsgs.loadMsg, time: NotificationTimings.get(notificationMsgs.loadMsg) })
   return (
-    <globalContext.Provider value={{ value, setvalue, Notification, notificationState, setnotificationState, notificationMsgs, NotificationTimings, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon,ItemRemovingModal,itemBeingRemoved, setItemBeingRemoved }}>
+    <globalContext.Provider value={{ mode, setMode, Notification, notificationState, setnotificationState, notificationMsgs, NotificationTimings, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon, ItemRemovingModal, itemBeingRemoved, setItemBeingRemoved,ModeToggler }}>
       {children}
     </globalContext.Provider>
   )
@@ -214,10 +217,9 @@ const NotificationTimings = new Map([
 ])
 
 const Notification = memo(() => {
-  const { notificationState, notificationMsgs } = useContext(globalContext)
+  const { notificationState,setnotificationState, notificationMsgs } = useContext(globalContext)
   const mainPopupEl = useRef(null);
   const timeout = useRef(null);
-
 
   useGSAP(() => {
     if (notificationState.msg === notificationMsgs.loadMsg) {
@@ -225,14 +227,20 @@ const Notification = memo(() => {
       setTimeout(() => {
         gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 40, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
         timeout.current = setTimeout(() => {
-          gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' })
+          gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
+            setnotificationState(null)
+            gsap.set(mainPopupEl.current, { bottom:40})
+          }})          
         }, Number(notificationState.time + 600));
       }, 3000);
     } else {
       clearTimeout(timeout.current)
       gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 80, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
       timeout.current = setTimeout(() => {
-        gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' })
+        gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
+          setnotificationState(null)
+          gsap.set(mainPopupEl.current, { bottom:40})
+        }})        
       }, Number(notificationState.time + 600));
     }
     return () => {
@@ -240,11 +248,19 @@ const Notification = memo(() => {
     };
   }, [notificationState])
 
+  function removeNotification(){
+    clearTimeout(timeout.current)
+    gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
+      setnotificationState(null)
+      gsap.set(mainPopupEl.current, { bottom:40})
+    }})    
+  }
+
   function condtionalElm() {
     if (notificationState.msg === notificationMsgs.loadMsg) {
       return (
         <>
-          <p className="dark:text-black text-white mr-1">{notificationState.msg}</p>
+          <p className="mr-1">{notificationState.msg}</p>
           <span className="relative flex size-2">
             <span className="absolute inline-flex h-full w-full animate-ping duration-700 rounded-full dark:bg-[#3e8300] bg-lime-400 opacity-75"></span>
             <span className="relative inline-flex size-2 rounded-full dark:bg-[#18af05] bg-lime-500"></span>
@@ -254,17 +270,23 @@ const Notification = memo(() => {
     }
     else if (notificationState.msg === notificationMsgs.itemAdded) {
       return (<>
-        <p className="dark:text-black text-white">{notificationState.msg}</p> <svg className={`w-[1.375rem] h-[1.375rem] text-[#9eff00] dark:text-[green]`} viewBox="0 0 24 24" fill="none">
+        <p>{notificationState.msg}</p> <svg className={`w-[1.375rem] h-[1.375rem] text-[#9eff00] dark:text-[green]`} viewBox="0 0 24 24" fill="none">
           <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </>)
     }
     else {
-      return (<p className="dark:text-black text-white">{notificationState.msg}</p>)
+      return (<p>{notificationState.msg}</p>)
     }
   }
   return (
-    <div ref={mainPopupEl} className={`fixed ar-one-sans flex gap-1 items-center z-10 opacity-0 capitalize left-1/2 -translate-x-1/2  p-[0.5rem_1rem] text-center w-max rounded-[8px] shadow-[0px_4px_8px_1px_#00000040] text-[0.91rem] md:text-[0.95rem] font-medium bg-[rgb(13,13,13)] dark:bg-[#f5fffa] pointer-events-none`}>
+    <div ref={mainPopupEl} className={`fixed ar-one-sans flex gap-1 items-center z-10 opacity-0 capitalize left-1/2 -translate-x-1/2  p-[0.5rem_1.25rem] text-center dark:text-black text-white w-max rounded-[8px] shadow-[0px_4px_8px_1px_#00000040] text-[0.91rem] md:text-[0.95rem] font-medium bg-[#0d0d0d] dark:bg-[#f5fffa] transition-all duration-100 border border-1 dark:border-[#00000040] border-[#ffffff40]`}>
+      <button onClick={removeNotification} className="absolute p-[0.275rem] top-[-0.5rem] right-[-.625rem] bg-[#0d0d0d] dark:bg-[#f5fffa] rounded-[50%] border border-1 dark:border-[#00000080] border-[#ffffff80] transition-[scale] duration-200 active:scale-[.95]">
+        <svg className="w-[0.85rem] h-[0.85rem] text-[inherit]"
+          viewBox="0 0 24 24"
+          fill="none"><g fill="none" fillRule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" /><path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z" /></g>
+        </svg>
+      </button>
       {condtionalElm()}
     </div>
   )
@@ -273,15 +295,13 @@ const Notification = memo(() => {
 
 let PageHeading = memo(({ heading }) => {
   const headingCom = useRef(null)
-  const { value } = useContext(globalContext)
+  const { mode } = useContext(globalContext)
   const { contextSafe } = useGSAP();
   let lastScrollPos = 0
 
   useEffect(() => {
     const scrolling = contextSafe((e) => {
-      const currentScrollpos = window.pageYOffset || document.documentElement.scrollTop;
-      console.log(lastScrollPos)
-      console.log(currentScrollpos)
+      const currentScrollpos = window.pageYOffset || document.documentElement.scrollTop;            
       if (currentScrollpos < lastScrollPos) {
         gsap.to(headingCom.current, {
           top: "var(--navHeight)",
@@ -305,13 +325,13 @@ let PageHeading = memo(({ heading }) => {
   }, [])
   // dark:bg-[#0d0d0d80] bg-[#fff5f580]
   return (
-    <div ref={headingCom} className='flex items-center py-4 px-5 sticky top-[var(--navHeight)] z-[5]  dark:bg-[rgb(13,13,13)] bg-[#f5fffa] backdrop-blur-md'>
+    <div ref={headingCom} className='flex items-center py-4 px-5 sticky top-[var(--navHeight)] z-[5]  dark:bg-[#0d0d0d] bg-[#f5fffa] backdrop-blur-md'>
       {/* return btn  */}
-      <div className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:hover:shadow-[0.25rem_0px_0.3125rem_-0.125rem_black] dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)]  bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.125rem_black] rounded-full dark:text-white transition-all duration-300 select-none' onClick={() => { window.history.back() }}> <span>
-        <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' color={value === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1" /></svg>
+      <button className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)] bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.3125rem_black] rounded-full dark:text-white select-none transition-[scale] duration-200 active:scale-[.95]' onClick={() => { window.history.back() }}> <span>
+        <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1" /></svg>
       </span>
-      </div>
-      <h3 className='text-[1.43rem] ml-4 capitalize font-semibold' style={{ textShadow: '0.125rem 0.0625rem 0.1875rem #3b3b3b94' }}>{heading}</h3>
+      </button>
+      <h3 className='text-[1.334rem] ml-4 capitalize font-semibold [textShadow:0.125rem_0.0625rem_0.1875rem_#3b3b3b94]'>{heading}</h3>
     </div>
   )
 })
@@ -326,18 +346,18 @@ const WhatsAppLink = memo(({ children, number, msg, classes }) => {
   )
 })
 
-function ItemRemovingModal({ itemBeingRemovingValues }) {
+const ItemRemovingModal = memo(({ itemBeingRemovingValues })=> {
   const modalref = useRef(null)
-  const { menucard, setmenucard, notificationMsgs, NotificationTimings, setnotificationState,itemBeingRemoved, setItemBeingRemoved } = useContext(globalContext)
+  const { menucard, setmenucard, notificationMsgs, NotificationTimings, setnotificationState, itemBeingRemoved, setItemBeingRemoved } = useContext(globalContext)
 
   useGSAP(() => {
-    gsap.fromTo(modalref.current, { opacity: 0, scale: 0.9}, {
+    gsap.fromTo(modalref.current, { opacity: 0, scale: 0.9 }, {
       opacity: 1,
       scale: 1,
       duration: 0.2,
       ease: "power3",
     });
-  },[])
+  }, [])
 
   // for removing modal and updating menucard array 
   function removeModal(value) {
@@ -354,7 +374,7 @@ function ItemRemovingModal({ itemBeingRemovingValues }) {
         return card;
       });
       setmenucard(updatedCards)
-    } 
+    }
     gsap.to(modalref.current, {
       opacity: 0,
       scale: 0.9,
@@ -370,30 +390,30 @@ function ItemRemovingModal({ itemBeingRemovingValues }) {
       {/* remove item modal start  */}
       < div className='fixed top-0 left-0 h-dvh w-dvw grid place-items-center bg-[#000000a1] z-[4]' onClick={() => { removeModal(false); }
       }>
-        <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='opacity-0 scale-[0.9] transition-all shadow-[0_0_7px_0px_#00000075] duration-200 rounded-md sm:w-[25rem] w-[80%] bg-black dark:bg-white dark:text-black p-[1.5625rem_1rem] sm:p-[1.7625rem_1.2625rem] text-white'>
+        <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='opacity-0 scale-[0.9] transition-all shadow-[0_0_7px_0px_#00000075] duration-200 rounded-md sm:w-[25rem] w-[80%] bg-black dark:bg-white dark:text-black p-[1.3625rem_1rem] sm:p-[1.3625rem_1.2625rem] text-white'>
           {/* ======= close btn starts ===== */}
-        <button
-          onClick={()=>{removeModal(false);}}
-          className="absolute p-[0.3rem] rounded-[50%] top-4 right-3 transition-all duration-200 bg-white hover:bg-[#d8d8d8] text-black dark:bg-black dark:hover:bg-[#232323] dark:text-white">
-          <svg className="w-[1.18rem] h-[1.18rem]" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        {/* ======= close btn ends ===== */}
+          <button
+            onClick={() => { removeModal(false); }}
+            className="absolute p-[0.3rem] rounded-[50%] top-4 right-3 transition-all duration-200 bg-white hover:bg-[#d8d8d8] text-black dark:bg-black dark:hover:bg-[#232323] dark:text-white active:scale-[.98]">
+            <svg className="w-[1.18rem] h-[1.18rem]" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          {/* ======= close btn ends ===== */}
           <h2 className='capitalize font-bold mb-2 text-[1.0625rem]'>remove item</h2>
-          <p className='mb-2 text-[0.97rem]'>Are you sure want to remove this item?</p>
-          <div className="flex justify-end gap-2 mt-4 sm:mt-6">
-            <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-medium py-[0.3125rem] rounded-sm px-4 dark:bg-black dark:hover:bg-[#232323] dark:text-white transition-all duration-200 text-[0.94rem]'>cancel</button>
-            <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-medium py-[0.3125rem] rounded-sm px-2 text-white text-[0.94rem] transition-all duration-200'>remove</button>
+          <p className='mb-6 text-[0.97rem]'>Are you sure want to remove this item?</p>
+          <div className="flex justify-end gap-2">
+            <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 dark:bg-black dark:hover:bg-[#232323] dark:text-white text-[0.94rem] transition-all duration-200 active:scale-[.98]'>Cancel</button>
+            <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 text-white text-[0.94rem] transition-all duration-200 active:scale-[.98]'>Remove</button>
           </div>
         </div>
       </div >
     </>
   )
-}
+})
 const CartIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth = 2 }) => {
   return (
     <svg className={classes} color={color} viewBox={viewBox} ><path fill="currentColor" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" strokeWidth={strokeWidth}></path></svg>
@@ -407,5 +427,54 @@ const CartRmvIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth =
 const CartAddIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth = 2 }) => {
   return (
     <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m10 0c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m-9.8-3.2v-.1l.9-1.7h7.4c.7 0 1.4-.4 1.7-1l3.9-7l-1.7-1l-3.9 7h-7L4.3 2H1v2h2l3.6 7.6L5.2 14c-.1.3-.2.6-.2 1c0 1.1.9 2 2 2h12v-2H7.4c-.1 0-.2-.1-.2-.2" /></svg>
+  )
+})
+const ModeToggler = memo(({parentClasses})=>{
+  let { mode, setMode} = useContext(globalContext)
+
+  function toggleBtn() {
+    document.documentElement.classList.toggle('dark')
+    document.body.classList.toggle('bg-slate-50')
+    setMode(`${document.documentElement.classList.contains('dark') === true ? 'dark' : 'light'}`)
+  }
+
+  return (
+    <div className={`${parentClasses}`} onClick={toggleBtn}>
+    <button className={`toggler align-middle w-[4.375em] relative h-[2.1875em] rounded-full overflow-hidden cursor-pointer`}>
+
+      {/* moonbg  */}
+      <img src={moonbg} className='absolute w-full h-full object-cover inset-0' alt="img" />
+
+      <div className={`moon_container top-[50%] translate-y-[-50%] transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'dark' ? 'translate-x-[0.33em]' : 'translate-x-[6.25em]'}`}>
+        {Array(4).fill(null).map((_, index) => (
+          <div key={'shadow ' + index} className={`${mode === 'dark' ? `moon_shadow ${'moon_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
+        ))}
+        <div className={`moon inset-0 transition-all duration-1000 absolute bg-[#E7E7E7] rounded-full  overflow-hidden`}>
+          {Array(6).fill(null).map((_, index) => (
+            <div key={index} className={`absolute rounded-[50%] bg-[#CDCDCD] 
+            ${index === 0 ? 'top-0 right-0 w-[40%] h-[40%]' : ''}
+            ${index === 1 ? 'top-1 right-3 w-[30%] h-[30%]' : ''}
+            ${index === 2 ? 'top-1/2 right-3 w-[10%] h-[10%]' : ''}
+            ${index === 3 ? 'top-1/2 right-1 w-[15%] h-[15%]' : ''}
+            ${index === 4 ? 'top-[70%] right-0 w-[25%] h-[25%]' : ''}
+            ${index === 5 ? 'top-[75%] right-2 w-[10%] h-[10%]' : ''}`}></div>
+          ))}
+        </div>
+      </div>
+
+
+      {/* sun bg  */}
+      <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${mode === 'dark' ? 'opacity-0' : ''}`} alt="img" />
+
+      <div className={`sun_container top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'light' ? 'translate-x-[0.33em]' : 'translate-x-[-6.25em]'}`}>
+        {Array(4).fill(null).map((_, index) => (
+          <div key={'shadow ' + index} className={`${mode === 'light' ? `sun_shadow ${'sun_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
+        ))}
+        <div className={`yellow sun inset-0 transition-all duration-1000 absolute bg-radial-gradient from-[#ff7000] to-[yellow_90%] rounded-full`}>
+        </div>
+      </div>
+
+    </button>
+  </div>
   )
 })

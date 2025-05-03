@@ -27,7 +27,7 @@ function App() {
     return () => { window.removeEventListener("load", handleLoad); }
   }, []);
 
-  const { Notification, ItemRemovingModal, itemBeingRemoved } = useContext(globalContext)
+  const { Notification,notificationState ,ItemRemovingModal, itemBeingRemoved } = useContext(globalContext)
   return (
     <main className='main dark:text-white text-black  min-h-dvh'>
       <ScrollToTop />
@@ -41,10 +41,10 @@ function App() {
         <Route path='/cart' element={<Cart />} />
       </Routes>
       <Footer />
-      <div>
-        {siteLoaded && <Notification />}
+      <>
+        {siteLoaded && notificationState && <Notification />}
         {itemBeingRemoved && <ItemRemovingModal itemBeingRemovingValues={itemBeingRemoved} />}
-      </div>
+      </>
     </main>
   )
 }

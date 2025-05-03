@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, memo } from "react";
 import "./footer.css";
 import WhiteLogo from "../logos/whitelogo.jsx";
 import BlackLogo from "../logos/blacklogo.jsx";
@@ -7,9 +7,9 @@ import { globalContext } from "../context/context.js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-function footer() {
+const footer = memo(()=> {
   const cartref = useRef(null);
-  const { notificationMsgs, NotificationTimings, setnotificationState, value, addToCartItemValue, WhatsAppLink, CartIcon } =
+  const { notificationMsgs, NotificationTimings, setnotificationState, mode, addToCartItemValue, WhatsAppLink, CartIcon ,ModeToggler} =
     useContext(globalContext);
   function copyNumber(e) {
     navigator.clipboard.writeText(e.target.innerText);
@@ -35,7 +35,7 @@ function footer() {
                 {
                   name: "Cart",
                   to: "cart",                
-                  svg: (<CartIcon color={value === "dark" ? "white" : "black"} classes={'w-[1.25rem] h-[1.25rem]'} />),
+                  svg: (<CartIcon color={mode === "dark" ? "white" : "black"} classes={'w-[1.25rem] h-[1.25rem]'} />),
                 },
               ].map((item, index) => (
                 <NavLink
@@ -43,12 +43,12 @@ function footer() {
                   key={index}
                   className={({ isActive }) => {
                     const baseClasses = `svgbtn text-center flex py-2 px-4 sm:px-4 rounded-[0.9375rem] text-nowrap  gap-2 capitalize active:scale-[0.9] dark:active:bg-[#80808059] active:bg-[#e6e6e6] transition duration-100`;
-                    const hoverClasses = `${value === "light"
+                    const hoverClasses = `${mode === "light"
                       ? "hover:bg-white hover:shadow-lg"
                       : "hover:bg-[#d1d1d159]"
                       }`;
                     const activeClasses = isActive
-                      ? `${value === "light"
+                      ? `${mode === "light"
                         ? "bg-white shadow-xl "
                         : "dark:bg-darkgradient"
                       }`
@@ -59,7 +59,7 @@ function footer() {
                   {
                     <span ref={cartref} className="relative">
                       {item?.svg}
-                      <span className="absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] w-[0.875rem] h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans leading-[100%] font-extrabold">
+                      <span className="absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] min-w-[0.875rem] min-h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans leading-[100%] font-extrabold">
                         {addToCartItemValue.length}
                       </span>
                     </span>
@@ -196,12 +196,12 @@ function footer() {
                   key={ind}
                   className={({ isActive }) => {
                     const baseClasses = `svgbtn text-center flex py-2 px-4 sm:px-4 rounded-[0.9375rem] text-nowrap  gap-2 capitalize active:scale-[0.9] dark:active:bg-[#80808059] active:bg-[#e6e6e6] transition duration-100`;
-                    const hoverClasses = `${value === "light"
+                    const hoverClasses = `${mode === "light"
                       ? "hover:bg-white hover:shadow-lg"
                       : "hover:bg-[#d1d1d159]"
                       }`;
                     const activeClasses = isActive
-                      ? `${value === "light"
+                      ? `${mode === "light"
                         ? "bg-white shadow-xl "
                         : "dark:bg-darkgradient"
                       }`
@@ -212,6 +212,7 @@ function footer() {
                   <span>{el.name}</span>
                 </NavLink>
               ))}
+              <ModeToggler parentClasses='py-2 px-4 sm:px-4 cursor-pointer'/>
             </div>
           </div>
 
@@ -474,20 +475,20 @@ function footer() {
           <address>{`design & developed by`}</address>
           <strong>
             <a target="_blank"
-              className="uppercase [text-shadow:2px_2px_2px_#00000063]"
+              className="uppercase [text-shadow:2px_2px_4px_#00000063]"
               href="https://ayushnagar-portfolio.netlify.app/">Ayush Nagar
             </a>
           </strong>
         </div>
-        <div className="w-full h-[1px] dark:bg-slate-200 bg-slate-500  rounded-full overflow-hidden"></div>
+        <div className="w-full h-[1px] dark:bg-slate-200 bg-slate-500 rounded-full overflow-hidden"></div>
       </div>
-      {value === "dark" ? (
+      {mode === "dark" ? (
         <WhiteLogo classes={"w-[11.875rem] sm:w-[13.125rem] mx-auto"} />
       ) : (
         <BlackLogo classes={"w-[11.875rem] md:w-[13.125rem] mx-auto"} />
       )}
     </footer>
   );
-}
+})
 
 export default footer;

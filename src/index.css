@@ -11,22 +11,33 @@
 }
 
 :root {
-    --navHeight: 83px;
+    --navHeight: 73px;
 }
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 
 input[type="number"] {
     -moz-appearance: textfield;
 }
 
+input::placeholder {
+    font-size: 0.95em;
+    color: inherit;
+    opacity: 0.9;
+  }
+  
+
 a,
 Link {
     user-select: none;
 }
+
 
 body,
 html {
@@ -36,7 +47,7 @@ html {
     font-family: "Anta", sans-serif;
     /* font-weight: 400; */
     font-style: normal;
-    transition: background-color 0.3s linear;
+    transition: background-color 0.1s linear;
 }
 
 .ar-one-sans {
@@ -82,11 +93,11 @@ html {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#F2F3E2", endColorstr="#B2E5F8", GradientType=1);
 }
 
-.svgbtn:hover>svg {
+.svgbtn:hover svg {
     animation: rotate 0.4s linear;
 }
 
-.svgbtn:active>svg {
+.svgbtn:active svg {
     transition: all 0.1s ease;
     scale: 0;
 }
@@ -272,14 +283,12 @@ input.acco:checked+.detail::after {
 .search-div {
     top: var(--navHeight);
 }
-
-
-/* .dark-secondPCharSpan{
-    color: #606060;
+@media (max-width:640px) {
+    .infi {
+        mask: linear-gradient(90deg, transparent 0%, white, white, white , transparent 100%);
+    }
 }
-.secondPCharSpan{
-    color: rgb(96 96 96 / 38%);
-} */
+
 @media (max-width:500px) {
 
     body,
@@ -296,11 +305,21 @@ input.acco:checked+.detail::after {
     }
 }
 
+@media (max-width:320px) {
+    .nav-logo {
+        width: 10.575em;
+    }
+}
 @media (max-width:300px) {
 
     body,
     html {
         font-size: 13px;
+    }
+}
+@media (max-width:280px) {
+    .nav-logo {
+        width: 9em;
     }
 }
 

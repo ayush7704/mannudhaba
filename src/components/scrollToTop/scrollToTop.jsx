@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React,{ useEffect } from "react"
 import { useLocation } from "react-router-dom"
 
 
@@ -10,4 +10,4 @@ function scrollToTop() {
     return null
 }
 
-export default scrollToTop
+export default React.memo(scrollToTop)

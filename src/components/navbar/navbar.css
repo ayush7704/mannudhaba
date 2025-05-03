@@ -44,15 +44,3 @@
         opacity: 0;
     }
 }
-
-
-@media (max-width:320px) {
-    .nav-logo {
-        width: 10.575em;
-    }
-}
-@media (max-width:280px) {
-    .nav-logo {
-        width: 9em;
-    }
-}

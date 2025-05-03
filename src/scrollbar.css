@@ -12,7 +12,7 @@ nav *::-webkit-scrollbar{
 }
 
 ::-webkit-scrollbar-thumb{
-    cursor: pointer;
+    /* cursor: pointer; */
     border-radius: 8px;
 }
 .dark ::-webkit-scrollbar-thumb {

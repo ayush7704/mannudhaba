@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,memo} from 'react';
 
-const WhatsAppForm = ({ subtotal, orders }) => {
+const WhatsAppForm = memo(({ subtotal, orders }) => {
   const [selectedOption, setSelectedOption] = useState('home delivery');
   const [villageOption, setvillageOption] = useState('');
   const [delifees, setdelifees] = useState(null)
@@ -188,6 +188,6 @@ const WhatsAppForm = ({ subtotal, orders }) => {
       </div>
     </form>
   );
-};
+});
 
 export default WhatsAppForm;

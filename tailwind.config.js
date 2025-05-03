@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default  {
   darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -9,7 +9,6 @@ module.exports = {
       backgroundImage: theme => ({
         'radial-gradient': 'radial-gradient(circle, var(--tw-gradient-stops))',
         'darkgradient': 'linear-gradient(to right, #d1d1d145, transparent 90%)',
-        // 'lightgradient': 'linear-gradient(to right, rgb(214 214 214), transparent 90%)',
         'lightgradient': 'linear-gradient(to right,#dbdbdb, transparent 90%)',
       }),
     },
