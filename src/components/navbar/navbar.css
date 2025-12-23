@@ -2,45 +2,58 @@
     top: calc(var(--navHeight));
 }
 
-.moon_shadow ,.sun_shadow{
+.moon_shadow,
+.sun_shadow {
     --shadow-color1: #ffffff30;
     background-color: var(--shadow-color1);
     will-change: opacity, inset;
 }
-.sun_shadow{
+
+.sun_shadow {
     background-color: #ffe9126b;
 }
+
 .moon_shadow1,
 .moon_shadow2,
 .moon_shadow3,
-.moon_shadow4,.sun_shadow1,.sun_shadow2,.sun_shadow3,.sun_shadow4 {
+.moon_shadow4,
+.sun_shadow1,
+.sun_shadow2,
+.sun_shadow3,
+.sun_shadow4 {
     animation: shadow-animation 8s linear infinite;
 }
 
-.moon_shadow1,.sun_shadow1 {
+.moon_shadow1,
+.sun_shadow1 {
     animation-delay: 0s;
 }
 
-.moon_shadow2,.sun_shadow2 {
+.moon_shadow2,
+.sun_shadow2 {
     animation-delay: 2s;
 }
 
-.moon_shadow3,.sun_shadow3 {
+.moon_shadow3,
+.sun_shadow3 {
     animation-delay: 4s;
 }
 
-.moon_shadow4,.sun_shadow4 {
+.moon_shadow4,
+.sun_shadow4 {
     animation-delay: 6s;
 }
 
 @keyframes shadow-animation {
     from {
-        inset: 0rem;
+        /* inset: .5rem; */
+        scale: 0.98;
         opacity: 1;
     }
 
     to {
-        inset: -1.5rem;
+        /* inset: -1.5rem; */
+        scale: 4;
         opacity: 0;
     }
 }

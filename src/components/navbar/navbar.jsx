@@ -20,19 +20,6 @@ function Navbar() {
     sethasSidebarOpened(prev => !prev)
   }, [])
 
-  useEffect(() => {
-    const imgRandor = () => {
-      document.documentElement.style.setProperty(`--navHeight`, `${nav.current.getBoundingClientRect().height}px`)
-    }
-    window.addEventListener('resize', imgRandor)
-    document.querySelector('.nav-logo').addEventListener('load', imgRandor)
-    document.documentElement.style.setProperty(`--navHeight`, `${nav.current.getBoundingClientRect().height}px`)
-    return () => {
-      document.querySelector('.nav-logo').removeEventListener('load', imgRandor)
-      window.removeEventListener('resize', imgRandor)
-    }
-  }, [])
-
   // useGSAP(() => {
   //   // let shadowtime = gsap.timeline({ defaults: { duration: 4, repeat: -1 } });
   //   // let shadowtime = gsap.timeline({ defaults: { duration: 4, repeat: -1 } });
@@ -74,24 +61,26 @@ function Navbar() {
   // }, [])
 
   useGSAP(() => {
-    gsap.fromTo(cartref.current, { scale: 1.2 }, { scale: 1, duration: 2.5, ease: 'elastic' })
+    gsap.fromTo(cartref.current, { transform: "scale(1.2)" }, { transform: "scale(1)", duration: 2.5, ease: 'elastic' })
   }, [addToCartItemValue.length])
 
   return (
-    <nav ref={nav} className='z-[5] dark:bg-[#0d0d0d] bg-[#f5fffa] flex items-center sm:gap-4 py-[.3125rem] justify-between lg:pl-[1.25rem] pl-[0.625rem] md:pr-[1.25rem] pr-[0.5rem] sticky top-0 text-[0.95rem]'>
+    <nav ref={nav} className='maintopNavbar z-[5] dark:bg-[#0d0d0d] bg-[#f5fffa] dark:text-white text-black flex items-center sm:gap-4 py-[.3125rem] justify-between lg:pl-[1.25rem] pl-[0.625rem] md:pr-[1.25rem] pr-[0.5rem] sticky top-0 text-[0.95rem]'>
 
       {/*======== logo and name starts  ======*/}
       <div className="name-logo">
-        {
-          mode === 'dark' ? <WhiteLogo classes={'nav-logo w-[11.575em] sm:w-[12.125em] md:w-[13.125em] max-[280px]:w-[9rem] max-[320px]:w-[10.575em]'} /> : <Blacklogo classes={'nav-logo w-[11.575em] sm:w-[12.125em] md:w-[13.125em] max-[280px]:w-[9rem] max-[320px]:w-[10.575em]'} />
-        }
+        <NavLink to={"/"}>
+          {
+            mode === 'dark' ? <WhiteLogo classes={'nav-logo w-[11.575em] sm:w-[12.125em] md:w-[13.125em] max-[280px]:w-[9rem] max-[320px]:w-[10.575em]'} /> : <Blacklogo classes={'nav-logo w-[11.575em] sm:w-[12.125em] md:w-[13.125em] max-[280px]:w-[9rem] max-[320px]:w-[10.575em]'} />
+          }
+        </NavLink>
       </div>
       {/*======== logo and name ends  ======*/}
 
 
-      <div onClick={() => { sidebarToggler() }} ref={linkswrapper} className={`linkswrapper w-full lg:relative absolute lg:hidden bg-[transparent] h-screen overflow-hidden left-0 ${hasSidebarOpened ? "" : "hidden"}`}></div>
+      <div onClick={() => { sidebarToggler() }} ref={linkswrapper} className={`linkswrapper w-full lg:relative absolute lg:hidden bg-[#000000d9] h-screen overflow-hidden left-0 ${hasSidebarOpened ? "" : "hidden"}`}></div>
 
-      <div ref={links} className={`links bg-[inherit] gap-1 transition-[width] duration-[200ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] lg:relative lg:overflow-auto overflow-hidden lg:flex lg:items-center lg:w-auto lg:top-[0px] lg:border-none dark:border-[#ffffff30] border-[#00000030] border-t-[1px] border-b-[1px] grid absolute w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[1.25rem] lg:pb-[0px] lg:rounded-lg max-lg:shadow-lg ${hasSidebarOpened ? "w-9/12" : "w-0"}`}>
+      <div ref={links} className={`links bg-[inherit] gap-1 transition-[width] duration-[200ms] ease-[cubic-bezier(0.77,_-0.45,_0.3,_1.57)] lg:relative lg:overflow-auto overflow-hidden lg:flex lg:items-center lg:w-auto lg:top-[0px] lg:border-none dark:border-[#ffffff30] border-[#00000030] border-l-[1px] border-b-[1px] grid absolute w-0 right-0 rounded-bl-lg dark:text-white text-black pb-[1.25rem] lg:pb-[0px] lg:rounded-lg max-lg:shadow-lg ${hasSidebarOpened ? "w-9/12 pl-[.25rem]" : "w-0 border-none"}`}>
 
         {/*======== close btn x   ======*/}
         <div className='lg:hidden py-[0.625rem] px-5 cursor-pointer' onClick={() => { sidebarToggler() }}>
@@ -118,7 +107,7 @@ function Navbar() {
               </svg>)
             },
             {
-              name: 'About us', to: 'about-us', svg: (<svg className={`w-[1.25em] h-[1.25em]`} color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
+              name: 'About us', to: 'about', svg: (<svg className={`w-[1.25em] h-[1.25em]`} color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24" fill="none">
                 <path d="M18 13C20.2091 13 22 11.2091 22 9C22 6.79086 20.2091 5 18 5C17.1767 5 16.4115 5.24874 15.7754 5.67518M6 13C3.79086 13 2 11.2091 2 9C2 6.79086 3.79086 5 6 5C6.82332 5 7.58854 5.24874 8.22461 5.67518M15.7754 5.67518C15.2287 4.11714 13.7448 3 12 3C10.2552 3 8.77132 4.11714 8.22461 5.67518M15.7754 5.67518C15.9209 6.08981 16 6.53566 16 7C16 7.3453 15.9562 7.68038 15.874 8M9.46487 7C9.15785 6.46925 8.73238 6.0156 8.22461 5.67518" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M6 17.5C7.59905 16.8776 9.69952 16.5 12 16.5C14.3005 16.5 16.401 16.8776 18 17.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 <path d="M5 21C6.86556 20.3776 9.3161 20 12 20C14.6839 20 17.1344 20.3776 19 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -155,7 +144,7 @@ function Navbar() {
       <div className='max-lg:ml-auto flex items-center justify-center md:gap-2 gap-1'>
         <a target='_blank'
           className="svgbtn p-[0.375em]"
-          href="https://www.instagram.com/mannudhaba?igsh=MTgwdjVvdnQxbmR3NQ==">
+          href="https://www.instagram.com/kanhaji_dhaba">
           <svg
             className="text-inherit w-[1.35em] h-[1.35em] md:w-[1.5em] md:h-[1.5em] drop-shadow-[1px_1px_0.25em_#000000b0]"
             xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +208,7 @@ function Navbar() {
             const hoverClasses = 'dark:hover:bg-[#43434352] hover:bg-[#d1d1d159]';
             return `${baseClasses} ${activeClasses} ${hoverClasses}`;
           }} onClick={() => { sethasSidebarOpened(false) }}>
-            {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] min-w-[0.875rem] min-h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans leading-[100%] font-extrabold'>{addToCartItemValue.length}</span>
+            {<span ref={cartref} className='relative'>{item?.svg} <span className='absolute dark:text-white text-black dark:outline-white outline-black top-[-0.450rem] right-[-0.1rem] min-w-[0.875rem] min-h-[0.875rem] rounded-[50%] dark:bg-[linear-gradient(to_right,_#f2baba,_#ec8ebb,_#6a57d2)] bg-[linear-gradient(to_right,_#f2baba,_#ffbbdc,_#a99ee8)] outline outline-1 flex items-center justify-center text-[0.625rem] ar-one-sans leading-[100%] font-semibold'><span>{addToCartItemValue.length}</span></span>
             </span>}
             <span className='max-sm:hidden'>{item.name}</span>
           </NavLink>))

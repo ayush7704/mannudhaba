@@ -1,6 +1,6 @@
 import React from 'react'
 
-function blacklogo({classes}) {
+function blacklogo({ classes }) {
     return (
         <>
 
@@ -11,6 +11,7 @@ function blacklogo({classes}) {
                 </g>
             </svg>
 
+            
         </>
     )
 }

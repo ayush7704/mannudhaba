@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { memo, useContext, useEffect, useRef, useState } from 'react'
 import { globalContext } from '../context/context'
 import { Menulink } from '../home/home.jsx'
 import Form from '../form/form.jsx'
@@ -6,13 +6,16 @@ import { NavLink } from 'react-router-dom'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
-function cart() {
+const Cart = memo(() =>{
   let cartmenubtn = useRef(null)
-  let summ = 0
-  let [sum, setsum] = useState()  
-  const { mode, menucard, setmenucard, PageHeading, addToCartItemValue, CartIcon, setItemBeingRemoved } = useContext(globalContext)
+  let summ = 0;
+  let [sum, setsum] = useState()
+
+  const { mode, menucard, setmenucard, PageHeading, addToCartItemValue, CartIcon, setItemBeingRemoved, recalculate_cssVars } = useContext(globalContext)
+
   useEffect(() => {
     document.title = 'Mannu Dhaba Cart';
+    recalculate_cssVars()
   }, [])
 
   // form subtotal start
@@ -55,10 +58,10 @@ function cart() {
   }, { dependencies: [addToCartItemValue.length] })
 
   return (
-    <div>
-      <section className={`relative cartPage backdrop-blur-[100px] ${addToCartItemValue.length < 1 ? "h-[calc(100svh_-_var(--navHeight))]":""}`}>
+    <div>       
+      <section className={`relative cartPage ${addToCartItemValue.length < 1 ? "h-[calc(100svh_-_var(--navHeight))]" : ""}`}>
         <PageHeading heading={' your cart'} />
-        <div className={`${addToCartItemValue.length < 1 ? "h-[calc(100%_-_var(--navHeight))] grid place-content-center":"p-5"}`}>
+        <div className={`${addToCartItemValue.length < 1 ? "h-[calc(100%_-_var(--navHeight))] grid place-content-center" : "min-h-[calc(100svh_-_var(--navHeight))] p-5"}`}>
           {addToCartItemValue.length < 1 ? <div>
             <p className='flex justify-center mb-4'>
               <NavLink to={'/menu'}>
@@ -89,9 +92,9 @@ function cart() {
                           </svg>
                         </span>
                       </div>
-                      {/* remove btn end */}                    
+                      {/* remove btn end */}
                       <div className='sm:w-[11.875rem] sm:h-[11.875rem] w-[80%] h-[9.5rem] p-2 rounded-xl'>
-                        <img src={menu.img} alt={menu.heading + ' img'} className='w-full h-full object-contain sm:object-cover rounded-[0.25rem]' />
+                        <img loading='lazy' src={menu.img} alt={menu.heading + ' img'} className='w-full h-full object-contain sm:object-cover rounded-[0.25rem]' />
                       </div>
                       {/* img end */}
                       <div className='p-2 flex-grow'>
@@ -102,7 +105,7 @@ function cart() {
                             {menu.contains.map((e, ind) => (<span key={e + ind} className="dark:text-white text-slate-950 capitalize">{`${e} ${menu.contains.length !== ind + 1 ? ',' : ''}`}</span>))} </details>}
 
                           <h4 className="text-nowrap">Price :  <span className='font-semibold'> &#8377; {menu.price}</span></h4>
-                          <p className='capitalize text-[0.875em] flex gap-1'>
+                          <p className='capitalize text-[0.875em] flex items-center gap-1'>
                             <span>
                               <svg className={`w-[1.375em] h-[1.375em]`} viewBox="0 0 24 24" color={`${mode === 'dark' ? '#9eff00' : 'rgb(111 180 0)'}`} fill="none">
                                 <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -112,7 +115,7 @@ function cart() {
                               home delivery
                             </span>
                           </p>
-                          <p className='capitalize text-[0.875em] flex gap-1'>
+                          <p className='capitalize text-[0.875em] flex items-center gap-1'>
                             <span>
                               <svg className={`w-[1.375em] h-[1.375em]`} viewBox="0 0 24 24" color={`${mode === 'dark' ? '#9eff00' : 'rgb(111 180 0)'}`} fill="none">
                                 <path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -149,16 +152,16 @@ function cart() {
               </div>
               {/* cart start  */}
               {/* checkout start  */}
-              <div className="lg:min-w-[35%] sm:max-lg:w-[85%] max-sm:w-[80%] max-[420px]:w-[95%] max-[520px]:w-[80%] lg:sticky lg:top-[--navHeight] rounded-lg">
+              <div className={`lg:min-w-[35%] max-lg:order-first sm:max-lg:w-[85%] max-sm:w-[80%] max-[420px]:w-[95%] max-[520px]:w-[80%] lg:sticky lg:top-[--pageHeadingBottom] rounded-lg`}>
                 <Form subtotal={sum} orders={addToCartItemValue} />
               </div>
               {/* checkout end  */}
             </div>
           }
         </div>
-      </section>      
+      </section>
     </div>
   )
-}
+})
 
-export default cart
+export default Cart

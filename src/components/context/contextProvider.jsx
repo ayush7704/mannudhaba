@@ -5,10 +5,11 @@ import { useState, memo, useEffect, useContext, useRef, useLayoutEffect, useMemo
 import gsap from 'gsap'
 import { useGSAP } from "@gsap/react";
 import foodimg from '../home/hero-food.webp'
-import { matarPaneer, saahiPaneer, paneerButterMasala, kheer, daalBaafle } from '../varieties imgs/varietyImgs'
+import { matarPaneer, saahiPaneer, paneerButterMasala, kheer, daalBaafle, daalBaati } from '../varieties imgs/varietyImgs'
 
 let ContextProvider = ({ children }) => {
-  const [mode, setMode] = useState('dark')
+  const local_Theme = JSON.parse(localStorage.getItem("theme"))
+  const [mode, setMode] = useState(local_Theme || 'dark')
   const [itemBeingRemoved, setItemBeingRemoved] = useState(null)
   const [menucard, setmenucard] = useState(
     [
@@ -66,7 +67,7 @@ let ContextProvider = ({ children }) => {
       { heading: 'Daal snacks', variety: 'daal special', img: foodimg, price: 120, inCart: false, quantity: 1 },
       { heading: 'Daal fry', variety: 'daal special', img: foodimg, price: 100, inCart: false, quantity: 1 },
       { heading: 'Daal baafle', variety: 'daal special', img: daalBaafle, price: 150, inCart: false, quantity: 1 },
-      { heading: 'Daal baati', variety: 'daal special', img: foodimg, price: 150, inCart: false, quantity: 1 },
+      { heading: 'Daal baati', variety: 'daal special', img: daalBaati, price: 150, inCart: false, quantity: 1 },
       { heading: 'Daal tadka', variety: 'daal special', img: foodimg, price: 120, inCart: false, quantity: 1 },
 
       // snacks       
@@ -138,7 +139,7 @@ let ContextProvider = ({ children }) => {
       // salad 
       { heading: 'green salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
       { heading: 'kachumbar salad', variety: 'salad special', img: foodimg, price: 50, inCart: false, quantity: 1 },
-  ])
+    ])
 
   useLayoutEffect(() => {
 
@@ -156,13 +157,13 @@ let ContextProvider = ({ children }) => {
                 menuItem.variety === clientItem.variety &&
                 clientItem.inCart
             );
+
             if (clientItemIndex !== -1) {
               const afterMenuItem = structuredClone(clientMenuAfter[clientItemIndex]);
               afterMenuItem.inCart = true
               afterMenuItem.quantity = clientItem?.quantity
               clientMenuAfter[clientItemIndex] = afterMenuItem
             }
-            console.log(clientItemIndex);
           })
         );
         setmenucard(clientMenuAfter)
@@ -174,18 +175,31 @@ let ContextProvider = ({ children }) => {
     const time = new Date();
     const isDayTime = time.getHours() >= 8 && time.getHours() <= 17;
     const isDark = document.documentElement.classList.contains('dark');
-
-    if (isDark && isDayTime) {
-      document.documentElement.classList.toggle('dark');
-      document.body.classList.toggle('bg-slate-50');
+    if (local_Theme) {
+      if (local_Theme === "dark") {
+        document.documentElement.classList.add('dark');
+        document.body.classList.remove('bg-slate-50');
+      }
+      else {
+        document.documentElement.classList.remove('dark');
+        document.body.classList.add('bg-slate-50');
+      }
+    }
+    else if (isDark && isDayTime) {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.add('bg-slate-50');
       setMode('light');
     }
   }, [])
 
-  let render = useRef(0)
-  useEffect(() => {
-    render.current = render.current + 1;
-  })
+  useLayoutEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(mode))
+  }, [mode])
+
+  // let render = useRef(0)
+  // useEffect(() => {
+  //   render.current = render.current + 1;
+  // })
 
   let addToCartItemValue = useMemo(() => { return (menucard.filter((menu) => { return menu.inCart === true })) }, [menucard])
 
@@ -196,12 +210,22 @@ let ContextProvider = ({ children }) => {
 
   const [notificationState, setnotificationState] = useState({ msg: notificationMsgs.loadMsg, time: NotificationTimings.get(notificationMsgs.loadMsg) })
   return (
-    <globalContext.Provider value={{ mode, setMode, Notification, notificationState, setnotificationState, notificationMsgs, NotificationTimings, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon, ItemRemovingModal, itemBeingRemoved, setItemBeingRemoved,ModeToggler }}>
+    <globalContext.Provider value={{ mode, setMode, Notification, notificationState, setnotificationState, notificationMsgs, NotificationTimings, PageHeading, menucard, setmenucard, addToCartItemValue, WhatsAppLink, CartIcon, CartRmvIcon, CartAddIcon, ItemRemovingModal, itemBeingRemoved, setItemBeingRemoved, ModeToggler, recalculate_cssVars }}>
       {children}
     </globalContext.Provider>
   )
 }
 export default memo(ContextProvider)
+
+function recalculate_cssVars() {
+  const pageHeading = document.querySelector(".pageHeading")
+  const nav = document.querySelector(".maintopNavbar")
+  const pageHeadingBottom = Boolean(pageHeading) ? pageHeading.getBoundingClientRect().bottom : 200
+
+
+  document.documentElement.style.setProperty(`--navHeight`, `${nav.getBoundingClientRect().height}px`)
+  document.documentElement.style.setProperty(`--pageHeadingBottom`, `${pageHeadingBottom}px`)
+}
 
 const notificationMsgs = {
   itemAdded: 'item added successfully',
@@ -217,7 +241,7 @@ const NotificationTimings = new Map([
 ])
 
 const Notification = memo(() => {
-  const { notificationState,setnotificationState, notificationMsgs } = useContext(globalContext)
+  const { notificationState, setnotificationState, notificationMsgs } = useContext(globalContext)
   const mainPopupEl = useRef(null);
   const timeout = useRef(null);
 
@@ -227,20 +251,24 @@ const Notification = memo(() => {
       setTimeout(() => {
         gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 40, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
         timeout.current = setTimeout(() => {
-          gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
-            setnotificationState(null)
-            gsap.set(mainPopupEl.current, { bottom:40})
-          }})          
+          gsap.to(mainPopupEl.current, {
+            opacity: 0, duration: 0.2, ease: 'power1.inOut', onComplete: () => {
+              setnotificationState(null)
+              gsap.set(mainPopupEl.current, { bottom: 40 })
+            }
+          })
         }, Number(notificationState.time + 600));
       }, 3000);
     } else {
       clearTimeout(timeout.current)
       gsap.fromTo(mainPopupEl.current, { bottom: 40, opacity: 0 }, { bottom: 80, opacity: 1, duration: 0.6, ease: 'power1.inOut' })
       timeout.current = setTimeout(() => {
-        gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
-          setnotificationState(null)
-          gsap.set(mainPopupEl.current, { bottom:40})
-        }})        
+        gsap.to(mainPopupEl.current, {
+          opacity: 0, duration: 0.2, ease: 'power1.inOut', onComplete: () => {
+            setnotificationState(null)
+            gsap.set(mainPopupEl.current, { bottom: 40 })
+          }
+        })
       }, Number(notificationState.time + 600));
     }
     return () => {
@@ -248,12 +276,14 @@ const Notification = memo(() => {
     };
   }, [notificationState])
 
-  function removeNotification(){
+  function removeNotification() {
     clearTimeout(timeout.current)
-    gsap.to(mainPopupEl.current, { opacity: 0, duration: 0.4, ease: 'power1.inOut' ,onComplete:()=>{
-      setnotificationState(null)
-      gsap.set(mainPopupEl.current, { bottom:40})
-    }})    
+    gsap.to(mainPopupEl.current, {
+      opacity: 0, duration: 0.2, ease: 'power1.inOut', onComplete: () => {
+        setnotificationState(null)
+        gsap.set(mainPopupEl.current, { bottom: 40 })
+      }
+    })
   }
 
   function condtionalElm() {
@@ -292,7 +322,6 @@ const Notification = memo(() => {
   )
 })
 
-
 let PageHeading = memo(({ heading }) => {
   const headingCom = useRef(null)
   const { mode } = useContext(globalContext)
@@ -300,20 +329,25 @@ let PageHeading = memo(({ heading }) => {
   let lastScrollPos = 0
 
   useEffect(() => {
+    let headingInView = true
     const scrolling = contextSafe((e) => {
-      const currentScrollpos = window.pageYOffset || document.documentElement.scrollTop;            
-      if (currentScrollpos < lastScrollPos) {
+      const currentScrollpos = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScrollpos < lastScrollPos && !headingInView) {
         gsap.to(headingCom.current, {
-          top: "var(--navHeight)",
-          duration: 2,
-          ease: "circ",
+          // top: "var(--navHeight)",
+          transform: "translateY(0)",
+          duration: 0.8,
+          ease: "power2",
         });
-      } else if (currentScrollpos > lastScrollPos && currentScrollpos !== 0) {
+        headingInView = true
+      } else if (currentScrollpos > lastScrollPos && currentScrollpos !== 0 && headingInView) {
         gsap.to(headingCom.current, {
-          top: "-100%",
-          // duration: 0.7,
-          ease: "circ",
+          // top: "-100%",
+          transform: "translateY(-300%)",
+          duration: 0.8,
+          ease: "power2",
         });
+        headingInView = false
       }
       lastScrollPos = currentScrollpos;
     })
@@ -325,13 +359,13 @@ let PageHeading = memo(({ heading }) => {
   }, [])
   // dark:bg-[#0d0d0d80] bg-[#fff5f580]
   return (
-    <div ref={headingCom} className='flex items-center py-4 px-5 sticky top-[var(--navHeight)] z-[5]  dark:bg-[#0d0d0d] bg-[#f5fffa] backdrop-blur-md'>
+    <div ref={headingCom} className='pageHeading flex items-center py-4 max-sm:px-5 px-8 sticky top-[var(--navHeight)] z-[3]  dark:bg-[#0d0d0d] bg-[#f5fffa] backdrop-blur-md transform-gpu will-change-transform'>
       {/* return btn  */}
       <button className='inline-flex w-[2.5rem] h-[2.5rem] items-center justify-center cursor-pointer dark:bg-[linear-gradient(to_right,_#8c609c,_#291c26,_black)] bg-[linear-gradient(to_right,_#d9b2d6,_#f4eef6,_#f8fafc)] hover:shadow-[0.1875rem_0px_0.3125rem_-0.3125rem_black] rounded-full dark:text-white select-none transition-[scale] duration-200 active:scale-[.95]' onClick={() => { window.history.back() }}> <span>
-        <svg className='w-[1.5rem] h-[1.5rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1" /></svg>
+        <svg className='sm:w-[1.5rem] sm:h-[1.5rem] w-[1.4rem] h-[1.4rem] dark:drop-shadow-[0.25rem_0.0625rem_0.0625rem_black] drop-shadow-[0.1875rem_0px_0.0625rem_black]' color={mode === 'dark' ? 'white' : 'black'} viewBox="0 0 24 24"><path fill="currentColor" d="M7 19a1 1 0 0 0 1 1h5c2.242 0 4.01-.778 5.218-2.023C19.414 16.744 20 15.113 20 13.5s-.586-3.244-1.782-4.477C17.01 7.778 15.242 7 13 7H8.414l2.043-2.043a1 1 0 0 0-1.414-1.414l-3.75 3.75a1 1 0 0 0 0 1.414l3.75 3.75a1 1 0 0 0 1.414-1.414L8.414 9H13c1.758 0 2.99.597 3.782 1.415c.804.83 1.218 1.948 1.218 3.085s-.414 2.256-1.218 3.085C15.99 17.403 14.758 18 13 18H8a1 1 0 0 0-1 1" /></svg>
       </span>
       </button>
-      <h3 className='text-[1.334rem] ml-4 capitalize font-semibold [textShadow:0.125rem_0.0625rem_0.1875rem_#3b3b3b94]'>{heading}</h3>
+      <h3 className='sm:text-[1.335rem] text-[1.235rem] ml-4 capitalize font-semibold [textShadow:0.125rem_0.0625rem_0.1875rem_#3b3b3b94]'>{heading}</h3>
     </div>
   )
 })
@@ -346,15 +380,19 @@ const WhatsAppLink = memo(({ children, number, msg, classes }) => {
   )
 })
 
-const ItemRemovingModal = memo(({ itemBeingRemovingValues })=> {
+const ItemRemovingModal = memo(({ itemBeingRemovingValues }) => {
   const modalref = useRef(null)
   const { menucard, setmenucard, notificationMsgs, NotificationTimings, setnotificationState, itemBeingRemoved, setItemBeingRemoved } = useContext(globalContext)
 
   useGSAP(() => {
-    gsap.fromTo(modalref.current, { opacity: 0, scale: 0.9 }, {
+    gsap.set("body", { overflow: 'hidden' })
+    gsap.fromTo(modalref.current, {
+      opacity: 0,      
+      scale: 0.9,
+    }, {
       opacity: 1,
       scale: 1,
-      duration: 0.2,
+      duration: .25,
       ease: "power3",
     });
   }, [])
@@ -375,9 +413,11 @@ const ItemRemovingModal = memo(({ itemBeingRemovingValues })=> {
       });
       setmenucard(updatedCards)
     }
+    gsap.set("body", { overflow: '' })
     gsap.to(modalref.current, {
       opacity: 0,
-      scale: 0.9,
+      transform: "scale(0.9)",
+      // scale: 0.9,
       duration: 0.15,
       ease: "power2.in",
       onComplete: () => {
@@ -388,26 +428,28 @@ const ItemRemovingModal = memo(({ itemBeingRemovingValues })=> {
   return (
     <>
       {/* remove item modal start  */}
-      < div className='fixed top-0 left-0 h-dvh w-dvw grid place-items-center bg-[#000000a1] z-[4]' onClick={() => { removeModal(false); }
+      < div className='fixed top-0 left-0 h-dvh w-dvw grid place-items-center bg-[#000000d9] z-[4]' onClick={() => { removeModal(false); }
       }>
-        <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='opacity-0 scale-[0.9] transition-all shadow-[0_0_7px_0px_#00000075] duration-200 rounded-md sm:w-[25rem] w-[80%] bg-black dark:bg-white dark:text-black p-[1.3625rem_1rem] sm:p-[1.3625rem_1.2625rem] text-white'>
+        <div onClick={(e) => { e.stopPropagation() }} ref={modalref} className='opacity-0 [transform:scale(0.9)] transition-all shadow-[0_0_7px_0px_#00000075] duration-200 rounded-md sm:w-[25rem] w-[85%] bg-black dark:bg-white dark:text-black p-[1.3625rem] sm:p-[1.3625rem_1.2625rem] text-white will-change-auto'>
           {/* ======= close btn starts ===== */}
           <button
             onClick={() => { removeModal(false); }}
-            className="absolute p-[0.3rem] rounded-[50%] top-4 right-3 transition-all duration-200 bg-white hover:bg-[#d8d8d8] text-black dark:bg-black dark:hover:bg-[#232323] dark:text-white active:scale-[.98]">
-            <svg className="w-[1.18rem] h-[1.18rem]" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              />
-            </svg>
+            className="absolute p-[0.3rem] rounded-[50%] top-4 right-3 transition-all duration-200 bg-white hover:bg-[#d8d8d8] text-black dark:bg-black dark:hover:bg-[#232323] dark:text-white active:[transform:scale(0.98)]">
+            <span>
+              <svg className="w-[1.18rem] h-[1.18rem]" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </button>
           {/* ======= close btn ends ===== */}
           <h2 className='capitalize font-bold mb-2 text-[1.0625rem]'>remove item</h2>
           <p className='mb-6 text-[0.97rem]'>Are you sure want to remove this item?</p>
           <div className="flex justify-end gap-2">
-            <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 dark:bg-black dark:hover:bg-[#232323] dark:text-white text-[0.94rem] transition-all duration-200 active:scale-[.98]'>Cancel</button>
-            <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 text-white text-[0.94rem] transition-all duration-200 active:scale-[.98]'>Remove</button>
+            <button onClick={(e) => { e.stopPropagation(); removeModal(false); }} className='bg-white hover:bg-[#d8d8d8] text-black font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 dark:bg-black dark:hover:bg-[#232323] dark:text-white text-[0.94rem] transition-all duration-200 active:[transform:scale(0.98)]'>Cancel</button>
+            <button onClick={(e) => { e.stopPropagation(); removeModal(true); }} className='bg-[rgb(220_38_38_/_25%)] dark:bg-[rgb(255_0_0_/_14%)] dark:text-black dark:hover:text-white dark:hover:bg-red-600 hover:bg-red-600 font-semibold md:font-medium  py-[0.3125rem] rounded-sm px-3 text-white text-[0.94rem] transition-all duration-200 active:[transform:scale(0.98)]'>Remove</button>
           </div>
         </div>
       </div >
@@ -429,52 +471,54 @@ const CartAddIcon = memo(({ classes, color, viewBox = "0 0 24 24", strokeWidth =
     <svg className={classes} viewBox={viewBox}><path fill="currentColor" d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m10 0c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m-9.8-3.2v-.1l.9-1.7h7.4c.7 0 1.4-.4 1.7-1l3.9-7l-1.7-1l-3.9 7h-7L4.3 2H1v2h2l3.6 7.6L5.2 14c-.1.3-.2.6-.2 1c0 1.1.9 2 2 2h12v-2H7.4c-.1 0-.2-.1-.2-.2" /></svg>
   )
 })
-const ModeToggler = memo(({parentClasses})=>{
-  let { mode, setMode} = useContext(globalContext)
+const ModeToggler = memo(({ parentClasses }) => {
+  let { mode, setMode } = useContext(globalContext)
 
   function toggleBtn() {
-    document.documentElement.classList.toggle('dark')
-    document.body.classList.toggle('bg-slate-50')
-    setMode(`${document.documentElement.classList.contains('dark') === true ? 'dark' : 'light'}`)
+    const isDark = document.documentElement.classList.contains('dark')
+    document.documentElement.classList.toggle('dark');
+    document.body.classList.toggle('bg-slate-50');
+    setMode(`${isDark ? 'light' : 'dark'}`)
   }
+
 
   return (
     <div className={`${parentClasses}`} onClick={toggleBtn}>
-    <button className={`toggler align-middle w-[4.375em] relative h-[2.1875em] rounded-full overflow-hidden cursor-pointer`}>
+      <button className={`toggler align-middle w-[4.375em] relative h-[2.1875em] rounded-full overflow-hidden cursor-pointer`}>
 
-      {/* moonbg  */}
-      <img src={moonbg} className='absolute w-full h-full object-cover inset-0' alt="img" />
+        {/* moonbg  */}
+        <img src={moonbg} className='absolute w-full h-full object-cover inset-0' alt="img" />
 
-      <div className={`moon_container top-[50%] translate-y-[-50%] transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'dark' ? 'translate-x-[0.33em]' : 'translate-x-[6.25em]'}`}>
-        {Array(4).fill(null).map((_, index) => (
-          <div key={'shadow ' + index} className={`${mode === 'dark' ? `moon_shadow ${'moon_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
-        ))}
-        <div className={`moon inset-0 transition-all duration-1000 absolute bg-[#E7E7E7] rounded-full  overflow-hidden`}>
-          {Array(6).fill(null).map((_, index) => (
-            <div key={index} className={`absolute rounded-[50%] bg-[#CDCDCD] 
+        <div className={`moon_container top-[50%] translate-y-[-50%] transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'dark' ? 'translate-x-[0.33em]' : 'translate-x-[6.25em]'}`}>
+          {Array(4).fill(null).map((_, index) => (
+            <div key={'shadow ' + index} className={`${mode === 'dark' ? `moon_shadow ${'moon_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
+          ))}
+          <div className={`moon inset-0 transition-all duration-1000 absolute bg-[#E7E7E7] rounded-full  overflow-hidden`}>
+            {Array(6).fill(null).map((_, index) => (
+              <div key={index} className={`absolute rounded-[50%] bg-[#CDCDCD] 
             ${index === 0 ? 'top-0 right-0 w-[40%] h-[40%]' : ''}
             ${index === 1 ? 'top-1 right-3 w-[30%] h-[30%]' : ''}
             ${index === 2 ? 'top-1/2 right-3 w-[10%] h-[10%]' : ''}
             ${index === 3 ? 'top-1/2 right-1 w-[15%] h-[15%]' : ''}
             ${index === 4 ? 'top-[70%] right-0 w-[25%] h-[25%]' : ''}
             ${index === 5 ? 'top-[75%] right-2 w-[10%] h-[10%]' : ''}`}></div>
+            ))}
+          </div>
+        </div>
+
+
+        {/* sun bg  */}
+        <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${mode === 'dark' ? 'opacity-0' : ''}`} alt="img" />
+
+        <div className={`sun_container top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'light' ? 'translate-x-[0.33em]' : 'translate-x-[-6.25em]'}`}>
+          {Array(4).fill(null).map((_, index) => (
+            <div key={'shadow ' + index} className={`${mode === 'light' ? `sun_shadow ${'sun_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
           ))}
+          <div className={`yellow sun inset-0 transition-all duration-1000 absolute bg-radial-gradient from-[#ff7000] to-[yellow_90%] rounded-full`}>
+          </div>
         </div>
-      </div>
 
-
-      {/* sun bg  */}
-      <img src={sunbg} className={`sunbg transition-all duration-1000 absolute w-full h-full object-cover inset-0 ${mode === 'dark' ? 'opacity-0' : ''}`} alt="img" />
-
-      <div className={`sun_container top-[50%] translate-y-[-50%]  transition-all duration-1000 absolute w-[1.625em] bg-[#E7E7E7] h-[1.5625em] rounded-full ${mode === 'light' ? 'translate-x-[0.33em]' : 'translate-x-[-6.25em]'}`}>
-        {Array(4).fill(null).map((_, index) => (
-          <div key={'shadow ' + index} className={`${mode === 'light' ? `sun_shadow ${'sun_shadow' + (index + 1)}` : ''} absolute inset-1 rounded-[50%]`}></div>
-        ))}
-        <div className={`yellow sun inset-0 transition-all duration-1000 absolute bg-radial-gradient from-[#ff7000] to-[yellow_90%] rounded-full`}>
-        </div>
-      </div>
-
-    </button>
-  </div>
+      </button>
+    </div>
   )
 })

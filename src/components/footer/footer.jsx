@@ -7,9 +7,9 @@ import { globalContext } from "../context/context.js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const footer = memo(()=> {
+const footer = memo(() => {
   const cartref = useRef(null);
-  const { notificationMsgs, NotificationTimings, setnotificationState, mode, addToCartItemValue, WhatsAppLink, CartIcon ,ModeToggler} =
+  const { notificationMsgs, NotificationTimings, setnotificationState, mode, addToCartItemValue, WhatsAppLink, CartIcon, ModeToggler } =
     useContext(globalContext);
   function copyNumber(e) {
     navigator.clipboard.writeText(e.target.innerText);
@@ -19,22 +19,22 @@ const footer = memo(()=> {
   useGSAP(() => {
     gsap.fromTo(
       cartref.current,
-      { scale: 1.2 },
-      { scale: 1, duration: 2.5, ease: "elastic" }
+      { transform: "scale(1.2)" },
+      { transform: "scale(1)", duration: 2.5, ease: "elastic" }
     );
   }, [addToCartItemValue.length]);
 
   return (
-    <footer className={`relative p-[1.25rem] backdrop-blur-[100px]`}>
-      <div className="py-5 sm:px-5 grid gap-8">
+    <footer className={`relative mx-auto p-[1.25rem] rounded-[1rem_1rem_0]`}>
+      <div className="py-5 sm:px-5 grid gap-12">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="sm:order-[-1] order-1">
-            <h2 className="capitalize text-lg mb-3">explore more</h2>
-            <div className="grid grid-cols-1 justify-between gap-1 dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
+            <h2 className="capitalize max-sm:text-[1.025rem] text-lg mb-3">explore more</h2>
+            <div className="grid grid-cols-1 justify-between gap-1 dark:text-[#ebebeb] text-[#202020] text-[0.9275rem]">
               {[
                 {
                   name: "Cart",
-                  to: "cart",                
+                  to: "cart",
                   svg: (<CartIcon color={mode === "dark" ? "white" : "black"} classes={'w-[1.25rem] h-[1.25rem]'} />),
                 },
               ].map((item, index) => (
@@ -120,7 +120,7 @@ const footer = memo(()=> {
 
                 {
                   name: "about us",
-                  to: "about-us",
+                  to: "about",
                   svg: (
                     <svg
                       className="footerElm text-inherit w-[1.25rem] h-[1.25rem]"
@@ -212,89 +212,74 @@ const footer = memo(()=> {
                   <span>{el.name}</span>
                 </NavLink>
               ))}
-              <ModeToggler parentClasses='py-2 px-4 sm:px-4 cursor-pointer'/>
+              <ModeToggler parentClasses='py-2 px-4 sm:px-4 cursor-pointer' />
             </div>
           </div>
 
           <div>
-            <h2 className="capitalize text-lg mb-3">Contact Us</h2>
-            <div className="flex flex-col items-start dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
+            <h2 className="capitalize max-sm:text-[1.025rem] text-lg mb-3">Contact Us</h2>
+            <div className="flex flex-col items-start dark:text-[#ebebeb] text-[#202020] text-[0.9275rem]">
               <a target="_blank"
                 className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-1"
                 href="https://maps.app.goo.gl/9fbqpbeUvJ6TfNWt6"
               >
-                <svg
-                  className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`}
-                  viewBox="0 0 24 24"
-                >
-                  <mask id="lineMdMapMarkerRadiusFilled0">
-                    <g
-                      fill="none"
-                      stroke="#fff"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    >
-                      <path
-                        fill="#fff"
-                        fillOpacity="0"
-                        strokeDasharray="40"
-                        strokeDashoffset="40"
-                        d="M12 18c0 0 -5.14 -6 -5.14 -9.86c0 -2.84 2.3 -5.14 5.14 -5.14c2.84 0 5.14 2.3 5.14 5.14c0 3.86 -5.14 9.86 -5.14 9.86Z"
-                      >
-                        <animate
-                          fill="freeze"
-                          attributeName="fillOpacity"
-                          begin="0.6s"
-                          dur="0.5s"
-                          values="0;1"
-                        />
-                        <animate
-                          fill="freeze"
-                          attributeName="stroke-dashoffset"
-                          dur="0.5s"
-                          values="40;0"
-                        />
-                      </path>
-                      <circle
-                        cx="12"
-                        cy="8.143"
-                        r="2.5"
-                        fill="#000"
-                        fillOpacity="0"
-                        stroke="none"
-                      >
-                        <animate
-                          fill="freeze"
-                          attributeName="fillOpacity"
-                          begin="1.1s"
-                          dur="0.5s"
-                          values="0;1"
-                        />
-                      </circle>
-                      <path
-                        fill="#fff"
-                        stroke="none"
-                        d="M12 18c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0Z"
-                      >
-                        <animate
-                          fill="freeze"
-                          attributeName="d"
-                          begin="1.6s"
-                          dur="0.2s"
-                          values="M12 18c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0c0 0 0 0 0 0l0 0c0 0 0 0 0 0c0 0 0 0 0 0Z;M12 21C15.3 21 18 19.9 18 18.5C18 17.8 17.3 17.2 16.2 16.7L16.8 15.8C18.8 16.6 20 17.7 20 19C20 21.2 16.4 23 12 23C7.6 23 4 21.2 4 19C4 17.7 5.2 16.6 7.1 15.8L7.7 16.7C6.7 17.2 6 17.8 6 18.5C6 19.9 8.7 21 12 21z"
-                        />
-                      </path>
-                    </g>
-                  </mask>
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    mask="url(#lineMdMapMarkerRadiusFilled0)"
-                  />
-                </svg>
+                <svg className={`footerElm text-inherit w-[1.2rem] h-[1.2rem]`} viewBox="0 0 12 12"><path fill="currentColor" d="M6 2a2.5 2.5 0 0 0-2.5 2.5c0 .453.259 1.04.691 1.674c.42.617.953 1.204 1.387 1.641c.238.24.606.24.844 0c.434-.437.966-1.024 1.387-1.64C8.24 5.54 8.5 4.952 8.5 4.5A2.5 2.5 0 0 0 6 2M2.5 4.5a3.5 3.5 0 1 1 7 0c0 .77-.408 1.568-.865 2.238c-.469.687-1.048 1.323-1.503 1.781a1.585 1.585 0 0 1-2.264 0c-.455-.458-1.034-1.094-1.503-1.781C2.908 6.068 2.5 5.269 2.5 4.5m4.5 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2.42 8.065c.122-.125.267-.236.427-.336c.21.277.43.54.643.782a1.5 1.5 0 0 0-.36.256C3.017 8.884 3 8.962 3 9s.016.116.13.233c.118.118.312.248.592.368C4.28 9.84 5.085 10 6 10s1.72-.16 2.278-.399c.28-.12.474-.25.591-.368C8.984 9.116 9 9.038 9 9s-.016-.116-.13-.233q-.122-.125-.36-.256c.214-.241.433-.505.643-.782q.242.15.428.336c.239.242.419.559.419.935s-.18.693-.42.935c-.236.24-.554.434-.908.585c-.71.304-1.654.48-2.672.48s-1.963-.176-2.672-.48c-.354-.151-.672-.345-.909-.585C2.18 9.693 2 9.376 2 9s.18-.693.42-.935" strokeWidth='1.75' /></svg>
                 <span>Location</span>
+              </a>
+              <a target='_blank'
+                className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2"
+                href="https://www.instagram.com/kanhaji_dhaba">
+                <svg
+                  className="footerElm text-inherit w-[1.2rem] h-[1.2rem] drop-shadow-[1px_1px_4px_#000000b0]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 256 256">
+                  <g fill="none">
+                    <rect
+                      width="256"
+                      height="256"
+                      fill="url(#skillIconsInstagram0)"
+                      rx="60"
+                    />
+                    <rect
+                      width="256"
+                      height="256"
+                      fill="url(#skillIconsInstagram1)"
+                      rx="60"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M128.009 28c-27.158 0-30.567.119-41.233.604c-10.646.488-17.913 2.173-24.271 4.646c-6.578 2.554-12.157 5.971-17.715 11.531c-5.563 5.559-8.98 11.138-11.542 17.713c-2.48 6.36-4.167 13.63-4.646 24.271c-.477 10.667-.602 14.077-.602 41.236s.12 30.557.604 41.223c.49 10.646 2.175 17.913 4.646 24.271c2.556 6.578 5.973 12.157 11.533 17.715c5.557 5.563 11.136 8.988 17.709 11.542c6.363 2.473 13.631 4.158 24.275 4.646c10.667.485 14.073.604 41.23.604c27.161 0 30.559-.119 41.225-.604c10.646-.488 17.921-2.173 24.284-4.646c6.575-2.554 12.146-5.979 17.702-11.542c5.563-5.558 8.979-11.137 11.542-17.712c2.458-6.361 4.146-13.63 4.646-24.272c.479-10.666.604-14.066.604-41.225s-.125-30.567-.604-41.234c-.5-10.646-2.188-17.912-4.646-24.27c-2.563-6.578-5.979-12.157-11.542-17.716c-5.562-5.562-11.125-8.979-17.708-11.53c-6.375-2.474-13.646-4.16-24.292-4.647c-10.667-.485-14.063-.604-41.23-.604zm-8.971 18.021c2.663-.004 5.634 0 8.971 0c26.701 0 29.865.096 40.409.575c9.75.446 15.042 2.075 18.567 3.444c4.667 1.812 7.994 3.979 11.492 7.48c3.5 3.5 5.666 6.833 7.483 11.5c1.369 3.52 3 8.812 3.444 18.562c.479 10.542.583 13.708.583 40.396s-.104 29.855-.583 40.396c-.446 9.75-2.075 15.042-3.444 18.563c-1.812 4.667-3.983 7.99-7.483 11.488c-3.5 3.5-6.823 5.666-11.492 7.479c-3.521 1.375-8.817 3-18.567 3.446c-10.542.479-13.708.583-40.409.583c-26.702 0-29.867-.104-40.408-.583c-9.75-.45-15.042-2.079-18.57-3.448c-4.666-1.813-8-3.979-11.5-7.479s-5.666-6.825-7.483-11.494c-1.369-3.521-3-8.813-3.444-18.563c-.479-10.542-.575-13.708-.575-40.413s.096-29.854.575-40.396c.446-9.75 2.075-15.042 3.444-18.567c1.813-4.667 3.983-8 7.484-11.5s6.833-5.667 11.5-7.483c3.525-1.375 8.819-3 18.569-3.448c9.225-.417 12.8-.542 31.437-.563zm62.351 16.604c-6.625 0-12 5.37-12 11.996c0 6.625 5.375 12 12 12s12-5.375 12-12s-5.375-12-12-12zm-53.38 14.021c-28.36 0-51.354 22.994-51.354 51.355s22.994 51.344 51.354 51.344c28.361 0 51.347-22.983 51.347-51.344c0-28.36-22.988-51.355-51.349-51.355zm0 18.021c18.409 0 33.334 14.923 33.334 33.334c0 18.409-14.925 33.334-33.334 33.334s-33.333-14.925-33.333-33.334c0-18.411 14.923-33.334 33.333-33.334"
+                    />
+                    <defs>
+                      <radialGradient
+                        id="skillIconsInstagram0"
+                        cx="0"
+                        cy="0"
+                        r="1"
+                        gradientTransform="matrix(0 -253.715 235.975 0 68 275.717)"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#FD5" />
+                        <stop offset=".1" stopColor="#FD5" />
+                        <stop offset=".5" stopColor="#FF543E" />
+                        <stop offset="1" stopColor="#C837AB" />
+                      </radialGradient>
+                      <radialGradient
+                        id="skillIconsInstagram1"
+                        cx="0"
+                        cy="0"
+                        r="1"
+                        gradientTransform="matrix(22.25952 111.2061 -458.39518 91.75449 -42.881 18.441)"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#3771C8" />
+                        <stop offset=".128" stopColor="#3771C8" />
+                        <stop offset="1" stopColor="#60F" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+                  </g>
+                </svg>
+                <span>Instagram</span>
               </a>
               {[
                 {
@@ -365,12 +350,12 @@ const footer = memo(()=> {
                   </button>
                 )
               )}
-              <a target='_blank'
+              {/* <a target='_blank'
                 className="footerElm svgbtn py-[0.375rem] w-full flex items-center gap-2"
-                href="https://www.instagram.com/mannudhaba?igsh=MTgwdjVvdnQxbmR3NQ==">
+                href="https://www.instagram.com/kanhaji_dhaba">
                 <svg
                   className="footerElm text-inherit w-[1.2rem] h-[1.2rem] drop-shadow-[1px_1px_4px_#000000b0]"
-                  xmlns="http://www.w3.org/2000/svg"                 
+                  xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 256 256">
                   <g fill="none">
                     <rect
@@ -419,13 +404,13 @@ const footer = memo(()=> {
                   </g>
                 </svg>
                 <span>Instagram</span>
-              </a>
+              </a> */}
             </div>
           </div>
 
           <div className="sm:order-1 order-[-1]">
-            <h2 className="capitalize text-lg mb-3">opening hours</h2>
-            <div className="flex flex-col items-start gap-y-3 dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
+            <h2 className="capitalize max-sm:text-[1.025rem] text-lg mb-3">opening hours</h2>
+            <div className="flex flex-col items-start gap-y-3 dark:text-[#ebebeb] text-[#202020] text-[0.9275rem]">
               <span className="footerElm">
                 Everyday <br /> 10AM - 2AM
               </span>
@@ -433,8 +418,8 @@ const footer = memo(()=> {
           </div>
 
           <div>
-            <h2 className="capitalize text-lg mb-3">Give Us Feedback</h2>
-            <div className="flex flex-col items-start gap-y-3 dark:text-[#ebebeb] text-[#202020] text-[0.96875rem]">
+            <h2 className="capitalize max-sm:text-[1.025rem] text-lg mb-3">Give Us Feedback</h2>
+            <div className="flex flex-col items-start gap-y-3 dark:text-[#ebebeb] text-[#202020] text-[0.9275rem]">
               <p className="footerElm">
                 Pure veg, Affordable, and perfect for families. Your feedback
                 matters for us — share your experience with a review!
@@ -443,29 +428,7 @@ const footer = memo(()=> {
                 href="https://g.page/r/CfpZjeiu18gXEBM/review"
                 className="flex gap-2 items-center justify-center px-4 py-2 bg-white text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-white font-medium border border-gray-300 rounded-md shadow-md hover:bg-gray-100 dark:hover:bg-gray-700  hover:shadow-lg transition duration-200"
               >
-                <svg
-                  className="w-[1.2rem] h-[1.2rem]"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 48 48"
-                >
-                  <path
-                    fill="#FFC107"
-                    d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
-                  ></path>
-                  <path
-                    fill="#FF3D00"
-                    d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-                  ></path>
-                  <path
-                    fill="#4CAF50"
-                    d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-                  ></path>
-                  <path
-                    fill="#1976D2"
-                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-                  ></path>
-                </svg>
+                <svg className="w-[1.2rem] h-[1.2rem]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill="none" fillRule="evenodd" clipRule="evenodd"><path fill="#F44336" d="M7.209 1.061c.725-.081 1.154-.081 1.933 0a6.57 6.57 0 0 1 3.65 1.82a100 100 0 0 0-1.986 1.93q-1.876-1.59-4.188-.734q-1.696.78-2.362 2.528a78 78 0 0 1-2.148-1.658a.26.26 0 0 0-.16-.027q1.683-3.245 5.26-3.86" opacity=".987" /><path fill="#FFC107" d="M1.946 4.92q.085-.013.161.027a78 78 0 0 0 2.148 1.658A7.6 7.6 0 0 0 4.04 7.99q.037.678.215 1.331L2 11.116Q.527 8.038 1.946 4.92" opacity=".997" /><path fill="#448AFF" d="M12.685 13.29a26 26 0 0 0-2.202-1.74q1.15-.812 1.396-2.228H8.122V6.713q3.25-.027 6.497.055q.616 3.345-1.423 6.032a7 7 0 0 1-.51.49" opacity=".999" /><path fill="#43A047" d="M4.255 9.322q1.23 3.057 4.51 2.854a3.94 3.94 0 0 0 1.718-.626q1.148.812 2.202 1.74a6.62 6.62 0 0 1-4.027 1.684a6.4 6.4 0 0 1-1.02 0Q3.82 14.524 2 11.116z" opacity=".993" /></g></svg>
                 Give review
               </a>
             </div>
@@ -473,20 +436,24 @@ const footer = memo(()=> {
         </div>
         <div className="text-center">
           <address>{`design & developed by`}</address>
-          <strong>
+          <strong className="font-bold">
             <a target="_blank"
-              className="uppercase [text-shadow:2px_2px_4px_#00000063]"
-              href="https://ayushnagar-portfolio.netlify.app/">Ayush Nagar
+              className="uppercase max-md:underline [text-shadow:2px_2px_0px_#00000035]"
+              href="https://ayushnagar.netlify.app/">Ayush Nagar
             </a>
           </strong>
         </div>
         <div className="w-full h-[1px] dark:bg-slate-200 bg-slate-500 rounded-full overflow-hidden"></div>
       </div>
-      {mode === "dark" ? (
-        <WhiteLogo classes={"w-[11.875rem] sm:w-[13.125rem] mx-auto"} />
-      ) : (
-        <BlackLogo classes={"w-[11.875rem] md:w-[13.125rem] mx-auto"} />
-      )}
+      <div className="flex justify-center">
+        <NavLink to={"/"}>
+          {mode === "dark" ? (
+            <WhiteLogo classes={"w-[11.875rem] sm:w-[13.125rem] mx-auto"} />
+          ) : (
+            <BlackLogo classes={"w-[11.875rem] md:w-[13.125rem] mx-auto"} />
+          )}
+        </NavLink>
+      </div>
     </footer>
   );
 })
